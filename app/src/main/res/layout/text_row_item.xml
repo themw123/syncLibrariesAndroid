@@ -1,47 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="60dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardCornerRadius="60dp"
-    android:background="@color/white"
-    android:layout_marginTop="20dp"
+    android:layout_height="80dp"
     >
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
 
-            >
 
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="240dp"
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        app:cardCornerRadius="60dp"
+        android:background="@color/white"
+        app:cardElevation="10dp"
+
+        >
+
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="20dp"
 
-                android:fontFamily="sans-serif-smallcaps"
-                android:gravity="center_vertical"
-                android:text="TextView"
-                android:textColor="#211f1f"
-                android:textSize="24sp" />
+                >
 
-            <androidx.appcompat.widget.AppCompatImageButton
-                android:id="@+id/button"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="20dp"
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="240dp"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="20dp"
 
-                android:background="@drawable/minus"
-                android:onClick="onClickDel" />
+                    android:fontFamily="sans-serif-smallcaps"
+                    android:gravity="center_vertical"
+                    android:text="TextView"
+                    android:textColor="#211f1f"
+                    android:textSize="24sp" />
+
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/button"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="20dp"
+
+                    android:background="@drawable/minus"
+                    android:onClick="onClickDel" />
 
 
-        </RelativeLayout>
-    </androidx.cardview.widget.CardView>
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
 
+</RelativeLayout>
