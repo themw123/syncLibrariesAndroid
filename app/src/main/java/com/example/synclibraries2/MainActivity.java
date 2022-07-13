@@ -191,15 +191,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void buttonOnorOff(Button b1, boolean st) {
 
-        String color = "";
-
         if(st) {
             b1.setEnabled(true);
-            color = "#3584D5";
         }
         else {
             b1.setEnabled(false);
-            color = "#91adc9";
         }
 
 

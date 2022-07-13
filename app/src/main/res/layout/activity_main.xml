@@ -172,12 +172,11 @@
             style="?android:attr/progressBarStyle"
             android:layout_width="118dp"
             android:layout_height="113dp"
-            android:backgroundTint="#134e8a"
-            android:indeterminate="true"
-            android:indeterminateTint="#134e8a"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="185dp"
-            />
+            android:backgroundTint="#134e8a"
+            android:indeterminate="true"
+            android:indeterminateTint="#134e8a" />
 
     </RelativeLayout>
 
