@@ -1,54 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+
+
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:padding="20dp"
-    android:background="@drawable/liste"
+    android:layout_height="60dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="60dp"
+    android:background="@color/white"
+    android:layout_marginTop="20dp"
     >
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="345dp"
-        android:layout_height="45dp"
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
 
-        >
+            >
 
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="240dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="220dp"
-            android:layout_height="26dp"
-            android:layout_marginTop="16dp"
-            android:fontFamily="sans-serif-smallcaps"
-            android:gravity="center_vertical"
-            android:text="TextView"
-            android:textColor="#211f1f"
-            android:textSize="20sp"
-            app:layout_constraintEnd_toStartOf="@+id/button"
-            app:layout_constraintHorizontal_bias="0.64"
+                android:fontFamily="sans-serif-smallcaps"
+                android:gravity="center_vertical"
+                android:text="TextView"
+                android:textColor="#211f1f"
+                android:textSize="24sp" />
 
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/button"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="20dp"
 
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/button"
-            android:layout_width="44dp"
-            android:layout_height="43dp"
-
-
-            android:layout_marginTop="6dp"
-
-            android:layout_marginEnd="56dp"
-            android:background="@drawable/minus"
-            android:onClick="onClickDel"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="SpeakableTextPresentCheck" />
+                android:background="@drawable/minus"
+                android:onClick="onClickDel" />
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
 
-
-</LinearLayout>
