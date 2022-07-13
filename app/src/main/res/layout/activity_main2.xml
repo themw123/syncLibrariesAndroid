@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity2">
+    tools:context=".MainActivity2"
+    >
 
     <RelativeLayout
         android:id="@+id/relativeLayout"
@@ -17,33 +18,35 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <EditText
-            android:id="@+id/editTextTextPersonName"
+
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="275dp"
             android:layout_height="60dp"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="80dp"
+            app:boxBackgroundColor="@null"
+            app:boxStrokeColor="@color/black"
+            android:textColorHint="#3584D5"
+            android:hint="title:"
+            app:endIconMode="clear_text"
+            >
 
-            android:backgroundTint="@color/white"
-            android:gravity="center"
-            android:backgroundTintMode="add"
-            android:cursorVisible="true"
-            android:fontFamily="sans-serif-smallcaps"
-            android:hint="title"
-            android:imeOptions="actionSend"
-            android:inputType="text"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextTextPersonName"
+                android:singleLine="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
 
-            android:textColor="@color/white"
-            android:textColorHint="@color/white"
-            android:textCursorDrawable="@drawable/cursor"
-            android:textSize="20sp">
+                />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        </EditText>
 
         <RelativeLayout
             android:id="@+id/loadingPanel"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+
+            >
 
             <ProgressBar
                 android:id="@+id/progressbar"

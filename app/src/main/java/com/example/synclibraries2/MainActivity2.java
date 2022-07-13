@@ -22,6 +22,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.textfield.TextInputEditText;
+
 import java.util.Vector;
 import syncLibraries.Session;
 
@@ -31,7 +33,7 @@ public class MainActivity2 extends AppCompatActivity {
     RecyclerView recyclerView;
     Session s;
     Vector<String>ausnahmen;
-    EditText t;
+    TextInputEditText t;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +64,7 @@ public class MainActivity2 extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
 
 
-        t = (EditText)this.findViewById(R.id.editTextTextPersonName);
+        t = (TextInputEditText)this.findViewById(R.id.editTextTextPersonName);
 
         t.setFocusable(true);
 
@@ -93,7 +95,7 @@ public class MainActivity2 extends AppCompatActivity {
 
     //Zeile hinzufügen
     public void add() {
-        t = (EditText)this.findViewById(R.id.editTextTextPersonName);
+        t = (TextInputEditText)this.findViewById(R.id.editTextTextPersonName);
         String titel = t.getText().toString();
         t.setText("");
         if(!titel.isEmpty()) {

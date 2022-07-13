@@ -30,7 +30,7 @@
                 app:cardBackgroundColor="@color/white"
                 app:cardCornerRadius="65dp"
                 app:cardElevation="10dp"
-                app:cardPreventCornerOverlap="false" >
+                app:cardPreventCornerOverlap="false">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -94,8 +94,8 @@
                         android:layout_width="110dp"
                         android:layout_height="70dp"
                         android:layout_alignParentLeft="true"
-                        android:layout_marginTop="200dp"
                         android:layout_marginLeft="49dp"
+                        android:layout_marginTop="200dp"
                         app:srcCompat="@drawable/shadow2" />
 
                     <ImageView
@@ -123,19 +123,21 @@
                 </RelativeLayout>
 
 
-        </androidx.cardview.widget.CardView>
+            </androidx.cardview.widget.CardView>
 
-    </RelativeLayout>
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/textView2"
             android:layout_width="385dp"
             android:layout_height="172dp"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="15dp"
             android:textAlignment="center"
             android:textColor="@color/black"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:scrollbars = "vertical"
+            />
 
 
         <ImageView

@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        TextView tw2 = (TextView) findViewById(R.id.textView1);
+        TextView tw2 = (TextView) findViewById(R.id.textView2);
         tw2.setMovementMethod(new ScrollingMovementMethod());
 
         createSSH();
