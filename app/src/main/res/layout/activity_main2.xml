@@ -11,7 +11,7 @@
         android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#3584D5"
+        android:background="@drawable/background"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -20,24 +20,32 @@
 
 
         <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="275dp"
-            android:layout_height="60dp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+
+            android:layout_width="300dp"
+            android:layout_height="80dp"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="80dp"
-            app:boxBackgroundColor="@null"
-            app:boxStrokeColor="@color/black"
-            android:textColorHint="#3584D5"
+            app:boxStrokeColor="@color/white"
+            app:boxCornerRadiusTopStart="20dp"
+            app:boxCornerRadiusBottomStart="20dp"
+            app:boxCornerRadiusBottomEnd="20dp"
+            app:boxCornerRadiusTopEnd="20dp"
+            android:textColorHint="@color/white"
+            android:textColor="@color/white"
+            app:endIconTint="@color/white"
             android:hint="title:"
             app:endIconMode="clear_text"
             >
+            <!-- hint farbe wenn activated ist die primarycolor-->
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editTextTextPersonName"
-                android:singleLine="true"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
-                />
+                android:singleLine="true"
+                android:textColor="@color/white"
+                 />
         </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -53,7 +61,6 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_centerInParent="true"
-                android:layout_centerHorizontal="true"
                 android:backgroundTint="#134e8a"
                 android:indeterminate="true"
                 android:indeterminateTint="#134e8a" />

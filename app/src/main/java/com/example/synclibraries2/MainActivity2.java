@@ -1,12 +1,14 @@
 package com.example.synclibraries2;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Configuration;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -37,6 +39,8 @@ public class MainActivity2 extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //dark mode deaktivieren
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
 
@@ -90,8 +94,27 @@ public class MainActivity2 extends AppCompatActivity {
 
     }
 
-
-
+    //close keyboard and focus when clicking outside
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent event) {
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            if (t.isFocused()) {
+                Rect outRect = new Rect();
+                t.getGlobalVisibleRect(outRect);
+                if (!outRect.contains((int)event.getRawX(),(int)event.getRawY()))   {
+                    if (getCurrentFocus() != null) {
+                        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+                    }
+                    t.clearFocus();
+                    //
+                    // Hide keyboard
+                    //
+                }
+            }
+        }
+        return super.dispatchTouchEvent(event);
+    }
 
     //Zeile hinzufügen
     public void add() {
@@ -104,14 +127,7 @@ public class MainActivity2 extends AppCompatActivity {
         }
     }
 
-    @Override
-    public boolean dispatchTouchEvent(MotionEvent ev) {
-        if (getCurrentFocus() != null) {
-            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
-        }
-        return super.dispatchTouchEvent(ev);
-    }
+
 
 
 

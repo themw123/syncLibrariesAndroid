@@ -2,7 +2,7 @@
     <!-- Base application theme. -->
     <style name="Theme.Synclibraries2" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">#3584D5</item>
+        <item name="colorPrimary">#ffffff</item>
         <item name="colorPrimaryVariant">#3584D5</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
