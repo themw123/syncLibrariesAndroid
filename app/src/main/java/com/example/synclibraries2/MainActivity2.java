@@ -59,7 +59,7 @@ public class MainActivity2 extends AppCompatActivity implements Serializable {
 
             sl = new SyncLibrary();
             jwv = sl.setJustWatchWatchList();
-            ausnahmen =  sl.getAusnahmen();
+            ausnahmen = sl.getAusnahmen();
 
             adapter.refreshListe(jwv, ausnahmen);
             runOnUiThread(new Runnable() {

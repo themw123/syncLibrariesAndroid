@@ -125,7 +125,8 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
                 if(isChecked) {
                     String title = jwv.get(viewHolder.getAdapterPosition()).getTitle();
                     String tmdb = jwv.get(viewHolder.getAdapterPosition()).getTmdb();
-                    addData(title, tmdb);
+                    String imdb = jwv.get(viewHolder.getAdapterPosition()).getImdb();
+                    addData(title, tmdb, imdb);
                 }
                 else {
                     String tmdb = jwv.get(viewHolder.getAdapterPosition()).getTmdb();
@@ -147,10 +148,10 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
         return index;
     }
 
-    public void addData(String titel, String tmdb) {
+    public void addData(String titel, String tmdb, String imdb) {
         Thread t1 = new Thread(() -> {
-            s.addAusnahme(titel, tmdb);
-            String[] neu = {titel, tmdb};
+            s.addAusnahme(titel, tmdb, imdb);
+            String[] neu = {titel, tmdb, imdb};
             ausnahmen.add(neu);
         });
         t1.start();

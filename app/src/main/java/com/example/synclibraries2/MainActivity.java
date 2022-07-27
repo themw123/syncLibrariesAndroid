@@ -81,8 +81,6 @@ public class MainActivity extends AppCompatActivity {
 
         waitForCreateSync();
 
-
-
         //!!!!!!!!!!!!!!!synchronize!!!!!!!!!!!!!!!!!!!!!!
         sl.sync();
         boolean error = sl.wasSuccessful();
