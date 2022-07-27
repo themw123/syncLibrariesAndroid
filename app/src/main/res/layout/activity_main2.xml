@@ -19,35 +19,6 @@
         app:layout_constraintTop_toTopOf="parent">
 
 
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-
-            android:layout_width="300dp"
-            android:layout_height="80dp"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="80dp"
-            app:boxStrokeColor="@color/white"
-            app:boxCornerRadiusTopStart="20dp"
-            app:boxCornerRadiusBottomStart="20dp"
-            app:boxCornerRadiusBottomEnd="20dp"
-            app:boxCornerRadiusTopEnd="20dp"
-            android:textColorHint="@color/white"
-            android:textColor="@color/white"
-            app:endIconTint="@color/white"
-            android:hint="title:"
-            app:endIconMode="clear_text"
-            >
-            <!-- hint farbe wenn activated ist die primarycolor-->
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editTextTextPersonName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:singleLine="true"
-                android:textColor="@color/white"
-                 />
-        </com.google.android.material.textfield.TextInputLayout>
-
 
         <RelativeLayout
             android:id="@+id/loadingPanel"
@@ -69,10 +40,10 @@
 
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/ausnahmen"
+            android:id="@+id/justwatch"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="230dp"
+            android:layout_marginTop="120dp"
             android:layout_marginBottom="20dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"

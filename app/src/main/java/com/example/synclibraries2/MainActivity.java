@@ -19,7 +19,10 @@ import syncLibraries.SyncLibrary;
 public class MainActivity extends AppCompatActivity {
 
     private SSH ssh = null;
+    private SyncLibrary sl = null;
+
     private Thread createSSHThread = null;
+    private Thread createSyncThread = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
         tw2.setMovementMethod(new ScrollingMovementMethod());
 
         createSSH();
+        createSync();
     }
 
 
@@ -56,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void sync() {
 
+
         Button b1 = (Button) findViewById(R.id.syncButton);
         TextView tw1 = (TextView) findViewById(R.id.textView1);
         TextView tw2 = (TextView) findViewById(R.id.textView2);
@@ -74,9 +79,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        waitForCreateSync();
+
+
 
         //!!!!!!!!!!!!!!!synchronize!!!!!!!!!!!!!!!!!!!!!!
-        SyncLibrary sl = new SyncLibrary();
         sl.sync();
         boolean error = sl.wasSuccessful();
         //!!!!!!!!!!!!!!!synchronize!!!!!!!!!!!!!!!!!!!!!!
@@ -120,6 +127,21 @@ public class MainActivity extends AppCompatActivity {
     private void waitForCreateSSH() {
         try {
             createSSHThread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void createSync() {
+        createSyncThread = new Thread(() -> {
+            sl = new SyncLibrary();
+        });
+        createSyncThread.start();
+    }
+
+    private void waitForCreateSync() {
+        try {
+            createSyncThread.join();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -169,7 +191,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void onClickExceptions(View view) {
-
         buttonAnimation(view,"short");
         startActivity(new Intent( MainActivity.this, MainActivity2.class));
     }
