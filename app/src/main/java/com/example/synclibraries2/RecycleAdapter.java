@@ -27,7 +27,7 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
 
 
     private SyncLibrary sl;
-    private Vector<String[]> ausnahmen;
+    private Vector<String> ausnahmen;
     private Vector<JustWatch> jwv;
     private Session s;
 
@@ -99,9 +99,8 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
         //switch state setzen
         String tmdb = jwv.get(viewHolder.getAdapterPosition()).getTmdb();
         boolean in = false;
-        for(String[] s : ausnahmen) {
-            String tmdbAusnahme = s[1];
-            if(tmdbAusnahme.equals(tmdb)) {
+        for(String tmdbAusnahm : ausnahmen) {
+            if(tmdbAusnahm.equals(tmdb)) {
                 in = true;
             }
         }
@@ -134,7 +133,7 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
                     String title = jwv.get(viewHolder.getAdapterPosition()).getTitle();
                     String tmdb = jwv.get(viewHolder.getAdapterPosition()).getTmdb();
                     String imdb = jwv.get(viewHolder.getAdapterPosition()).getImdb();
-                    addData(title, tmdb, imdb);
+                    addData(tmdb);
                 }
                 else {
                     String tmdb = jwv.get(viewHolder.getAdapterPosition()).getTmdb();
@@ -149,18 +148,17 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
     private int getIndexAusnahmen(String tmdb) {
         int index = -1;
         for(int i=0;i<ausnahmen.size();i++) {
-            if(ausnahmen.get(i)[1].equals(tmdb)) {
+            if(ausnahmen.get(i).equals(tmdb)) {
                 index = i;
             }
         }
         return index;
     }
 
-    public void addData(String titel, String tmdb, String imdb) {
+    public void addData(String tmdb) {
         Thread t1 = new Thread(() -> {
-            s.addAusnahme(titel, tmdb, imdb);
-            String[] neu = {titel, tmdb, imdb};
-            ausnahmen.add(neu);
+            s.addAusnahme(tmdb);
+            ausnahmen.add(tmdb);
         });
         t1.start();
     }
