@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import syncLibraries.SSH;
@@ -19,10 +20,10 @@ import syncLibraries.SyncLibrary;
 public class MainActivity extends AppCompatActivity {
 
     private SSH ssh = null;
-    private SyncLibrary sl = null;
+    public static SyncLibrary sl = null;
 
     private Thread createSSHThread = null;
-    private Thread createSyncThread = null;
+    private static Thread createSyncThread = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
 
         createSSH();
         createSync();
+
+        String test = "";
     }
 
 
@@ -62,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         Button b1 = (Button) findViewById(R.id.syncButton);
+        ImageButton b2 = (ImageButton) findViewById(R.id.button);
         TextView tw1 = (TextView) findViewById(R.id.textView1);
         TextView tw2 = (TextView) findViewById(R.id.textView2);
 
@@ -72,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
 
                 buttonAnimation(findViewById(R.id.syncButton), "long");
                 buttonOnorOff(b1, false);
+                ImagebuttonOnorOff(b2, false);
 
                 //b1.getBackground().setAlpha(200);
                 tw1.setText("");
@@ -101,6 +106,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 buttonOnorOff(b1, true);
+                ImagebuttonOnorOff(b2, true);
 
 
                 Handler handler = new Handler();
@@ -137,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
         createSyncThread.start();
     }
 
-    private void waitForCreateSync() {
+    public static void waitForCreateSync() {
         try {
             createSyncThread.join();
         } catch (InterruptedException e) {
@@ -208,19 +214,22 @@ public class MainActivity extends AppCompatActivity {
         view.startAnimation(shake);
     }
 
-    public void buttonOnorOff(Button b1, boolean st) {
 
+    public void buttonOnorOff(Button b, boolean st) {
         if(st) {
-            b1.setEnabled(true);
+            b.setEnabled(true);
         }
         else {
-            b1.setEnabled(false);
+            b.setEnabled(false);
         }
-
-
-
-
-
     }
 
+    public void ImagebuttonOnorOff(ImageButton b, boolean st) {
+        if(st) {
+            b.setEnabled(true);
+        }
+        else {
+            b.setEnabled(false);
+        }
+    }
 }

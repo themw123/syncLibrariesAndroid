@@ -5,7 +5,9 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -23,14 +25,15 @@ import java.util.Vector;
 import syncLibraries.JustWatch;
 import syncLibraries.SyncLibrary;
 
-public class MainActivity2 extends AppCompatActivity implements Serializable {
+public class MainActivity2 extends AppCompatActivity{
+
+    public Activity activity = this;
 
     RecycleAdapter adapter;
     RecyclerView recyclerView;
 
-    SyncLibrary sl;
-    Vector<JustWatch> jwv;
-    Vector<String[]> ausnahmen;
+    private SyncLibrary sl;
+
 
 
     @Override
@@ -41,38 +44,38 @@ public class MainActivity2 extends AppCompatActivity implements Serializable {
         setContentView(R.layout.activity_main2);
 
 
-        jwv = new Vector<JustWatch>();
-        ausnahmen = new Vector<String[]>();
+        findViewById(R.id.progressbar).setVisibility(View.VISIBLE);
 
-        /*
-        // data to populate the RecyclerView with
-        recyclerView = (RecyclerView) findViewById(R.id.ausnahmen);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new RecycleAdapter(this);
-        */
-        // data to populate the RecyclerView with
-        recyclerView = (RecyclerView) findViewById(R.id.justwatch);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new RecycleAdapter(this);
 
         Thread t1 = new Thread(() -> {
+            //darf nicht in main thread damit ui lädt
+            MainActivity.waitForCreateSync();
+            sl = MainActivity.sl;
 
-            sl = new SyncLibrary();
-            jwv = sl.setJustWatchWatchList();
-            ausnahmen = sl.getAusnahmen();
-
-            adapter.refreshListe(jwv, ausnahmen);
+            //muss in main thread
             runOnUiThread(new Runnable() {
+
                 @Override
                 public void run() {
-                    findViewById(R.id.loadingPanel).setVisibility(View.GONE);
+                    recyclerView = (RecyclerView) findViewById(R.id.justwatch);
+
+                    recyclerView.setLayoutManager(new LinearLayoutManager(activity));
+                    adapter = new RecycleAdapter();
+
+                    findViewById(R.id.progressbar).setVisibility(View.INVISIBLE);
+
+                    adapter.refreshListe(sl);
                     adapter.notifyDataSetChanged();
+                    recyclerView.setAdapter(adapter);
                 }
             });
+
+
         });
         t1.start();
 
-        recyclerView.setAdapter(adapter);
+
+
 
 
 

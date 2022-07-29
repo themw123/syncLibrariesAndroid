@@ -20,18 +20,29 @@ import java.util.Vector;
 
 import syncLibraries.JustWatch;
 import syncLibraries.Session;
+import syncLibraries.SyncLibrary;
 
 public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHolder> {
 
 
-    private Session s;
+
+    private SyncLibrary sl;
     private Vector<String[]> ausnahmen;
     private Vector<JustWatch> jwv;
+    private Session s;
 
-    public RecycleAdapter(MainActivity2 mainActivity2) {
-        s = new Session();
-        this.ausnahmen = new Vector<String[]>();
-        this.jwv = new Vector<JustWatch>();
+    public RecycleAdapter() {
+        this.sl = null;
+        this.ausnahmen = null;
+        this.jwv = null;
+        this.s = null;
+    }
+
+    public void refreshListe(SyncLibrary sl){
+        this.sl = sl;
+        this.ausnahmen = sl.getAusnahmen();
+        this.jwv = sl.getJustWatchWatchList();
+        this.s = sl.getSession();
     }
 
     /**
@@ -71,10 +82,7 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
         return new ViewHolder(view);
     }
 
-    public void refreshListe(Vector<JustWatch> jwv, Vector<String[]> ausnahmen) {
-        this.jwv = jwv;
-        this.ausnahmen = ausnahmen;
-    }
+
 
 
     // Replace the contents of a view (invoked by the layout manager)

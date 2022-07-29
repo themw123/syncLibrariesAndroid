@@ -34,7 +34,8 @@
                 android:layout_centerInParent="true"
                 android:backgroundTint="#134e8a"
                 android:indeterminate="true"
-                android:indeterminateTint="#134e8a" />
+                android:indeterminateTint="#134e8a"
+                android:visibility="invisible" />
 
         </RelativeLayout>
 
@@ -43,11 +44,10 @@
             android:id="@+id/justwatch"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="120dp"
-            android:layout_marginBottom="20dp"
             android:layout_marginLeft="20dp"
+            android:layout_marginTop="120dp"
             android:layout_marginRight="20dp"
-            >
+            android:layout_marginBottom="20dp">
 
         </androidx.recyclerview.widget.RecyclerView>
 
