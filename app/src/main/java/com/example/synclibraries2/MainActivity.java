@@ -22,9 +22,9 @@ public class MainActivity extends AppCompatActivity {
     private SSH ssh = null;
     public static SyncLibrary sl = null;
 
-    private Thread createSSHThread = null;
-    private static Thread createSyncLibraryThread = null;
-    private static Thread createSyncThread = new Thread();
+    private Thread createSSH = null;
+    private static Thread createSyncLibrary = null;
+    private static Thread startSync = new Thread();
 
 
     @Override
@@ -35,8 +35,8 @@ public class MainActivity extends AppCompatActivity {
         TextView tw2 = (TextView) findViewById(R.id.textView2);
         tw2.setMovementMethod(new ScrollingMovementMethod());
 
-        createSSHThread();
-        createSyncLibraryThread();
+        createSSH();
+        createSyncLibrary();
 
         String test = "";
     }
@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void onClickSync(View view) {
 
-        createSyncThread = new Thread(() -> {
+        startSync = new Thread(() -> {
 
             new Thread(() -> closeStremio()).start();
 
@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
             sync();
 
         });
-        createSyncThread.start();
+        startSync.start();
 
 
     }
@@ -123,39 +123,48 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void createSSHThread() {
-        createSSHThread = new Thread(() -> {
+    private void createSSH() {
+        createSSH = new Thread(() -> {
             ssh = new SSH("marvin","***REMOVED***","192.168.0.138",22);
         });
-        createSSHThread.start();
+        createSSH.start();
     }
 
     private void waitForCreateSSH() {
         try {
-            createSSHThread.join();
+            createSSH.join();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
 
-    private void createSyncLibraryThread() {
-        createSyncLibraryThread = new Thread(() -> {
+    private void createSyncLibrary() {
+        createSyncLibrary = new Thread(() -> {
             sl = new SyncLibrary();
         });
-        createSyncLibraryThread.start();
+        createSyncLibrary.start();
     }
 
     public static void waitForCreateSyncLibrary() {
         try {
-            createSyncLibraryThread.join();
+            createSyncLibrary.join();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
 
-    public static void waitForCreateSyncThread() {
+
+    public void startSync() {
         try {
-            createSyncThread.join();
+            startSync.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void waitForStartSync() {
+        try {
+            startSync.join();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

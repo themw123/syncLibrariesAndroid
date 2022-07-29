@@ -50,7 +50,7 @@ public class MainActivity2 extends AppCompatActivity{
         Thread t1 = new Thread(() -> {
             //darf nicht in main thread damit ui lädt
             MainActivity.waitForCreateSyncLibrary();
-            MainActivity.waitForCreateSyncThread();
+            MainActivity.waitForStartSync();
             sl = MainActivity.sl;
 
             //muss in main thread
