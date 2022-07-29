@@ -23,7 +23,9 @@ public class MainActivity extends AppCompatActivity {
     public static SyncLibrary sl = null;
 
     private Thread createSSHThread = null;
-    private static Thread createSyncThread = null;
+    private static Thread createSyncLibraryThread = null;
+    private static Thread createSyncThread = new Thread();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,8 +35,8 @@ public class MainActivity extends AppCompatActivity {
         TextView tw2 = (TextView) findViewById(R.id.textView2);
         tw2.setMovementMethod(new ScrollingMovementMethod());
 
-        createSSH();
-        createSync();
+        createSSHThread();
+        createSyncLibraryThread();
 
         String test = "";
     }
@@ -44,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void onClickSync(View view) {
 
-        Thread t1 = new Thread(() -> {
+        createSyncThread = new Thread(() -> {
 
             new Thread(() -> closeStremio()).start();
 
@@ -53,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
             sync();
 
         });
-        t1.start();
+        createSyncThread.start();
 
 
     }
@@ -76,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
 
                 buttonAnimation(findViewById(R.id.syncButton), "long");
                 buttonOnorOff(b1, false);
-                ImagebuttonOnorOff(b2, false);
+                //ImagebuttonOnorOff(b2, false);
 
                 //b1.getBackground().setAlpha(200);
                 tw1.setText("");
@@ -84,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        waitForCreateSync();
+        waitForCreateSyncLibrary();
 
         //!!!!!!!!!!!!!!!synchronize!!!!!!!!!!!!!!!!!!!!!!
         sl.sync();
@@ -106,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 buttonOnorOff(b1, true);
-                ImagebuttonOnorOff(b2, true);
+                //ImagebuttonOnorOff(b2, true);
 
 
                 Handler handler = new Handler();
@@ -121,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void createSSH() {
+    private void createSSHThread() {
         createSSHThread = new Thread(() -> {
             ssh = new SSH("marvin","***REMOVED***","192.168.0.138",22);
         });
@@ -136,14 +138,22 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void createSync() {
-        createSyncThread = new Thread(() -> {
+    private void createSyncLibraryThread() {
+        createSyncLibraryThread = new Thread(() -> {
             sl = new SyncLibrary();
         });
-        createSyncThread.start();
+        createSyncLibraryThread.start();
     }
 
-    public static void waitForCreateSync() {
+    public static void waitForCreateSyncLibrary() {
+        try {
+            createSyncLibraryThread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void waitForCreateSyncThread() {
         try {
             createSyncThread.join();
         } catch (InterruptedException e) {
