@@ -7,10 +7,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Transformation;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -43,6 +47,7 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
         this.ausnahmen = sl.getAusnahmen();
         this.jwv = sl.getJustWatchWatchList();
         this.s = sl.getSession();
+
     }
 
     /**
@@ -51,7 +56,8 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
      */
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView textView;
-        public Switch sw;
+        private Switch sw;
+        private ImageView imageView;
 
         public ViewHolder(View view) {
             super(view);
@@ -59,6 +65,7 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
 
             textView = (TextView) view.findViewById(R.id.textView);
             sw = (Switch) view.findViewById(R.id.switch1);
+            imageView = (ImageView) view.findViewById(R.id.imageView);
         }
 
         public TextView getTextView() {
@@ -66,6 +73,9 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
         }
         public Switch getSwitch() {
             return sw;
+        }
+        public ImageView getImageView() {
+            return imageView;
         }
     }
 
@@ -114,6 +124,10 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
         }
 
 
+        //bild setzten
+        Picasso.with(viewHolder.getImageView().getContext()).load("https://image.tmdb.org/t/p/original" + jwv.get(viewHolder.getAdapterPosition()).getTmdbPoster())
+                .fit()
+                .into(viewHolder.getImageView());
 
 
 

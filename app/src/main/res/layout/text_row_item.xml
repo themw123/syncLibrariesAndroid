@@ -30,18 +30,27 @@
 
             >
 
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/imageView"
+                android:layout_width="62dp"
+                android:layout_height="62dp"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                app:shapeAppearanceOverlay="@style/circleImageView" />
+
             <TextView
                 android:id="@+id/textView"
-                android:layout_width="200dp"
+                android:layout_width="150dp"
                 android:layout_height="match_parent"
-
 
                 android:layout_centerInParent="true"
                 android:fontFamily="sans-serif-smallcaps"
                 android:gravity="center"
                 android:text="TextView"
                 android:textColor="#6A6363"
-                android:textSize="20sp" />
+                android:textSize="15sp" />
 
 
             <Switch
@@ -51,6 +60,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="15dp"
+                android:theme="@style/switch1"
                 />
 
 

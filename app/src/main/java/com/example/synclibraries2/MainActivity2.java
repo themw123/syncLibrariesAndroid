@@ -14,11 +14,14 @@ import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.material.textfield.TextInputEditText;
+import com.squareup.picasso.Picasso;
 
 import java.io.Serializable;
+import java.time.Instant;
 import java.util.Collections;
 import java.util.Vector;
 
@@ -33,7 +36,6 @@ public class MainActivity2 extends AppCompatActivity{
     RecyclerView recyclerView;
 
     private SyncLibrary sl;
-
 
 
     @Override
@@ -51,6 +53,8 @@ public class MainActivity2 extends AppCompatActivity{
             //darf nicht in main thread damit ui lädt
             MainActivity.waitForCreateSyncLibrary();
             MainActivity.waitForStartSync();
+
+
             sl = MainActivity.sl;
 
             //muss in main thread
@@ -81,6 +85,8 @@ public class MainActivity2 extends AppCompatActivity{
 
 
     }
+
+
 
 
 
