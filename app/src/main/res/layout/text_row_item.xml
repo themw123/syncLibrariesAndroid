@@ -35,13 +35,13 @@
                 android:id="@+id/imageView"
                 android:layout_width="60dp"
                 android:layout_height="62dp"
-                app:strokeWidth="4dp"
-                android:padding="2dp"
-                app:strokeColor="#808080"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="15dp"
-                app:shapeAppearanceOverlay="@style/circleImageView" />
+                android:padding="2dp"
+                app:shapeAppearanceOverlay="@style/circleImageView"
+                app:strokeColor="#D3D3D3"
+                app:strokeWidth="4dp" />
 
             <TextView
                 android:id="@+id/textView"
