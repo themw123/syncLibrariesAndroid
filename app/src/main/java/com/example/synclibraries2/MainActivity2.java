@@ -4,36 +4,27 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
-import android.graphics.Rect;
 import android.os.Bundle;
-import android.view.KeyEvent;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.google.android.material.textfield.TextInputEditText;
-import com.squareup.picasso.Picasso;
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 
-import java.io.Serializable;
-import java.time.Instant;
-import java.util.Collections;
-import java.util.Vector;
-
-import syncLibraries.JustWatch;
 import syncLibraries.SyncLibrary;
 
 public class MainActivity2 extends AppCompatActivity{
 
-    public Activity activity = this;
+    private TabLayout tabLayout;
+    private ViewPager2 viewPager;
+    private SeitenAdapter seitenAdapter;
 
-    RecycleAdapter adapter;
-    RecyclerView recyclerView;
+    private Activity activity = this;
+    private RecycleAdapter adapter;
+    private RecyclerView recyclerView;
 
     private SyncLibrary sl;
 
@@ -46,17 +37,24 @@ public class MainActivity2 extends AppCompatActivity{
         setContentView(R.layout.activity_main2);
 
 
+        tabLayout = findViewById(R.id.tabLayout);
+        viewPager = findViewById(R.id.viewPager);
+        seitenAdapter = new SeitenAdapter(getSupportFragmentManager(), getLifecycle());
+        viewPager.setAdapter(seitenAdapter);
+
+        new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> {
+            tab.setText("Tab " + (position+1));
+        }).attach();
+
+
         findViewById(R.id.progressbar).setVisibility(View.VISIBLE);
-
-
         Thread t1 = new Thread(() -> {
+
             //darf nicht in main thread damit ui lädt
             MainActivity.waitForCreateSyncLibrary();
             MainActivity.waitForStartSync();
 
-
             sl = MainActivity.sl;
-
             //muss in main thread
             runOnUiThread(new Runnable() {
 

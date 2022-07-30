@@ -23,7 +23,8 @@
         <entry key="..\:/Users/Marvin/git/synclibrariesApp2/app/src/main/res/drawable/syncbutton.xml" value="0.1515" />
         <entry key="..\:/Users/Marvin/git/synclibrariesApp2/app/src/main/res/drawable/test.xml" value="0.1" />
         <entry key="..\:/Users/Marvin/git/synclibrariesApp2/app/src/main/res/layout/activity_main.xml" value="0.2" />
-        <entry key="..\:/Users/Marvin/git/synclibrariesApp2/app/src/main/res/layout/activity_main2.xml" value="0.264" />
+        <entry key="..\:/Users/Marvin/git/synclibrariesApp2/app/src/main/res/layout/activity_main2.xml" value="0.1" />
+        <entry key="..\:/Users/Marvin/git/synclibrariesApp2/app/src/main/res/layout/fragment_serien_filme.xml" value="0.17028985507246377" />
         <entry key="..\:/Users/Marvin/git/synclibrariesApp2/app/src/main/res/layout/text_row_item.xml" value="0.264" />
       </map>
     </option>
@@ -33,5 +34,12 @@
   </component>
   <component name="ProjectType">
     <option name="id" value="Android" />
+  </component>
+  <component name="VisualizationToolProject">
+    <option name="state">
+      <ProjectState>
+        <option name="scale" value="0.16" />
+      </ProjectState>
+    </option>
   </component>
 </project>
