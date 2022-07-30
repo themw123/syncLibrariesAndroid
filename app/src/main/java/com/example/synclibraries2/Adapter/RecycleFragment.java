@@ -1,4 +1,4 @@
-package com.example.synclibraries2;
+package com.example.synclibraries2.Adapter;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -12,11 +12,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+
+import com.example.synclibraries2.MainActivity;
+import com.example.synclibraries2.R;
 
 import syncLibraries.SyncLibrary;
 
-public class SerienFilme extends Fragment {
+public class RecycleFragment extends Fragment {
 
     private int position;
 
@@ -29,7 +31,7 @@ public class SerienFilme extends Fragment {
 
     public static final String TITLE = "title";
 
-    public SerienFilme(int position) {
+    public RecycleFragment(int position) {
         this.position = position;
         // Required empty public constructor
         MainActivity.waitForCreateSyncLibrary();
@@ -40,7 +42,7 @@ public class SerienFilme extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_serien_filme, container, false);
+        View view = inflater.inflate(R.layout.recycle_fragment, container, false);
 
         recyclerView = view.findViewById(R.id.justwatch);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -59,7 +61,7 @@ public class SerienFilme extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ((TextView)view.findViewById(R.id.textViewXY)).setText(getArguments().getString(TITLE));
+        //((TextView)view.findViewById(R.id.textViewXY)).setText(getArguments().getString(TITLE));
 
     }
 }

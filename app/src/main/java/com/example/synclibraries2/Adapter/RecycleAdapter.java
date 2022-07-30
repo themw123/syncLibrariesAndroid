@@ -1,25 +1,18 @@
-package com.example.synclibraries2;
+package com.example.synclibraries2.Adapter;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.CompoundButton;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.synclibraries2.R;
 import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Transformation;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Locale;
 import java.util.Vector;
 
 import syncLibraries.JustWatch;
@@ -54,7 +47,7 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
     private Vector<JustWatch> filterTitel(SyncLibrary sl) {
 
         Vector<JustWatch> jwv = (Vector<JustWatch>) sl.getJustWatchWatchList().clone();
-        
+
         //nur Serien
         if(position == 0) {
             for(int i=0;i<jwv.size();i++) {
@@ -116,7 +109,7 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         // Create a new view, which defines the UI of the list item
         View view = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.text_row_item, viewGroup, false);
+                .inflate(R.layout.rows, viewGroup, false);
 
         return new ViewHolder(view);
     }
@@ -200,17 +193,17 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
 
     public void addData(String tmdb) {
         Thread t1 = new Thread(() -> {
-            s.addAusnahme(tmdb);
             ausnahmen.add(tmdb);
+            s.addAusnahme(tmdb);
         });
         t1.start();
     }
 
     private void delData(String tmdb) {
         Thread t1 = new Thread(() -> {
-            s.delAusnahme(tmdb);
             int index = getIndexAusnahmen(tmdb);
             ausnahmen.remove(index);
+            s.delAusnahme(tmdb);
         });
         t1.start();
     }

@@ -3,23 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SerienFilme">
-
-    <TextView
-        android:id="@+id/textViewXY"
-        android:layout_width="100dp"
-        android:layout_height="50dp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="60dp"
-        android:gravity="center"
-        />
+    tools:context=".Adapter.RecycleFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/justwatch"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="120dp"
+        android:layout_marginTop="80dp"
         android:layout_marginRight="20dp"
         android:layout_marginBottom="20dp">
 

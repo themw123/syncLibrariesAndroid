@@ -1,6 +1,5 @@
-package com.example.synclibraries2;
+package com.example.synclibraries2.Adapter;
 
-import android.app.Activity;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -18,9 +17,9 @@ public class SeitenAdapter extends FragmentStateAdapter {
     @NonNull
     @Override
     public Fragment createFragment(int position) {
-        Fragment fragment = new SerienFilme(position);
+        Fragment fragment = new RecycleFragment(position);
         Bundle args = new Bundle();
-        args.putString(SerienFilme.TITLE, "Tab "+(position+1));
+        args.putString(RecycleFragment.TITLE, "Tab "+(position+1));
         fragment.setArguments(args);
         return fragment;
     }

@@ -2,19 +2,14 @@ package com.example.synclibraries2;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager2.widget.ViewPager2;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 
+import com.example.synclibraries2.Adapter.SeitenAdapter;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
-
-import syncLibraries.SyncLibrary;
 
 public class MainActivity2 extends AppCompatActivity{
 
@@ -42,7 +37,15 @@ public class MainActivity2 extends AppCompatActivity{
                 public void run() {
                     viewPager.setAdapter(seitenAdapter);
                     new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> {
-                        tab.setText("Tab " + (position+1));
+                        if(position == 0) {
+                            tab.setText("Serien");
+                        }
+                        else if(position == 1) {
+                            tab.setText("Filme");
+                        }
+                        else {
+                            tab.setText("kp");
+                        }
                     }).attach();
                     findViewById(R.id.progressbar).setVisibility(View.INVISIBLE);
                 }

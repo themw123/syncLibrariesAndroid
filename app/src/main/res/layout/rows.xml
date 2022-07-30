@@ -63,8 +63,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="15dp"
-                android:theme="@style/switch1"
-                />
+                android:theme="@style/switch1" />
 
 
         </RelativeLayout>
