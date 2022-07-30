@@ -22,13 +22,6 @@ public class MainActivity2 extends AppCompatActivity{
     private ViewPager2 viewPager;
     private SeitenAdapter seitenAdapter;
 
-    private Activity activity = this;
-    private RecycleAdapter adapter;
-    private RecyclerView recyclerView;
-
-    private SyncLibrary sl;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //dark mode deaktivieren
@@ -37,45 +30,29 @@ public class MainActivity2 extends AppCompatActivity{
         setContentView(R.layout.activity_main2);
 
 
-        tabLayout = findViewById(R.id.tabLayout);
-        viewPager = findViewById(R.id.viewPager);
-        seitenAdapter = new SeitenAdapter(getSupportFragmentManager(), getLifecycle());
-        viewPager.setAdapter(seitenAdapter);
-
-        new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> {
-            tab.setText("Tab " + (position+1));
-        }).attach();
-
-
         findViewById(R.id.progressbar).setVisibility(View.VISIBLE);
         Thread t1 = new Thread(() -> {
 
-            //darf nicht in main thread damit ui lädt
-            MainActivity.waitForCreateSyncLibrary();
-            MainActivity.waitForStartSync();
+            tabLayout = findViewById(R.id.tabLayout);
+            viewPager = findViewById(R.id.viewPager);
+            seitenAdapter = new SeitenAdapter(getSupportFragmentManager(), getLifecycle());
 
-            sl = MainActivity.sl;
-            //muss in main thread
             runOnUiThread(new Runnable() {
-
                 @Override
                 public void run() {
-                    recyclerView = (RecyclerView) findViewById(R.id.justwatch);
-
-                    recyclerView.setLayoutManager(new LinearLayoutManager(activity));
-                    adapter = new RecycleAdapter();
-
+                    viewPager.setAdapter(seitenAdapter);
+                    new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> {
+                        tab.setText("Tab " + (position+1));
+                    }).attach();
                     findViewById(R.id.progressbar).setVisibility(View.INVISIBLE);
-
-                    adapter.refreshListe(sl);
-                    adapter.notifyDataSetChanged();
-                    recyclerView.setAdapter(adapter);
                 }
             });
 
 
+
         });
         t1.start();
+
 
 
 

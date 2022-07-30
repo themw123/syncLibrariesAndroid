@@ -29,13 +29,14 @@ import syncLibraries.SyncLibrary;
 public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHolder> {
 
 
-
+    private int position;
     private SyncLibrary sl;
     private Vector<String> ausnahmen;
     private Vector<JustWatch> jwv;
     private Session s;
 
-    public RecycleAdapter() {
+    public RecycleAdapter(int position) {
+        this.position = position;
         this.sl = null;
         this.ausnahmen = null;
         this.jwv = null;
@@ -45,9 +46,37 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
     public void refreshListe(SyncLibrary sl){
         this.sl = sl;
         this.ausnahmen = sl.getAusnahmen();
-        this.jwv = sl.getJustWatchWatchList();
+        this.jwv = filterTitel(sl);
         this.s = sl.getSession();
 
+    }
+
+    private Vector<JustWatch> filterTitel(SyncLibrary sl) {
+
+        Vector<JustWatch> jwv = (Vector<JustWatch>) sl.getJustWatchWatchList().clone();
+        
+        //nur Serien
+        if(position == 0) {
+            for(int i=0;i<jwv.size();i++) {
+                if(jwv.get(i).getType().equals("movie")) {
+                    jwv.remove(i);
+                    i--;
+                }
+            }
+        }
+        //nur Filme
+        else if(position == 1) {
+            for(int i=0;i<jwv.size();i++) {
+                if(jwv.get(i).getType().equals("series")) {
+                    jwv.remove(i);
+                    i--;
+                }
+            }
+        }
+
+
+
+        return jwv;
     }
 
     /**
