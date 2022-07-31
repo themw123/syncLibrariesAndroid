@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.method.ScrollingMovementMethod;
@@ -32,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
         TextView tw2 = (TextView) findViewById(R.id.textView2);
         tw2.setMovementMethod(new ScrollingMovementMethod());
+
 
         createSyncLibrary();
 
@@ -124,10 +126,6 @@ public class MainActivity extends AppCompatActivity {
     private void createSyncLibrary() {
         createSyncLibrary = new Thread(() -> {
             sl = new SyncLibrary();
-            if(!sl.getSSH().getError()) {
-                findViewById(R.id.open).setClickable(true);
-                findViewById(R.id.close).setClickable(true);
-            }
         });
         createSyncLibrary.start();
     }
@@ -152,12 +150,31 @@ public class MainActivity extends AppCompatActivity {
     private void closeStremio() {
         waitForCreateSyncLibrary();
         sl.sshSendCommand("taskkill /IM stremio.exe /F >nul 2>&1");
+        Button open = findViewById(R.id.open);
+        Button close = findViewById(R.id.close);
+        if(sl.getSSH().getError()) {
+            open.setTextColor(Color.parseColor("#c44347"));
+            close.setTextColor(Color.parseColor("#c44347"));
+        }
+        else {
+            open.setTextColor(Color.parseColor("#A6A4A4"));
+            close.setTextColor(Color.parseColor("#A6A4A4"));
+        }
     }
 
     private void openStremio() {
         waitForCreateSyncLibrary();
         sl.sshSendCommand("SCHTASKS.EXE /RUN /TN \"openstremio\"");
-
+        Button open = findViewById(R.id.open);
+        Button close = findViewById(R.id.close);
+        if(sl.getSSH().getError()) {
+            open.setTextColor(Color.parseColor("#c44347"));
+            close.setTextColor(Color.parseColor("#c44347"));
+        }
+        else {
+            open.setTextColor(Color.parseColor("#A6A4A4"));
+            close.setTextColor(Color.parseColor("#A6A4A4"));
+        }
     }
 
     private void openSurfshark() {
