@@ -156,14 +156,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void startSync() {
-        try {
-            startSync.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-
     public static void waitForStartSync() {
         try {
             startSync.join();
