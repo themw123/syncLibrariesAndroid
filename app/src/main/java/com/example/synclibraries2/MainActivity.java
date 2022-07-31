@@ -124,6 +124,10 @@ public class MainActivity extends AppCompatActivity {
     private void createSyncLibrary() {
         createSyncLibrary = new Thread(() -> {
             sl = new SyncLibrary();
+            if(!sl.getSSH().getError()) {
+                findViewById(R.id.open).setClickable(true);
+                findViewById(R.id.close).setClickable(true);
+            }
         });
         createSyncLibrary.start();
     }
@@ -153,6 +157,7 @@ public class MainActivity extends AppCompatActivity {
     private void openStremio() {
         waitForCreateSyncLibrary();
         sl.sshSendCommand("SCHTASKS.EXE /RUN /TN \"openstremio\"");
+
     }
 
     private void openSurfshark() {
@@ -218,12 +223,4 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void ImagebuttonOnorOff(ImageButton b, boolean st) {
-        if(st) {
-            b.setEnabled(true);
-        }
-        else {
-            b.setEnabled(false);
-        }
-    }
 }
