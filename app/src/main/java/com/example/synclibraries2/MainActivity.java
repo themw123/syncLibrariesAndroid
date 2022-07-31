@@ -20,6 +20,7 @@ import syncLibraries.SyncLibrary;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static int counter = 0;
     public static SyncLibrary sl = null;
 
     private static Thread createSyncLibrary = null;
@@ -34,8 +35,11 @@ public class MainActivity extends AppCompatActivity {
         TextView tw2 = (TextView) findViewById(R.id.textView2);
         tw2.setMovementMethod(new ScrollingMovementMethod());
 
-
-        createSyncLibrary();
+        //sonnst wird es mehrmals aufgerufen durch MainActivity2 anscheinend
+        counter++;
+        if(counter == 1) {
+            createSyncLibrary();
+        }
 
     }
 
@@ -95,6 +99,15 @@ public class MainActivity extends AppCompatActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
+
+                Button syncButton = findViewById(R.id.syncButton);
+                if(error) {
+                    syncButton.setTextColor(Color.parseColor("#c44347"));
+                }
+                else {
+                    syncButton.setTextColor(Color.parseColor("#FFFFFF"));
+                }
+
                 findViewById(R.id.progressBar).setVisibility(View.INVISIBLE);
 
                 if(!error) {
