@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         tw2.setMovementMethod(new ScrollingMovementMethod());
 
         createSyncLibrary();
-        
+
     }
 
 
