@@ -19,10 +19,8 @@ import syncLibraries.SyncLibrary;
 
 public class MainActivity extends AppCompatActivity {
 
-    private SSH ssh = null;
     public static SyncLibrary sl = null;
 
-    private Thread createSSH = null;
     private static Thread createSyncLibrary = null;
     private static Thread startSync = new Thread();
 
@@ -35,12 +33,8 @@ public class MainActivity extends AppCompatActivity {
         TextView tw2 = (TextView) findViewById(R.id.textView2);
         tw2.setMovementMethod(new ScrollingMovementMethod());
 
-        createSSH();
         createSyncLibrary();
-
-        String test = "";
-
-
+        
     }
 
 
@@ -125,20 +119,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void createSSH() {
-        createSSH = new Thread(() -> {
-            ssh = new SSH("marvin","***REMOVED***","192.168.0.138",22);
-        });
-        createSSH.start();
-    }
 
-    private void waitForCreateSSH() {
-        try {
-            createSSH.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
 
     private void createSyncLibrary() {
         createSyncLibrary = new Thread(() -> {
@@ -165,23 +146,23 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void closeStremio() {
-        waitForCreateSSH();
-        ssh.sendCommend("taskkill /IM stremio.exe /F >nul 2>&1");
+        waitForCreateSyncLibrary();
+        sl.sshSendCommand("taskkill /IM stremio.exe /F >nul 2>&1");
     }
 
     private void openStremio() {
-        waitForCreateSSH();
-        ssh.sendCommend("SCHTASKS.EXE /RUN /TN \"openstremio\"");
+        waitForCreateSyncLibrary();
+        sl.sshSendCommand("SCHTASKS.EXE /RUN /TN \"openstremio\"");
     }
 
     private void openSurfshark() {
-        waitForCreateSSH();
-        ssh.sendCommend("SCHTASKS.EXE /RUN /TN \"opensurfshark\"");
+        waitForCreateSyncLibrary();
+        sl.sshSendCommand("SCHTASKS.EXE /RUN /TN \"opensurfshark\"");
     }
 
     private void closeSurfshark() {
-        waitForCreateSSH();
-        ssh.sendCommend("taskkill /IM Surfshark.exe /F >nul 2>&1");
+        waitForCreateSyncLibrary();
+        sl.sshSendCommand("taskkill /IM Surfshark.exe /F >nul 2>&1");
     }
 
 
