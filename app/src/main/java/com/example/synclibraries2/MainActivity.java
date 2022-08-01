@@ -312,6 +312,8 @@ public class MainActivity extends AppCompatActivity {
         else {
             b.setEnabled(false);
         }
+
+        String test = "";
     }
 
 }
