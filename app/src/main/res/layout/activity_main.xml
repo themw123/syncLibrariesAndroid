@@ -102,20 +102,9 @@
                         android:layout_height="85dp"
                         android:layout_alignParentBottom="true"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginBottom="215dp"
+                        android:layout_marginBottom="222dp"
                         app:srcCompat="@drawable/shadow1" />
 
-                    <androidx.appcompat.widget.AppCompatImageButton
-                        android:id="@+id/button"
-                        android:layout_width="84dp"
-                        android:layout_height="85dp"
-                        android:layout_alignParentBottom="true"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginBottom="220dp"
-                        android:background="@drawable/plus"
-
-                        android:onClick="onClickExceptions"
-                        tools:ignore="SpeakableTextPresentCheck" />
 
 
                 </RelativeLayout>

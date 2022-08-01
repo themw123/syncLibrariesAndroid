@@ -33,6 +33,7 @@ dependencies {
     implementation 'com.google.android.material:material:1.6.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'com.squareup.picasso:picasso:2.5.2'
+    implementation 'com.oguzdev:CircularFloatingActionMenu:1.0.2'
     implementation files('libs\\SyncLibrary-0.0.1-SNAPSHOT-jar-with-dependencies.jar')
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'

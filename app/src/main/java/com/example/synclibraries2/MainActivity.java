@@ -12,9 +12,13 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.synclibraries2.Exceptions.MainActivity2;
+import com.oguzdev.circularfloatingactionmenu.library.FloatingActionButton;
+import com.oguzdev.circularfloatingactionmenu.library.FloatingActionMenu;
+import com.oguzdev.circularfloatingactionmenu.library.SubActionButton;
 
 import syncLibraries.SyncLibrary;
 
@@ -40,6 +44,45 @@ public class MainActivity extends AppCompatActivity {
         if(counter == 1) {
             createSyncLibrary();
         }
+
+
+        ImageView icon = new ImageView(this); // Create an icon
+        icon.setImageDrawable(getDrawable(R.drawable.plus1));
+
+        FloatingActionButton.LayoutParams params1 = new FloatingActionButton.LayoutParams(250,250);
+        params1.setMargins(0, 0, 0, 80);
+        FloatingActionButton menuButton = new FloatingActionButton.Builder(this)
+                .setPosition(5)
+                .setLayoutParams(params1)
+                .setBackgroundDrawable(R.drawable.plus)
+                .build();
+
+
+
+        SubActionButton.Builder itemBuilder = new SubActionButton.Builder(this);
+        // repeat many times:
+        ImageView itemIcon = new ImageView(this);
+        itemIcon.setImageDrawable(getDrawable(R.drawable.plus));
+        SubActionButton exceptionsButton = itemBuilder
+                .setContentView(itemIcon)
+                .build();
+
+        ImageView itemIcon2 = new ImageView(this);
+        itemIcon2.setImageDrawable(getDrawable(R.drawable.minus));
+        SubActionButton downloadButton = itemBuilder.setContentView(itemIcon2).build();
+
+
+
+
+        FloatingActionMenu actionMenu = new FloatingActionMenu.Builder(this)
+                .addSubActionView(exceptionsButton, 180, 180)
+                .addSubActionView(downloadButton, 180, 180)
+                .setRadius(230)
+                .setStartAngle(230)
+                .setEndAngle(310)
+                .attachTo(menuButton)
+                .build();
+
 
     }
 
@@ -69,7 +112,6 @@ public class MainActivity extends AppCompatActivity {
 
 
         Button b1 = (Button) findViewById(R.id.syncButton);
-        ImageButton b2 = (ImageButton) findViewById(R.id.button);
         TextView tw1 = (TextView) findViewById(R.id.textView1);
         TextView tw2 = (TextView) findViewById(R.id.textView2);
 
