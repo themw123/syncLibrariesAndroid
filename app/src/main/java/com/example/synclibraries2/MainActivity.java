@@ -20,14 +20,18 @@ import com.oguzdev.circularfloatingactionmenu.library.FloatingActionButton;
 import com.oguzdev.circularfloatingactionmenu.library.FloatingActionMenu;
 import com.oguzdev.circularfloatingactionmenu.library.SubActionButton;
 
+import syncLibraries.SSH;
 import syncLibraries.SyncLibrary;
 
 public class MainActivity extends AppCompatActivity {
 
     private static int counter = 0;
     public static SyncLibrary sl = null;
+    public static SSH ssh = null;
 
     private static Thread createSyncLibrary = null;
+    private static Thread createSSH = null;
+
     private static Thread startSync = new Thread();
 
 
@@ -43,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
         counter++;
         if(counter == 1) {
             createSyncLibrary();
+            createSSH();
         }
 
 
@@ -157,6 +162,23 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void createSSH() {
+        createSSH = new Thread(() -> {
+            ssh = new SSH("marvin","xxxxxx","192.168.0.138",22);
+            ssh.connect();
+        });
+        createSSH.start();
+    }
+
+    public static void waitForCreateSSH() {
+        try {
+            createSSH.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 
     public static void waitForStartSync() {
         try {
@@ -210,12 +232,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void closeStremio(boolean state) {
-        waitForCreateSyncLibrary();
-        sl.sshSendCommand("taskkill /IM stremio.exe /F >nul 2>&1");
+        waitForCreateSSH();
+        ssh.sendCommend("taskkill /IM stremio.exe /F >nul 2>&1");
         if(state) {
             Button open = findViewById(R.id.open);
             Button close = findViewById(R.id.close);
-            if(sl.getSSH().getError()) {
+            if(ssh.getError()) {
                 open.setTextColor(Color.parseColor("#c44347"));
                 close.setTextColor(Color.parseColor("#c44347"));
             }
@@ -237,11 +259,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void openStremio() {
-        waitForCreateSyncLibrary();
-        sl.sshSendCommand("SCHTASKS.EXE /RUN /TN \"openstremio\"");
+        waitForCreateSSH();
+        ssh.sendCommend("SCHTASKS.EXE /RUN /TN \"openstremio\"");
         Button open = findViewById(R.id.open);
         Button close = findViewById(R.id.close);
-        if(sl.getSSH().getError()) {
+        if(ssh.getError()) {
             open.setTextColor(Color.parseColor("#c44347"));
             close.setTextColor(Color.parseColor("#c44347"));
         }
@@ -262,12 +284,12 @@ public class MainActivity extends AppCompatActivity {
 
     private void openSurfshark() {
         waitForCreateSyncLibrary();
-        sl.getSSH().sendCommend("SCHTASKS.EXE /RUN /TN \"opensurfshark\"");
+        ssh.sendCommend("SCHTASKS.EXE /RUN /TN \"opensurfshark\"");
     }
 
     private void closeSurfshark() {
         waitForCreateSyncLibrary();
-        sl.getSSH().sendCommend("taskkill /IM Surfshark.exe /F >nul 2>&1");
+        ssh.sendCommend("taskkill /IM Surfshark.exe /F >nul 2>&1");
     }
 
 

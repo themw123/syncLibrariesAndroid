@@ -15,52 +15,35 @@ import com.squareup.picasso.Picasso;
 
 import java.util.Vector;
 
+import syncLibraries.Download;
 import syncLibraries.JustWatch;
+import syncLibraries.Qbittorrent;
 import syncLibraries.Session;
+import syncLibraries.Snowfl;
 import syncLibraries.SyncLibrary;
 
 public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHolder> {
 
 
     private int position;
-    private SyncLibrary sl;
+    private Download download;
+    private Vector<String> downloaded;
+    private Vector<Qbittorrent> downloading;
+    private Vector<Snowfl> search;
 
     public RecycleAdapter(int position) {
         this.position = position;
-        this.sl = null;
+        this.download = null;
     }
 
-    public void refreshListe(SyncLibrary sl){
-        this.sl = sl;
+    public void refreshListe(Download download){
+        this.download = download;
+        this.downloaded = download.getDownloaded();
+        this.downloading = download.getDownloading();
+        this.search = download.getSearch();
     }
 
-    private Vector<JustWatch> filterTitel(SyncLibrary sl) {
 
-        Vector<JustWatch> jwv = (Vector<JustWatch>) sl.getJustWatchWatchList().clone();
-
-        //nur Serien
-        if(position == 0) {
-            for(int i=0;i<jwv.size();i++) {
-                if(jwv.get(i).getType().equals("movie")) {
-                    jwv.remove(i);
-                    i--;
-                }
-            }
-        }
-        //nur Filme
-        else if(position == 1) {
-            for(int i=0;i<jwv.size();i++) {
-                if(jwv.get(i).getType().equals("series")) {
-                    jwv.remove(i);
-                    i--;
-                }
-            }
-        }
-
-
-
-        return jwv;
-    }
 
     /**
      * Provide a reference to the type of views that you are using
@@ -104,7 +87,7 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
         //viewHolder.getTextView().setText(localDataSet[position]);
 
         //text setzen
-        viewHolder.getTextView().setText(jwv.get(viewHolder.getAdapterPosition()).getTitle());
+        //viewHolder.getTextView().setText(jwv.get(viewHolder.getAdapterPosition()).getTitle());
 
 
 
@@ -117,7 +100,8 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
     @Override
     public int getItemCount() {
         //return localDataSet.length;
-        return jwv.size();
+        //return jwv.size();
+        return 1;
     }
 
 

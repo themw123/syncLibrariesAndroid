@@ -15,6 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.synclibraries2.MainActivity;
 import com.example.synclibraries2.R;
 
+import syncLibraries.Download;
+import syncLibraries.SSH;
 import syncLibraries.SyncLibrary;
 
 public class RecycleFragment extends Fragment {
@@ -25,7 +27,8 @@ public class RecycleFragment extends Fragment {
     private RecyclerView recyclerView;
 
     private Activity activity;
-    private SyncLibrary sl;
+    private Download download;
+    private SSH ssh;
 
 
     public static final String TITLE = "title";
@@ -33,9 +36,10 @@ public class RecycleFragment extends Fragment {
     public RecycleFragment(int position) {
         this.position = position;
         // Required empty public constructor
-        MainActivity.waitForCreateSyncLibrary();
-        MainActivity.waitForStartSync();
-        this.sl = MainActivity.sl;
+        MainActivity.waitForCreateSSH();
+        this.ssh = MainActivity.ssh;
+        download = new Download(ssh);
+        String test = "";
     }
 
     @Override
@@ -58,7 +62,7 @@ public class RecycleFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter = new RecycleAdapter(position);
 
-        adapter.refreshListe(sl);
+        adapter.refreshListe(download);
         adapter.notifyDataSetChanged();
         recyclerView.setAdapter(adapter);
 
