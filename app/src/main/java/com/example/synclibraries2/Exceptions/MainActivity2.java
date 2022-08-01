@@ -1,4 +1,4 @@
-package com.example.synclibraries2;
+package com.example.synclibraries2.Exceptions;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -7,7 +7,7 @@ import androidx.viewpager2.widget.ViewPager2;
 import android.os.Bundle;
 import android.view.View;
 
-import com.example.synclibraries2.Adapter.SeitenAdapter;
+import com.example.synclibraries2.R;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 

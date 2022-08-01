@@ -1,4 +1,4 @@
-package com.example.synclibraries2.Adapter;
+package com.example.synclibraries2.Exceptions;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -109,7 +109,7 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         // Create a new view, which defines the UI of the list item
         View view = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.rows, viewGroup, false);
+                .inflate(R.layout.exception_row, viewGroup, false);
 
         return new ViewHolder(view);
     }

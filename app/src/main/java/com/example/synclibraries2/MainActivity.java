@@ -2,7 +2,6 @@ package com.example.synclibraries2;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -15,7 +14,8 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import syncLibraries.SSH;
+import com.example.synclibraries2.Exceptions.MainActivity2;
+
 import syncLibraries.SyncLibrary;
 
 public class MainActivity extends AppCompatActivity {

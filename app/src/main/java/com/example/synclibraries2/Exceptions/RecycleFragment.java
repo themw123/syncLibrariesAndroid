@@ -1,4 +1,4 @@
-package com.example.synclibraries2.Adapter;
+package com.example.synclibraries2.Exceptions;
 
 import android.app.Activity;
 import android.os.Bundle;
