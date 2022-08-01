@@ -104,9 +104,6 @@ public class MainActivity extends AppCompatActivity {
                 if(error) {
                     syncButton.setTextColor(Color.parseColor("#c44347"));
                 }
-                else {
-                    syncButton.setTextColor(Color.parseColor("#FFFFFF"));
-                }
 
                 findViewById(R.id.progressBar).setVisibility(View.INVISIBLE);
 
@@ -127,6 +124,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         tw1.setText("");
+                        syncButton.setTextColor(Color.parseColor("#FFFFFF"));
                     }
                 }, 3000);
             }
@@ -170,10 +168,19 @@ public class MainActivity extends AppCompatActivity {
                 open.setTextColor(Color.parseColor("#c44347"));
                 close.setTextColor(Color.parseColor("#c44347"));
             }
-            else {
-                open.setTextColor(Color.parseColor("#A6A4A4"));
-                close.setTextColor(Color.parseColor("#A6A4A4"));
-            }
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            open.setTextColor(Color.parseColor("#A6A4A4"));
+                            close.setTextColor(Color.parseColor("#A6A4A4"));
+                        }
+                    }, 4000);
+                }
+            });
         }
 
     }
@@ -187,10 +194,19 @@ public class MainActivity extends AppCompatActivity {
             open.setTextColor(Color.parseColor("#c44347"));
             close.setTextColor(Color.parseColor("#c44347"));
         }
-        else {
-            open.setTextColor(Color.parseColor("#A6A4A4"));
-            close.setTextColor(Color.parseColor("#A6A4A4"));
-        }
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        open.setTextColor(Color.parseColor("#A6A4A4"));
+                        close.setTextColor(Color.parseColor("#A6A4A4"));
+                    }
+                }, 4000);
+            }
+        });
     }
 
     private void openSurfshark() {
