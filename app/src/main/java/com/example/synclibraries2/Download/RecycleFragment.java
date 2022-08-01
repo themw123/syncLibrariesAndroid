@@ -1,17 +1,16 @@
-package com.example.synclibraries2.Exceptions;
+package com.example.synclibraries2.Download;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.example.synclibraries2.MainActivity;
 import com.example.synclibraries2.R;
@@ -42,7 +41,18 @@ public class RecycleFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.recycle_fragment_exceptions, container, false);
+        View view = null;
+
+        if(position == 0) {
+            view = inflater.inflate(R.layout.recycle_fragment_download1, container, false);
+        }
+        else if(position == 1) {
+            view = inflater.inflate(R.layout.recycle_fragment_download2, container, false);
+        }
+        else if(position == 2) {
+            view = inflater.inflate(R.layout.recycle_fragment_download3, container, false);
+        }
+
 
         recyclerView = view.findViewById(R.id.justwatch);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));

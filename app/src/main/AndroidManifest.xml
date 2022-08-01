@@ -14,14 +14,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Synclibraries2">
-
+        <activity
+            android:name=".Download.MainActivity3"
+            android:exported="false"
+            android:label="@string/title_activity_main3"
+            android:theme="@style/Theme.Synclibraries2.NoActionBar" />
         <activity
             android:name=".Exceptions.MainActivity2"
             android:exported="false"
-            android:parentActivityName = ".MainActivity"
-            android:windowSoftInputMode="adjustNothing"
-            />
-
+            android:parentActivityName=".MainActivity"
+            android:windowSoftInputMode="adjustNothing" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -31,7 +33,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
     </application>
 
 </manifest>

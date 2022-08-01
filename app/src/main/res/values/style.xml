@@ -10,4 +10,10 @@
     <style name="switch1" >
         <item name="colorControlActivated">#3584d5</item>
     </style>
+
+    <style name="TabLayoutStyle">
+        <item name="android:textSize">15dp</item>
+    </style>
+
+
 </resources>

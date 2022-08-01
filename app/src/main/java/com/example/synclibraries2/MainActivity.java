@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.synclibraries2.Download.MainActivity3;
 import com.example.synclibraries2.Exceptions.MainActivity2;
 import com.oguzdev.circularfloatingactionmenu.library.FloatingActionButton;
 import com.oguzdev.circularfloatingactionmenu.library.FloatingActionMenu;
@@ -176,11 +177,6 @@ public class MainActivity extends AppCompatActivity {
 
         SubActionButton.Builder itemBuilder = new SubActionButton.Builder(this);
         // repeat many times:
-        ImageView itemIcon = new ImageView(this);
-        itemIcon.setImageDrawable(getDrawable(R.drawable.download));
-        SubActionButton downloadButton = itemBuilder
-                .setContentView(itemIcon)
-                .build();
         ImageView itemIcon2 = new ImageView(this);
         itemIcon2.setImageDrawable(getDrawable(R.drawable.exception));
         SubActionButton exceptionButton = itemBuilder.setContentView(itemIcon2).build();
@@ -189,6 +185,16 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 buttonAnimation(v,"short");
                 startActivity(new Intent( MainActivity.this, MainActivity2.class));
+            }
+        });
+        ImageView itemIcon = new ImageView(this);
+        itemIcon.setImageDrawable(getDrawable(R.drawable.download));
+        SubActionButton downloadButton = itemBuilder.setContentView(itemIcon).build();
+        downloadButton.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                buttonAnimation(v,"short");
+                startActivity(new Intent( MainActivity.this, MainActivity3.class));
             }
         });
 
