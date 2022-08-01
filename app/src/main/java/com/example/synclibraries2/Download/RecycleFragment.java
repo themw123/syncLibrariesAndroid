@@ -49,6 +49,9 @@ public class RecycleFragment extends Fragment {
         else if(position == 1) {
             view = inflater.inflate(R.layout.recycle_fragment_download2, container, false);
         }
+        else if (position == 2) {
+            view = inflater.inflate(R.layout.recycle_fragment_download3, container, false);
+        }
 
 
         recyclerView = view.findViewById(R.id.justwatch);

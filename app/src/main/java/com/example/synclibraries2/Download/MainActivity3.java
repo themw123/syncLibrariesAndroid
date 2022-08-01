@@ -38,10 +38,13 @@ public class MainActivity3 extends AppCompatActivity{
                     viewPager.setAdapter(seitenAdapter);
                     new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> {
                         if(position == 0) {
-                            tab.setText("Download");
+                            tab.setText("Search");
                         }
                         else if(position == 1) {
-                            tab.setText("Downloaded");
+                            tab.setText("Loading");
+                        }
+                        else if(position == 2){
+                            tab.setText("Local");
                         }
                         else {
                             tab.setText("kp");

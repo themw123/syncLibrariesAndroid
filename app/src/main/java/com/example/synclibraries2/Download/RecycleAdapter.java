@@ -24,24 +24,14 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
 
     private int position;
     private SyncLibrary sl;
-    private Vector<String> ausnahmen;
-    private Vector<JustWatch> jwv;
-    private Session s;
 
     public RecycleAdapter(int position) {
         this.position = position;
         this.sl = null;
-        this.ausnahmen = null;
-        this.jwv = null;
-        this.s = null;
     }
 
     public void refreshListe(SyncLibrary sl){
         this.sl = sl;
-        this.ausnahmen = sl.getAusnahmen();
-        this.jwv = filterTitel(sl);
-        this.s = sl.getSession();
-
     }
 
     private Vector<JustWatch> filterTitel(SyncLibrary sl) {
@@ -121,32 +111,7 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
     }
 
 
-    private int getIndexAusnahmen(String tmdb) {
-        int index = -1;
-        for(int i=0;i<ausnahmen.size();i++) {
-            if(ausnahmen.get(i).equals(tmdb)) {
-                index = i;
-            }
-        }
-        return index;
-    }
 
-    public void addData(String tmdb) {
-        Thread t1 = new Thread(() -> {
-            ausnahmen.add(tmdb);
-            s.addAusnahme(tmdb);
-        });
-        t1.start();
-    }
-
-    private void delData(String tmdb) {
-        Thread t1 = new Thread(() -> {
-            int index = getIndexAusnahmen(tmdb);
-            ausnahmen.remove(index);
-            s.delAusnahme(tmdb);
-        });
-        t1.start();
-    }
 
     // Return the size of your dataset (invoked by the layout manager)
     @Override

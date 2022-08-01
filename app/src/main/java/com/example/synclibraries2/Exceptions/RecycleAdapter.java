@@ -26,22 +26,18 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
     private SyncLibrary sl;
     private Vector<String> ausnahmen;
     private Vector<JustWatch> jwv;
-    private Session s;
 
     public RecycleAdapter(int position) {
         this.position = position;
         this.sl = null;
         this.ausnahmen = null;
         this.jwv = null;
-        this.s = null;
     }
 
     public void refreshListe(SyncLibrary sl){
         this.sl = sl;
         this.ausnahmen = sl.getAusnahmen();
         this.jwv = filterTitel(sl);
-        this.s = sl.getSession();
-
     }
 
     private Vector<JustWatch> filterTitel(SyncLibrary sl) {
@@ -194,7 +190,7 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
     public void addData(String tmdb) {
         Thread t1 = new Thread(() -> {
             ausnahmen.add(tmdb);
-            s.addAusnahme(tmdb);
+            sl.getSession().addAusnahme(tmdb);
         });
         t1.start();
     }
@@ -203,7 +199,7 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
         Thread t1 = new Thread(() -> {
             int index = getIndexAusnahmen(tmdb);
             ausnahmen.remove(index);
-            s.delAusnahme(tmdb);
+            sl.getSession().delAusnahme(tmdb);
         });
         t1.start();
     }

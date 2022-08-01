@@ -262,12 +262,12 @@ public class MainActivity extends AppCompatActivity {
 
     private void openSurfshark() {
         waitForCreateSyncLibrary();
-        sl.sshSendCommand("SCHTASKS.EXE /RUN /TN \"opensurfshark\"");
+        sl.getSSH().sendCommend("SCHTASKS.EXE /RUN /TN \"opensurfshark\"");
     }
 
     private void closeSurfshark() {
         waitForCreateSyncLibrary();
-        sl.sshSendCommand("taskkill /IM Surfshark.exe /F >nul 2>&1");
+        sl.getSSH().sendCommend("taskkill /IM Surfshark.exe /F >nul 2>&1");
     }
 
 

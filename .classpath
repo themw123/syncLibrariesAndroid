@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="app/build/generated/source/buildConfig/debug"/>
+	<classpathentry kind="src" path="app/src/androidTest/java"/>
+	<classpathentry kind="src" path="app/src/main/java"/>
+	<classpathentry kind="src" path="app/src/test/java"/>
+	<classpathentry kind="lib" path="app/build/intermediates/compile_and_runtime_not_namespaced_r_class_jar/debug/R.jar"/>
+	<classpathentry kind="lib" path="app/build/intermediates/external_file_lib_dex_archives/debug/0_SyncLibrary-0.0.1-SNAPSHOT-jar-with-dependencies.jar"/>
+	<classpathentry kind="lib" path="app/build/intermediates/merged_java_res/debug/base.jar"/>
+	<classpathentry kind="lib" path="app/build/intermediates/project_dex_archive/debug/out/e66ddccd4f6271c1263e1210ce1c64fd2052ad9a29316d4a6e4d6f6818ea69d8_0.jar"/>
+	<classpathentry kind="lib" path="app/build/intermediates/project_dex_archive/debug/out/e66ddccd4f6271c1263e1210ce1c64fd2052ad9a29316d4a6e4d6f6818ea69d8_1.jar"/>
+	<classpathentry kind="lib" path="app/libs/SyncLibrary-0.0.1-SNAPSHOT-jar-with-dependencies.jar"/>
+	<classpathentry kind="lib" path="gradle/wrapper/gradle-wrapper.jar"/>
+	<classpathentry kind="output" path="app/build/intermediates/javac/debug/classes"/>
+</classpath>
