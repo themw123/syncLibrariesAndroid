@@ -78,21 +78,15 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
      */
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView textView;
-        private ImageView imageView;
 
         public ViewHolder(View view) {
             super(view);
             // Define click listener for the ViewHolder's View
-
             textView = (TextView) view.findViewById(R.id.textView);
-            imageView = (ImageView) view.findViewById(R.id.imageView);
         }
 
         public TextView getTextView() {
             return textView;
-        }
-        public ImageView getImageView() {
-            return imageView;
         }
     }
 
@@ -121,16 +115,6 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
 
         //text setzen
         viewHolder.getTextView().setText(jwv.get(viewHolder.getAdapterPosition()).getTitle());
-
-
-        //bild setzten
-        Picasso.with(viewHolder.getImageView().getContext()).load("https://image.tmdb.org/t/p/original" + jwv.get(viewHolder.getAdapterPosition()).getTmdbPoster())
-                .fit()
-                .into(viewHolder.getImageView());
-
-
-
-
 
 
 

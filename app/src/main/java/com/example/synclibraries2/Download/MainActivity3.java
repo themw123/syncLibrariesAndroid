@@ -41,9 +41,6 @@ public class MainActivity3 extends AppCompatActivity{
                             tab.setText("Download");
                         }
                         else if(position == 1) {
-                            tab.setText("Downloading");
-                        }
-                        else if(position == 2){
                             tab.setText("Downloaded");
                         }
                         else {
