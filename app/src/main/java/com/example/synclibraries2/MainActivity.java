@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
         startSync = new Thread(() -> {
 
-            new Thread(() -> closeStremio()).start();
+            new Thread(() -> closeStremio(false)).start();
 
             new Thread(() -> openSurfshark()).start();
 
@@ -160,19 +160,22 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void closeStremio() {
+    private void closeStremio(boolean state) {
         waitForCreateSyncLibrary();
         sl.sshSendCommand("taskkill /IM stremio.exe /F >nul 2>&1");
-        Button open = findViewById(R.id.open);
-        Button close = findViewById(R.id.close);
-        if(sl.getSSH().getError()) {
-            open.setTextColor(Color.parseColor("#c44347"));
-            close.setTextColor(Color.parseColor("#c44347"));
+        if(state) {
+            Button open = findViewById(R.id.open);
+            Button close = findViewById(R.id.close);
+            if(sl.getSSH().getError()) {
+                open.setTextColor(Color.parseColor("#c44347"));
+                close.setTextColor(Color.parseColor("#c44347"));
+            }
+            else {
+                open.setTextColor(Color.parseColor("#A6A4A4"));
+                close.setTextColor(Color.parseColor("#A6A4A4"));
+            }
         }
-        else {
-            open.setTextColor(Color.parseColor("#A6A4A4"));
-            close.setTextColor(Color.parseColor("#A6A4A4"));
-        }
+
     }
 
     private void openStremio() {
@@ -207,7 +210,7 @@ public class MainActivity extends AppCompatActivity {
     public void onClickClose(View view) {
         Thread t = new Thread(() -> {
             buttonAnimation(view,"short");
-            closeStremio();
+            closeStremio(true);
         });
         t.start();
     }
