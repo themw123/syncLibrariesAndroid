@@ -78,7 +78,6 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
      */
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView textView;
-        private Switch sw;
         private ImageView imageView;
 
         public ViewHolder(View view) {
@@ -86,15 +85,11 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
             // Define click listener for the ViewHolder's View
 
             textView = (TextView) view.findViewById(R.id.textView);
-            sw = (Switch) view.findViewById(R.id.switch1);
             imageView = (ImageView) view.findViewById(R.id.imageView);
         }
 
         public TextView getTextView() {
             return textView;
-        }
-        public Switch getSwitch() {
-            return sw;
         }
         public ImageView getImageView() {
             return imageView;
@@ -128,24 +123,6 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
         viewHolder.getTextView().setText(jwv.get(viewHolder.getAdapterPosition()).getTitle());
 
 
-        //switch state setzen
-        String tmdb = jwv.get(viewHolder.getAdapterPosition()).getTmdb();
-        boolean in = false;
-        for(String tmdbAusnahm : ausnahmen) {
-            if(tmdbAusnahm.equals(tmdb)) {
-                in = true;
-            }
-        }
-        if(in) {
-            viewHolder.getSwitch().setChecked(true);
-            in = false;
-        }
-        //wichtig
-        else {
-            viewHolder.getSwitch().setChecked(false);
-        }
-
-
         //bild setzten
         Picasso.with(viewHolder.getImageView().getContext()).load("https://image.tmdb.org/t/p/original" + jwv.get(viewHolder.getAdapterPosition()).getTmdbPoster())
                 .fit()
@@ -156,27 +133,6 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
 
 
 
-        //switch wechsel
-        viewHolder.sw.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                //wenn switch durch programm, nicht durch user gewechselt wird
-                if(!viewHolder.getSwitch().isPressed()) {
-                    return;
-                }
-                // do something, the isChecked will be
-                // true if the switch is in the On position
-                if(isChecked) {
-                    String title = jwv.get(viewHolder.getAdapterPosition()).getTitle();
-                    String tmdb = jwv.get(viewHolder.getAdapterPosition()).getTmdb();
-                    String imdb = jwv.get(viewHolder.getAdapterPosition()).getImdb();
-                    addData(tmdb);
-                }
-                else {
-                    String tmdb = jwv.get(viewHolder.getAdapterPosition()).getTmdb();
-                    delData(tmdb);
-                }
-            }
-        });
 
     }
 

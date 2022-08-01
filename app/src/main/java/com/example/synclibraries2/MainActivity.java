@@ -189,7 +189,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         ImageView itemIcon = new ImageView(this);
-        itemIcon.setImageDrawable(getDrawable(R.drawable.download));
+        itemIcon.setImageDrawable(getDrawable(R.drawable.download1));
         SubActionButton downloadButton = itemBuilder.setContentView(itemIcon).build();
         downloadButton.setOnClickListener( new View.OnClickListener() {
             @Override
