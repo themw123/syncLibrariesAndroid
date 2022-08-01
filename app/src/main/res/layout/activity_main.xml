@@ -96,17 +96,6 @@
                         android:layout_marginTop="197dp"
                         app:srcCompat="@drawable/shadow2" />
 
-                    <ImageView
-                        android:id="@+id/imageView2"
-                        android:layout_width="85dp"
-                        android:layout_height="85dp"
-                        android:layout_alignParentBottom="true"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginBottom="208dp"
-                        app:srcCompat="@drawable/shadow1" />
-
-
-
                 </RelativeLayout>
 
 
@@ -164,6 +153,9 @@
             android:backgroundTint="#134e8a"
             android:indeterminate="true"
             android:indeterminateTint="#134e8a" />
+
+
+
 
     </RelativeLayout>
 

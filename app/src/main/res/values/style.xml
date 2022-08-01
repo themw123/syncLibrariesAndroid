@@ -1,15 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="circleImageView" parent="">
+    <style name="circleImageViewException" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">0%</item>
+
+    </style>
+
+    <style name="circleImageViewDownload" parent="">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">50%</item>
 
     </style>
 
     <style name="switch1" >
-        <item name="colorControlActivated">#3584d5</item>
+        <item name="colorControlActivated">#38a857</item>
+        <item name="android:colorForeground">@color/white</item>
     </style>
+
+
 
     <style name="TabLayoutStyle">
         <item name="android:textSize">15dp</item>

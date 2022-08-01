@@ -19,6 +19,7 @@
         android:focusable="true"
         android:clickable="true"
         android:foreground="?android:attr/selectableItemBackground"
+
         app:cardElevation="10dp"
 
         >
@@ -32,13 +33,13 @@
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/imageView"
-                android:layout_width="65dp"
-                android:layout_height="67dp"
+                android:layout_width="60dp"
+                android:layout_height="62dp"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="15dp"
                 android:padding="2dp"
-                app:shapeAppearanceOverlay="@style/circleImageView"
+                app:shapeAppearanceOverlay="@style/circleImageViewDownload"
                 app:strokeColor="#D3D3D3"
                 app:strokeWidth="2dp" />
 
@@ -62,7 +63,8 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="15dp"
-                android:theme="@style/switch1" />
+                android:theme="@style/switch1"
+                />
 
 
         </RelativeLayout>

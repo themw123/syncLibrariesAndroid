@@ -174,6 +174,7 @@ public class MainActivity extends AppCompatActivity {
                 .setLayoutParams(params1)
                 .setBackgroundDrawable(R.drawable.menu)
                 .build();
+        menuButton.setElevation(5);
 
         SubActionButton.Builder itemBuilder = new SubActionButton.Builder(this);
         // repeat many times:

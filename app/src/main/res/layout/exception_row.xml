@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
+    android:layout_height="200dp"
     >
 
 
@@ -12,61 +12,83 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="160dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        app:cardCornerRadius="60dp"
+        app:cardCornerRadius="30dp"
         android:focusable="true"
         android:clickable="true"
         android:foreground="?android:attr/selectableItemBackground"
-
         app:cardElevation="10dp"
 
         >
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-
+            android:orientation="horizontal"
+            android:gravity="center"
             >
 
-
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/imageView"
-                android:layout_width="65dp"
-                android:layout_height="67dp"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="15dp"
-                android:padding="2dp"
-                app:shapeAppearanceOverlay="@style/circleImageView"
-                app:strokeColor="#D3D3D3"
-                app:strokeWidth="2dp" />
-
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="150dp"
+            <LinearLayout
+                android:layout_weight="0.8"
                 android:layout_height="match_parent"
-
-                android:layout_centerInParent="true"
-                android:fontFamily="sans-serif-smallcaps"
-                android:gravity="center"
-                android:text="TextView"
-                android:textColor="#6A6363"
-                android:textSize="15sp" />
-
-
-            <Switch
-                android:id="@+id/switch1"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="15dp"
-                android:theme="@style/switch1" />
+                android:layout_width="0dp">
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:shapeAppearanceOverlay="@style/circleImageViewException"
+                    />
+            </LinearLayout>
 
 
-        </RelativeLayout>
+
+            <LinearLayout
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:layout_width="0dp"
+                android:background="#2166ad"
+                >
+
+
+                <LinearLayout
+                    android:layout_width="140dp"
+                    android:layout_height="140dp"
+                    android:orientation="vertical"
+                    android:layout_marginLeft="5dp"
+                    android:gravity="center"
+                    >
+
+                    <TextView
+                        android:id="@+id/textView"
+                        android:layout_width="150dp"
+                        android:layout_height="80dp"
+                        android:textStyle="normal"
+                        android:gravity="center"
+                        android:text="TextView"
+                        android:textColor="@color/white"
+                        android:textSize="15sp" />
+
+                    <Switch
+                        android:id="@+id/switch1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:theme="@style/switch1"
+                        android:scaleX="1.2"
+                        android:scaleY="1.2"
+
+
+                        />
+                </LinearLayout>
+
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
     </androidx.cardview.widget.CardView>
 
 </RelativeLayout>
