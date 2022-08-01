@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -46,42 +45,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-        ImageView icon = new ImageView(this); // Create an icon
-        icon.setImageDrawable(getDrawable(R.drawable.plus1));
 
-        FloatingActionButton.LayoutParams params1 = new FloatingActionButton.LayoutParams(250,250);
-        params1.setMargins(0, 0, 0, 80);
-        FloatingActionButton menuButton = new FloatingActionButton.Builder(this)
-                .setPosition(5)
-                .setLayoutParams(params1)
-                .setBackgroundDrawable(R.drawable.plus)
-                .build();
-
-
-
-        SubActionButton.Builder itemBuilder = new SubActionButton.Builder(this);
-        // repeat many times:
-        ImageView itemIcon = new ImageView(this);
-        itemIcon.setImageDrawable(getDrawable(R.drawable.plus));
-        SubActionButton exceptionsButton = itemBuilder
-                .setContentView(itemIcon)
-                .build();
-
-        ImageView itemIcon2 = new ImageView(this);
-        itemIcon2.setImageDrawable(getDrawable(R.drawable.minus));
-        SubActionButton downloadButton = itemBuilder.setContentView(itemIcon2).build();
-
-
-
-
-        FloatingActionMenu actionMenu = new FloatingActionMenu.Builder(this)
-                .addSubActionView(exceptionsButton, 180, 180)
-                .addSubActionView(downloadButton, 180, 180)
-                .setRadius(230)
-                .setStartAngle(230)
-                .setEndAngle(310)
-                .attachTo(menuButton)
-                .build();
+        menuButtons();
 
 
     }
@@ -200,6 +165,43 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void menuButtons() {
+        FloatingActionButton.LayoutParams params1 = new FloatingActionButton.LayoutParams(170,170);
+        params1.setMargins(0, 0, 0, 80);
+        FloatingActionButton menuButton = new FloatingActionButton.Builder(this)
+                .setPosition(5)
+                .setLayoutParams(params1)
+                .setBackgroundDrawable(R.drawable.menu)
+                .build();
+
+        SubActionButton.Builder itemBuilder = new SubActionButton.Builder(this);
+        // repeat many times:
+        ImageView itemIcon = new ImageView(this);
+        itemIcon.setImageDrawable(getDrawable(R.drawable.download));
+        SubActionButton downloadButton = itemBuilder
+                .setContentView(itemIcon)
+                .build();
+        ImageView itemIcon2 = new ImageView(this);
+        itemIcon2.setImageDrawable(getDrawable(R.drawable.exception));
+        SubActionButton exceptionButton = itemBuilder.setContentView(itemIcon2).build();
+        exceptionButton.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                buttonAnimation(v,"short");
+                startActivity(new Intent( MainActivity.this, MainActivity2.class));
+            }
+        });
+
+        FloatingActionMenu actionMenu = new FloatingActionMenu.Builder(this)
+                .addSubActionView(downloadButton, 180, 180)
+                .addSubActionView(exceptionButton, 180, 180)
+                .setRadius(250)
+                .setStartAngle(230)
+                .setEndAngle(310)
+                .attachTo(menuButton)
+                .build();
+    }
+
     private void closeStremio(boolean state) {
         waitForCreateSyncLibrary();
         sl.sshSendCommand("taskkill /IM stremio.exe /F >nul 2>&1");
@@ -262,9 +264,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
-
-
     public void onClickClose(View view) {
         Thread t = new Thread(() -> {
             buttonAnimation(view,"short");
@@ -281,12 +280,6 @@ public class MainActivity extends AppCompatActivity {
         });
         t.start();
 
-    }
-
-
-    public void onClickExceptions(View view) {
-        buttonAnimation(view,"short");
-        startActivity(new Intent( MainActivity.this, MainActivity2.class));
     }
 
 
