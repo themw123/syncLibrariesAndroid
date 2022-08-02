@@ -25,7 +25,6 @@ public class RecycleFragment extends Fragment {
     private RecycleAdapter adapter;
     private RecyclerView recyclerView;
 
-    private Activity activity;
     private SyncLibrary sl;
 
 

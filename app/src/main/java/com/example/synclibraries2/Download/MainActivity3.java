@@ -1,8 +1,10 @@
 package com.example.synclibraries2.Download;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TabHost;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;

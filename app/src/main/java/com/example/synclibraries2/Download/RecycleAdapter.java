@@ -101,7 +101,20 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
     public int getItemCount() {
         //return localDataSet.length;
         //return jwv.size();
-        return 1;
+        int i = 0;
+        if(position == 0) {
+           i = search.size();
+        }
+        else if(position == 1) {
+            i = downloading.size();
+        }
+        else if(position == 2) {
+            i = downloaded.size();
+        }
+        else {
+            i = 0;
+        }
+        return i;
     }
 
 
