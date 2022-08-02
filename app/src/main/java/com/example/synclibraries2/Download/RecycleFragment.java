@@ -2,6 +2,7 @@ package com.example.synclibraries2.Download;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,15 +23,26 @@ import syncLibraries.SyncLibrary;
 public class RecycleFragment extends Fragment {
 
     private int position;
-
+    private Download download;
     private RecycleAdapter adapter;
     private RecyclerView recyclerView;
 
+    public static Handler handler;
+    public static Runnable runnable;
 
     public static final String TITLE = "title";
 
-    public RecycleFragment(int position) {
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+
+        refreshThread();
+    }
+
+    public RecycleFragment(int position, Download download) {
         this.position = position;
+        this.download = download;
         // Required empty public constructor
     }
 
@@ -54,8 +66,9 @@ public class RecycleFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter = new RecycleAdapter(position);
 
-        adapter.refreshListe();
-        adapter.notifyDataSetChanged();
+        //adapter.refreshListe();
+        //adapter.notifyDataSetChanged();
+        //refreshThread();
         recyclerView.setAdapter(adapter);
 
 
@@ -70,4 +83,19 @@ public class RecycleFragment extends Fragment {
         //((TextView)view.findViewById(R.id.textViewXY)).setText(getArguments().getString(TITLE));
 
     }
+
+    private void refreshThread() {
+        handler = new Handler();
+        runnable = new Runnable() {
+            @Override
+            public void run() {
+                adapter.refreshAdapter(download);
+                adapter.notifyDataSetChanged();
+                handler.postDelayed(this, 5000);
+            }
+        };
+
+        handler.post(runnable);
+    }
+
 }

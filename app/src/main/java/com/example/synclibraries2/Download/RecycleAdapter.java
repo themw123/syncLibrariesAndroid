@@ -34,15 +34,17 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
 
     public RecycleAdapter(int position) {
         this.position = position;
-        MainActivity.waitForCreateDownload();
-        this.download = MainActivity.download;
-        this.downloaded = download.getDownloaded();
-        this.downloading = download.getDownloading();
-        this.search = download.getSearch();
+        this.download = null;
+        this.downloaded = null;
+        this.downloading = null;
+        this.search = null;
+
     }
 
-    public void refreshListe(){
-        download.refreshData();
+    public void refreshAdapter(Download download) {
+        this.download = download;
+        this.downloaded = download.getDownloaded();
+        this.downloading = download.getDownloading();
     }
 
 

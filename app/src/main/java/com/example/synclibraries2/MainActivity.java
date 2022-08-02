@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
         if(counter == 1) {
             createSyncLibrary();
             createSSH();
-            createDownload();
+            this.download = new Download();
         }
 
 
@@ -191,21 +191,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void createDownload() {
-        createDownload = new Thread(() -> {
-            waitForCreateSSH();
-            download = new Download(ssh);
-        });
-        createDownload.start();
-    }
-
-    public static void waitForCreateDownload() {
-        try {
-            createDownload.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
 
     private void menuButtons() {
         FloatingActionButton.LayoutParams params1 = new FloatingActionButton.LayoutParams(170,170);

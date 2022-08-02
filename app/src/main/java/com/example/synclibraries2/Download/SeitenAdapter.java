@@ -8,16 +8,21 @@ import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Lifecycle;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
+import syncLibraries.Download;
+
 public class SeitenAdapter extends FragmentStateAdapter {
 
-    public SeitenAdapter(@NonNull FragmentManager fragmentManager, @NonNull Lifecycle lifecycle) {
+    private Download download;
+
+    public SeitenAdapter(@NonNull FragmentManager fragmentManager, @NonNull Lifecycle lifecycle, Download download) {
         super(fragmentManager, lifecycle);
+        this.download = download;
     }
 
     @NonNull
     @Override
     public Fragment createFragment(int position) {
-        Fragment fragment = new RecycleFragment(position);
+        Fragment fragment = new RecycleFragment(position, download);
         Bundle args = new Bundle();
         args.putString(RecycleFragment.TITLE, "Tab "+(position+1));
         fragment.setArguments(args);
