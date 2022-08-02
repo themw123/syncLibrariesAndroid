@@ -35,9 +35,6 @@ public class RecycleFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
-        refreshHandler();
     }
 
     public RecycleFragment(int position, Download download) {
@@ -66,9 +63,8 @@ public class RecycleFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter = new RecycleAdapter(position);
 
-        //adapter.refreshListe();
-        //adapter.notifyDataSetChanged();
-        //refreshThread();
+        adapter.refreshAdapter(download);
+        adapter.notifyDataSetChanged();
         recyclerView.setAdapter(adapter);
 
 
@@ -84,18 +80,5 @@ public class RecycleFragment extends Fragment {
 
     }
 
-    private void refreshHandler() {
-        handler = new Handler();
-        runnable = new Runnable() {
-            @Override
-            public void run() {
-                adapter.refreshAdapter(download);
-                adapter.notifyDataSetChanged();
-                handler.postDelayed(this, 5000);
-            }
-        };
-
-        handler.post(runnable);
-    }
 
 }

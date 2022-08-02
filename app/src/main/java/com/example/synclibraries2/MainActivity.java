@@ -35,7 +35,6 @@ public class MainActivity extends AppCompatActivity {
     private static Thread createSyncLibrary = null;
     private static Thread createSSH = null;
     private static Thread startSync = new Thread();
-    private static Thread createDownload;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

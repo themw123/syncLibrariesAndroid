@@ -41,7 +41,7 @@ public class MainActivity3 extends AppCompatActivity{
 
             this.download = MainActivity.download;
             download.startSSH();
-            refreshThread();
+            download.refreshData();
 
             tabLayout = findViewById(R.id.tabLayout);
             viewPager = findViewById(R.id.viewPager);
@@ -82,32 +82,6 @@ public class MainActivity3 extends AppCompatActivity{
     }
 
 
-    private void refreshThread() {
-        t1 = new Thread(() -> {
-            while(!cancel) {
-                if(download.getSSH().getError()) {
-                    download.getSSH().connect();
-                }
-                if(!download.getSSH().getError()) {
-                    download.refreshData();
-                }
-                try {
-                    Thread.sleep(5000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-        t1.start();
-    }
-
-
-
-    public void onPause() {
-        super.onPause();
-        cancel = true;
-        RecycleFragment.handler.removeCallbacks(RecycleFragment.runnable);
-    }
 
 
 
