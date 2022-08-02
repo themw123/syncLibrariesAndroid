@@ -26,9 +26,7 @@ public class RecycleFragment extends Fragment {
     private RecycleAdapter adapter;
     private RecyclerView recyclerView;
 
-    private Activity activity;
     private Download download;
-    private SSH ssh;
 
 
     public static final String TITLE = "title";
@@ -36,10 +34,8 @@ public class RecycleFragment extends Fragment {
     public RecycleFragment(int position) {
         this.position = position;
         // Required empty public constructor
-        MainActivity.waitForCreateSSH();
-        this.ssh = MainActivity.ssh;
-        download = new Download(ssh);
-        String test = "";
+        MainActivity.waitForCreateDownload();
+        download = MainActivity.download;
     }
 
     @Override

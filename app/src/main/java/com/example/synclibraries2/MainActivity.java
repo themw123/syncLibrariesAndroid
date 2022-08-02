@@ -20,6 +20,7 @@ import com.oguzdev.circularfloatingactionmenu.library.FloatingActionButton;
 import com.oguzdev.circularfloatingactionmenu.library.FloatingActionMenu;
 import com.oguzdev.circularfloatingactionmenu.library.SubActionButton;
 
+import syncLibraries.Download;
 import syncLibraries.SSH;
 import syncLibraries.SyncLibrary;
 
@@ -28,12 +29,13 @@ public class MainActivity extends AppCompatActivity {
     private static int counter = 0;
     public static SyncLibrary sl = null;
     public static SSH ssh = null;
+    public static Download download = null;
+
 
     private static Thread createSyncLibrary = null;
     private static Thread createSSH = null;
-
     private static Thread startSync = new Thread();
-
+    private static Thread createDownload;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
         if(counter == 1) {
             createSyncLibrary();
             createSSH();
+            createDownload();
         }
 
 
@@ -183,6 +186,22 @@ public class MainActivity extends AppCompatActivity {
     public static void waitForStartSync() {
         try {
             startSync.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void createDownload() {
+        createDownload = new Thread(() -> {
+            waitForCreateSSH();
+            download = new Download(ssh);
+        });
+        createDownload.start();
+    }
+
+    public static void waitForCreateDownload() {
+        try {
+            createDownload.join();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
