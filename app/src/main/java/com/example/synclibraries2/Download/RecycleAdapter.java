@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.synclibraries2.MainActivity;
 import com.example.synclibraries2.R;
 import com.squareup.picasso.Picasso;
 
@@ -33,14 +34,15 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
 
     public RecycleAdapter(int position) {
         this.position = position;
-        this.download = null;
-    }
-
-    public void refreshListe(Download download){
-        this.download = download;
+        MainActivity.waitForCreateDownload();
+        this.download = MainActivity.download;
         this.downloaded = download.getDownloaded();
         this.downloading = download.getDownloading();
         this.search = download.getSearch();
+    }
+
+    public void refreshListe(){
+        download.refreshData();
     }
 
 
@@ -102,13 +104,24 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
         //return localDataSet.length;
         //return jwv.size();
         int i = 0;
+
+
         if(position == 0) {
+            if(search == null) {
+                return 0;
+            }
            i = search.size();
         }
         else if(position == 1) {
+            if(downloading == null) {
+                return 0;
+            }
             i = downloading.size();
         }
         else if(position == 2) {
+            if(downloaded == null) {
+                return 0;
+            }
             i = downloaded.size();
         }
         else {

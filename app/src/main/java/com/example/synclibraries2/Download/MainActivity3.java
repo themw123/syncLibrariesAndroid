@@ -34,7 +34,6 @@ public class MainActivity3 extends AppCompatActivity{
         setContentView(R.layout.activity_main3);
 
 
-
         findViewById(R.id.progressbar).setVisibility(View.VISIBLE);
         Thread t1 = new Thread(() -> {
 

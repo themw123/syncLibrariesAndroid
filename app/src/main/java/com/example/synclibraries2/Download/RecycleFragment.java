@@ -26,16 +26,12 @@ public class RecycleFragment extends Fragment {
     private RecycleAdapter adapter;
     private RecyclerView recyclerView;
 
-    private Download download;
-
 
     public static final String TITLE = "title";
 
     public RecycleFragment(int position) {
         this.position = position;
         // Required empty public constructor
-        MainActivity.waitForCreateDownload();
-        download = MainActivity.download;
     }
 
     @Override
@@ -58,7 +54,7 @@ public class RecycleFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter = new RecycleAdapter(position);
 
-        adapter.refreshListe(download);
+        adapter.refreshListe();
         adapter.notifyDataSetChanged();
         recyclerView.setAdapter(adapter);
 
