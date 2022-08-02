@@ -3,8 +3,6 @@ package com.example.synclibraries2.Download;
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.view.View;
 import android.widget.TabHost;
 
@@ -27,8 +25,7 @@ public class MainActivity3 extends AppCompatActivity{
     private SeitenAdapter seitenAdapter;
     private static Download download;
 
-    private Handler handler;
-    private Runnable runnable;
+    public static Thread t1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +40,7 @@ public class MainActivity3 extends AppCompatActivity{
 
             this.download = MainActivity.download;
             download.startSSH();
-            refresh();
+            refreshThread();
 
             tabLayout = findViewById(R.id.tabLayout);
             viewPager = findViewById(R.id.viewPager);
@@ -84,30 +81,27 @@ public class MainActivity3 extends AppCompatActivity{
     }
 
 
-    private void refresh() {
-
-        handler = new Handler(Looper.getMainLooper());
-        runnable = new Runnable() {
-            @Override
-            public void run() {
+    private void refreshThread() {
+        t1 = new Thread(() -> {
+            while(true) {
                 if(download.getSSH().getError()) {
                     download.getSSH().connect();
                 }
                 download.refreshData();
-
-                handler.postDelayed(this, 5000);
+                try {
+                    Thread.sleep(5000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
-        };
-
-        handler.post(runnable);
-
+        });
+        t1.start();
     }
 
 
 
     public void onPause() {
         super.onPause();
-        handler.removeCallbacks(runnable);
         RecycleFragment.handler.removeCallbacks(RecycleFragment.runnable);
     }
 
