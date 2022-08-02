@@ -42,7 +42,7 @@ public class MainActivity3 extends AppCompatActivity{
             this.download = MainActivity.download;
             download.startSSH();
             download.refreshData();
-            
+
             tabLayout = findViewById(R.id.tabLayout);
             viewPager = findViewById(R.id.viewPager);
             seitenAdapter = new SeitenAdapter(getSupportFragmentManager(), getLifecycle(), download);
