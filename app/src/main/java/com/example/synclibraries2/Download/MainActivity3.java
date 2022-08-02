@@ -3,8 +3,10 @@ package com.example.synclibraries2.Download;
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TabHost;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -14,6 +16,7 @@ import com.example.synclibraries2.MainActivity;
 import com.example.synclibraries2.R;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
+import com.google.android.material.textfield.TextInputEditText;
 
 import syncLibraries.Download;
 import syncLibraries.SSH;
@@ -24,9 +27,6 @@ public class MainActivity3 extends AppCompatActivity{
     private ViewPager2 viewPager;
     private SeitenAdapter seitenAdapter;
     private static Download download;
-
-    public static Thread t1;
-    private boolean cancel = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,8 +74,6 @@ public class MainActivity3 extends AppCompatActivity{
 
         });
         t1.start();
-
-
 
 
 

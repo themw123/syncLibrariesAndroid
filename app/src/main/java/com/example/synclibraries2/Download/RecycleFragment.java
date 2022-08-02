@@ -3,9 +3,11 @@ package com.example.synclibraries2.Download;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.synclibraries2.MainActivity;
 import com.example.synclibraries2.R;
+import com.google.android.material.textfield.TextInputEditText;
 
 import syncLibraries.Download;
 import syncLibraries.SSH;
@@ -29,6 +32,7 @@ public class RecycleFragment extends Fragment {
 
     public static Handler handler;
     public static Runnable runnable;
+    private TextInputEditText t;
 
     public static final String TITLE = "title";
 
@@ -50,26 +54,57 @@ public class RecycleFragment extends Fragment {
 
         if(position == 0) {
             view = inflater.inflate(R.layout.recycle_fragment_download1, container, false);
+            recyclerView = view.findViewById(R.id.search);
         }
         else if(position == 1) {
             view = inflater.inflate(R.layout.recycle_fragment_download2, container, false);
+            recyclerView = view.findViewById(R.id.justwatch);
         }
         else if (position == 2) {
             view = inflater.inflate(R.layout.recycle_fragment_download3, container, false);
+            recyclerView = view.findViewById(R.id.justwatch);
         }
 
-
-        recyclerView = view.findViewById(R.id.justwatch);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter = new RecycleAdapter(position);
-
         adapter.refreshAdapter(download);
         adapter.notifyDataSetChanged();
         recyclerView.setAdapter(adapter);
 
 
-        return view;
+        if(position == 0) {
+            t = (TextInputEditText) view.findViewById(R.id.editText);
+            t.setFocusable(true);
+            t.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+                @Override
+                public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                    String titel = t.getText().toString();
+                    t.setText("");
+                    if(!titel.isEmpty()) {
 
+                        Thread t1 = new Thread(() -> {
+                            download.setSearch(titel, 1);
+                            adapter.test();
+                            String test = "";
+                        });
+                        t1.start();
+
+                    /*
+                    adapter.addData(titel,adapter.getItemCount());
+                    recyclerView.scrollToPosition(adapter.getItemCount()-1);
+                    */
+
+                    }
+                    t.clearFocus();
+                    return true;
+                }
+            });
+        }
+
+
+
+
+        return view;
 
     }
 

@@ -45,6 +45,9 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
         this.download = download;
         this.downloaded = download.getDownloaded();
         this.downloading = download.getDownloading();
+        Snowfl s = new Snowfl("hi", "h", "hj", "jj", 1);
+        this.search = download.getSearch();
+        this.search.add(s);
     }
 
 
@@ -65,6 +68,7 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
         public TextView getTextView() {
             return textView;
         }
+
     }
 
 
@@ -92,7 +96,9 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
 
         //text setzen
         //viewHolder.getTextView().setText(jwv.get(viewHolder.getAdapterPosition()).getTitle());
-
+        if(this.position == 0) {
+            viewHolder.getTextView().setText(search.get(viewHolder.getAdapterPosition()).getName());
+        }
 
 
     }
@@ -133,5 +139,10 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
     }
 
 
+    public void test() {
+        //this.search = search[]
+        notifyDataSetChanged();
+        String test = "";
+    }
 
 }
