@@ -37,7 +37,7 @@ public class RecycleFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
 
-        refreshThread();
+        refreshHandler();
     }
 
     public RecycleFragment(int position, Download download) {
@@ -84,7 +84,7 @@ public class RecycleFragment extends Fragment {
 
     }
 
-    private void refreshThread() {
+    private void refreshHandler() {
         handler = new Handler();
         runnable = new Runnable() {
             @Override

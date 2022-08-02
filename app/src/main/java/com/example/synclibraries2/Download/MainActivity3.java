@@ -26,6 +26,7 @@ public class MainActivity3 extends AppCompatActivity{
     private static Download download;
 
     public static Thread t1;
+    private boolean cancel = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,11 +84,13 @@ public class MainActivity3 extends AppCompatActivity{
 
     private void refreshThread() {
         t1 = new Thread(() -> {
-            while(true) {
+            while(!cancel) {
                 if(download.getSSH().getError()) {
                     download.getSSH().connect();
                 }
-                download.refreshData();
+                if(!download.getSSH().getError()) {
+                    download.refreshData();
+                }
                 try {
                     Thread.sleep(5000);
                 } catch (InterruptedException e) {
@@ -102,6 +105,7 @@ public class MainActivity3 extends AppCompatActivity{
 
     public void onPause() {
         super.onPause();
+        cancel = true;
         RecycleFragment.handler.removeCallbacks(RecycleFragment.runnable);
     }
 
