@@ -112,9 +112,6 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
         return i;
     }
 
-    public void test() {
-        String text = "";
-    }
 
 
 }

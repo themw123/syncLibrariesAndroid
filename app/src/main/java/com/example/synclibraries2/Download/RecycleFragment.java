@@ -97,9 +97,7 @@ public class RecycleFragment extends Fragment {
                             handler.post(new Runnable() {
                                 @Override
                                 public void run() {
-                                    adapter.test();
                                     adapter.notifyDataSetChanged();
-
                                 }
                             });
 
