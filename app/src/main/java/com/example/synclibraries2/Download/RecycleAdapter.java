@@ -3,25 +3,13 @@ package com.example.synclibraries2.Download;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
-import android.widget.ImageView;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.synclibraries2.MainActivity;
 import com.example.synclibraries2.R;
-import com.squareup.picasso.Picasso;
-
-import java.util.Vector;
 
 import syncLibraries.Download;
-import syncLibraries.JustWatch;
-import syncLibraries.Qbittorrent;
-import syncLibraries.Session;
-import syncLibraries.Snowfl;
-import syncLibraries.SyncLibrary;
 
 public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHolder> {
 
@@ -56,6 +44,15 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
         public TextView getTextView() {
             return textView;
         }
+        public TextView getSize() {
+            return textView;
+        }
+        public TextView getSite() {
+            return textView;
+        }
+        public TextView getSeeder() {
+            return textView;
+        }
 
     }
 
@@ -67,7 +64,7 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         // Create a new view, which defines the UI of the list item
         View view = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.download_row, viewGroup, false);
+                .inflate(R.layout.download_row1, viewGroup, false);
         return new ViewHolder(view);
     }
 
@@ -83,6 +80,10 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
         //text setzen
         if(this.position == 0) {
             viewHolder.getTextView().setText(download.getSearch().get(viewHolder.getAdapterPosition()).getName());
+            viewHolder.getSite().setText(download.getSearch().get(viewHolder.getAdapterPosition()).getSite());
+            viewHolder.getSite().setText(download.getSearch().get(viewHolder.getAdapterPosition()).getSite());
+            viewHolder.getSeeder().setText(download.getSearch().get(viewHolder.getAdapterPosition()).getSeeder());
+
         }
 
 

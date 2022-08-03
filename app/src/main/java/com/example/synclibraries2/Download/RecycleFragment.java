@@ -1,6 +1,7 @@
 package com.example.synclibraries2.Download;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -9,6 +10,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -127,11 +129,18 @@ public class RecycleFragment extends Fragment {
             t.setOnEditorActionListener(new TextView.OnEditorActionListener() {
                 @Override
                 public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+
+                    //hide keyboard
+                    InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+
                     String titel = t.getText().toString();
                     t.setText("");
                     if(!titel.isEmpty()) {
                         pr.setVisibility(View.VISIBLE);
 
+                        download.setSearch("",0);
+                        adapter.notifyDataSetChanged();
                         Thread t = new Thread(() -> {
 
                             download.setSearch(titel, 1);
