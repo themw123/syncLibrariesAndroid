@@ -27,6 +27,9 @@ public class MainActivity3 extends AppCompatActivity{
     private ViewPager2 viewPager;
     private SeitenAdapter seitenAdapter;
     private static Download download;
+    public static Thread ssh;
+    public static Thread loadDownloading;
+    public static Thread loadDownloaded;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,55 +38,73 @@ public class MainActivity3 extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main3);
 
+        this.download = MainActivity.download;
 
-        findViewById(R.id.progressbar).setVisibility(View.VISIBLE);
-        Thread t1 = new Thread(() -> {
-
-            this.download = MainActivity.download;
+        ssh = new Thread(() -> {
             download.startSSH();
-            download.refreshData();
-
-            tabLayout = findViewById(R.id.tabLayout);
-            viewPager = findViewById(R.id.viewPager);
-            seitenAdapter = new SeitenAdapter(getSupportFragmentManager(), getLifecycle(), download);
-
-
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    viewPager.setAdapter(seitenAdapter);
-                    new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> {
-                        if(position == 0) {
-                            tab.setText("Search");
-                        }
-                        else if(position == 1) {
-                            tab.setText("Loading");
-                        }
-                        else if(position == 2){
-                            tab.setText("Local");
-                        }
-                        else {
-                            tab.setText("kp");
-                        }
-                    }).attach();
-                    findViewById(R.id.progressbar).setVisibility(View.INVISIBLE);
-                }
-            });
-
-
-
         });
-        t1.start();
+        ssh.start();
+
+        loadDownloading = new Thread(() -> {
+            download.setDownloading();
+        });
+        loadDownloading.start();
+
+        loadDownloaded = new Thread(() -> {
+            download.setDownloaded();
+        });
+        loadDownloaded.start();
+
+        tabLayout = findViewById(R.id.tabLayout);
+        viewPager = findViewById(R.id.viewPager);
+        seitenAdapter = new SeitenAdapter(getSupportFragmentManager(), getLifecycle(), download);
+
+        viewPager.setAdapter(seitenAdapter);
+        new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> {
+            if(position == 0) {
+                tab.setText("Search");
+            }
+            else if(position == 1) {
+                tab.setText("Loading");
+            }
+            else if(position == 2){
+                tab.setText("Local");
+            }
+            else {
+                tab.setText("kp");
+            }
+        }).attach();
+
 
 
 
     }
 
+    public static void waitForSSH() {
+        try {
+            ssh.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 
+    public static void waitForDownloading() {
+        try {
+            waitForSSH();
+            loadDownloading.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 
-
-
-
+    public static void waitForDownloaded() {
+        try {
+            waitForSSH();
+            loadDownloaded.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 
 
 

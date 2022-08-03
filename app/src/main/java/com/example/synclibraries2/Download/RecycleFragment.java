@@ -78,11 +78,48 @@ public class RecycleFragment extends Fragment {
             pr = (ProgressBar) view.findViewById(R.id.progressbar);
         }
 
+
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter = new RecycleAdapter(position);
         adapter.refreshAdapter(download);
-        adapter.notifyDataSetChanged();
         recyclerView.setAdapter(adapter);
+
+
+        if(position == 1) {
+            Thread t = new Thread(() -> {
+
+                MainActivity3.waitForDownloading();
+
+                Handler handler = new Handler(Looper.getMainLooper());
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        adapter.notifyDataSetChanged();
+                        pr.setVisibility(View.INVISIBLE);
+                    }
+                });
+            });
+            t.start();
+        }
+
+
+        if(position == 2) {
+            Thread t = new Thread(() -> {
+
+                MainActivity3.waitForDownloaded();
+
+                Handler handler = new Handler(Looper.getMainLooper());
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        adapter.notifyDataSetChanged();
+                        pr.setVisibility(View.INVISIBLE);
+                    }
+                });
+            });
+            t.start();
+
+        }
 
 
         if(position == 0) {

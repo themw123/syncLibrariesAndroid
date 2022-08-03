@@ -30,7 +30,7 @@
             android:backgroundTint="#134e8a"
             android:indeterminate="true"
             android:indeterminateTint="#134e8a"
-            android:visibility="invisible" />
+            android:visibility="visible" />
 
     </RelativeLayout>
 
