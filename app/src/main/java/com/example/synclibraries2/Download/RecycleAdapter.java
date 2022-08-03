@@ -28,26 +28,14 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
 
     private int position;
     private Download download;
-    private Vector<String> downloaded;
-    private Vector<Qbittorrent> downloading;
-    private Vector<Snowfl> search;
 
     public RecycleAdapter(int position) {
         this.position = position;
         this.download = null;
-        this.downloaded = null;
-        this.downloading = null;
-        this.search = null;
-
     }
 
     public void refreshAdapter(Download download) {
         this.download = download;
-        this.downloaded = download.getDownloaded();
-        this.downloading = download.getDownloading();
-        Snowfl s = new Snowfl("hi", "h", "hj", "jj", 1);
-        this.search = download.getSearch();
-        this.search.add(s);
     }
 
 
@@ -80,7 +68,6 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
         // Create a new view, which defines the UI of the list item
         View view = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.download_row, viewGroup, false);
-
         return new ViewHolder(view);
     }
 
@@ -92,12 +79,10 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
-        //viewHolder.getTextView().setText(localDataSet[position]);
 
         //text setzen
-        //viewHolder.getTextView().setText(jwv.get(viewHolder.getAdapterPosition()).getTitle());
         if(this.position == 0) {
-            viewHolder.getTextView().setText(search.get(viewHolder.getAdapterPosition()).getName());
+            viewHolder.getTextView().setText(download.getSearch().get(viewHolder.getAdapterPosition()).getName());
         }
 
 
@@ -109,28 +94,17 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        //return localDataSet.length;
-        //return jwv.size();
         int i = 0;
 
 
         if(position == 0) {
-            if(search == null) {
-                return 0;
-            }
-           i = search.size();
+           i = download.getSearch().size();
         }
         else if(position == 1) {
-            if(downloading == null) {
-                return 0;
-            }
-            i = downloading.size();
+            i = download.getDownloading().size();
         }
         else if(position == 2) {
-            if(downloaded == null) {
-                return 0;
-            }
-            i = downloaded.size();
+            i = download.getDownloaded().size();
         }
         else {
             i = 0;
@@ -138,11 +112,9 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
         return i;
     }
 
-
     public void test() {
-        //this.search = search[]
-        notifyDataSetChanged();
-        String test = "";
+        String text = "";
     }
+
 
 }

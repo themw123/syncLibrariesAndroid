@@ -3,6 +3,8 @@ package com.example.synclibraries2.Download;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +20,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.synclibraries2.MainActivity;
 import com.example.synclibraries2.R;
 import com.google.android.material.textfield.TextInputEditText;
+
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 import syncLibraries.Download;
 import syncLibraries.SSH;
@@ -82,17 +89,22 @@ public class RecycleFragment extends Fragment {
                     t.setText("");
                     if(!titel.isEmpty()) {
 
-                        Thread t1 = new Thread(() -> {
-                            download.setSearch(titel, 1);
-                            adapter.test();
-                            String test = "";
-                        });
-                        t1.start();
+                        Thread t = new Thread(() -> {
 
-                    /*
-                    adapter.addData(titel,adapter.getItemCount());
-                    recyclerView.scrollToPosition(adapter.getItemCount()-1);
-                    */
+                            download.setSearch(titel, 1);
+
+                            Handler handler = new Handler(Looper.getMainLooper());
+                            handler.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    adapter.test();
+                                    adapter.notifyDataSetChanged();
+
+                                }
+                            });
+
+                        });
+                        t.start();
 
                     }
                     t.clearFocus();
