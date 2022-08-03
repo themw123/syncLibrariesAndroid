@@ -19,7 +19,9 @@
             android:name=".Download.MainActivity3"
             android:exported="false"
             android:label="@string/title_activity_main3"
-            android:theme="@style/Theme.Synclibraries2.NoActionBar" />
+            android:theme="@style/Theme.Synclibraries2.NoActionBar"
+            android:windowSoftInputMode="adjustPan"
+        />
         <activity
             android:name=".Exceptions.MainActivity2"
             android:exported="false"

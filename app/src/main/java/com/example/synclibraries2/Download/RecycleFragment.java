@@ -9,6 +9,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -37,9 +38,8 @@ public class RecycleFragment extends Fragment {
     private RecycleAdapter adapter;
     private RecyclerView recyclerView;
 
-    public static Handler handler;
-    public static Runnable runnable;
     private TextInputEditText t;
+    private ProgressBar pr;
 
     public static final String TITLE = "title";
 
@@ -62,14 +62,20 @@ public class RecycleFragment extends Fragment {
         if(position == 0) {
             view = inflater.inflate(R.layout.recycle_fragment_download1, container, false);
             recyclerView = view.findViewById(R.id.search);
+            t = (TextInputEditText) view.findViewById(R.id.editText);
+            pr = (ProgressBar)view.findViewById(R.id.progressbar);
         }
         else if(position == 1) {
             view = inflater.inflate(R.layout.recycle_fragment_download2, container, false);
             recyclerView = view.findViewById(R.id.justwatch);
+            t = (TextInputEditText) view.findViewById(R.id.editText);
+            pr = (ProgressBar)view.findViewById(R.id.progressbar);
         }
         else if (position == 2) {
             view = inflater.inflate(R.layout.recycle_fragment_download3, container, false);
             recyclerView = view.findViewById(R.id.justwatch);
+            t = (TextInputEditText) view.findViewById(R.id.editText);
+            pr = (ProgressBar) view.findViewById(R.id.progressbar);
         }
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -80,7 +86,6 @@ public class RecycleFragment extends Fragment {
 
 
         if(position == 0) {
-            t = (TextInputEditText) view.findViewById(R.id.editText);
             t.setFocusable(true);
             t.setOnEditorActionListener(new TextView.OnEditorActionListener() {
                 @Override
@@ -88,6 +93,7 @@ public class RecycleFragment extends Fragment {
                     String titel = t.getText().toString();
                     t.setText("");
                     if(!titel.isEmpty()) {
+                        pr.setVisibility(View.VISIBLE);
 
                         Thread t = new Thread(() -> {
 
@@ -98,6 +104,7 @@ public class RecycleFragment extends Fragment {
                                 @Override
                                 public void run() {
                                     adapter.notifyDataSetChanged();
+                                    pr.setVisibility(View.INVISIBLE);
                                 }
                             });
 
@@ -109,6 +116,7 @@ public class RecycleFragment extends Fragment {
                     return true;
                 }
             });
+
         }
 
 
