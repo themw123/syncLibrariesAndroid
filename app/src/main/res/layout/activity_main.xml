@@ -109,11 +109,10 @@
             android:layout_height="172dp"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="15dp"
+            android:scrollbars="vertical"
             android:textAlignment="center"
             android:textColor="@color/black"
-            android:textSize="14sp"
-            android:scrollbars = "vertical"
-            />
+            android:textSize="14sp" />
 
 
         <ImageView

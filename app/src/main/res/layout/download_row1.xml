@@ -35,13 +35,13 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_weight="0.35"
                 android:orientation="horizontal"
                 android:background="#2166ad"
                 >
 
                 <LinearLayout
-                    android:layout_weight="4"
+                    android:layout_weight="5"
                     android:layout_height="match_parent"
                     android:layout_width="0dp">
 
@@ -49,33 +49,40 @@
                         android:id="@+id/textView"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:textStyle="normal"
                         android:layout_centerInParent="true"
-                        android:gravity="center"
-                        android:text="TextView"
-                        android:textColor="@color/white"
                         android:layout_marginLeft="25dp"
-                        android:textSize="15sp" />
+                        android:gravity="center"
+                        android:paddingLeft="20dp"
+                        android:paddingBottom="5dp"
+                        android:paddingTop="5dp"
+                        android:text="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+                        android:textColor="@color/white"
+                        app:autoSizeTextType="uniform"
+                        app:autoSizeMinTextSize="10dp"
+                        app:autoSizeMaxTextSize="18dp"
+
+                        android:textStyle="normal" />
 
 
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_weight="1"
+                    android:layout_weight="2"
                     android:layout_height="match_parent"
                     android:layout_width="0dp"
                     android:gravity="center"
                     >
+
                     <ImageButton
                         android:id="@+id/imageButton"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginRight="15dp"
-                        android:scaleType="fitCenter"
+                        android:layout_marginRight="20dp"
                         android:background="#00ffffff"
                         android:clickable="true"
+                        android:scaleType="fitCenter"
                         app:srcCompat="@drawable/download" />
 
                 </LinearLayout>
@@ -89,7 +96,10 @@
                 android:layout_weight="1"
                 android:orientation="horizontal"
                 android:background="@color/white"
-                android:padding="20dp"
+                android:paddingTop="5dp"
+                android:paddingLeft="25dp"
+                android:paddingRight="25dp"
+                android:backgroundTint="#12467a"
                 >
 
                 <TextView
@@ -99,6 +109,7 @@
                     android:layout_weight="1"
                     android:text="TextView"
                     android:gravity="center"
+                    android:textColor="@color/white"
                     />
 
                 <TextView
@@ -108,6 +119,7 @@
                     android:layout_weight="1"
                     android:text="TextView"
                     android:gravity="center"
+                    android:textColor="@color/white"
                     />
 
                 <TextView
@@ -117,6 +129,7 @@
                     android:layout_weight="1"
                     android:text="TextView"
                     android:gravity="center"
+                    android:textColor="@color/white"
                     />
 
 

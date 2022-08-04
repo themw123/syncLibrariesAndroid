@@ -3,6 +3,8 @@ package com.example.synclibraries2.Download;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -34,25 +36,37 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
      */
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView textView;
+        private final TextView site;
+        private final TextView size;
+        private final TextView seeder;
+        private ImageButton button;
 
         public ViewHolder(View view) {
             super(view);
             // Define click listener for the ViewHolder's View
             textView = (TextView) view.findViewById(R.id.textView);
+            site = (TextView) view.findViewById(R.id.site);
+            size = (TextView) view.findViewById(R.id.size);
+            seeder = (TextView) view.findViewById(R.id.seeder);
+            button = (ImageButton) view.findViewById(R.id.imageButton);
         }
 
         public TextView getTextView() {
-            return textView;
+            return textView ;
         }
         public TextView getSize() {
-            return textView;
+            return site;
         }
         public TextView getSite() {
-            return textView;
+            return size;
         }
         public TextView getSeeder() {
-            return textView;
+            return seeder;
         }
+        public ImageButton getButton() {
+            return button;
+        }
+
 
     }
 
@@ -81,13 +95,21 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
         if(this.position == 0) {
             viewHolder.getTextView().setText(download.getSearch().get(viewHolder.getAdapterPosition()).getName());
             viewHolder.getSite().setText(download.getSearch().get(viewHolder.getAdapterPosition()).getSite());
-            viewHolder.getSite().setText(download.getSearch().get(viewHolder.getAdapterPosition()).getSite());
+            viewHolder.getSize().setText(download.getSearch().get(viewHolder.getAdapterPosition()).getSize());
             viewHolder.getSeeder().setText(download.getSearch().get(viewHolder.getAdapterPosition()).getSeeder());
-
         }
+
+        //wenn download geklickt wird
+        viewHolder.getButton().setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                String magnet = download.getSearch().get(viewHolder.getAdapterPosition()).getMagnet();
+                //download...
+            }
+        });
 
 
     }
+
 
 
 
