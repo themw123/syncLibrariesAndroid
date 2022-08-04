@@ -58,7 +58,8 @@ public class MainActivity3 extends AppCompatActivity{
         tabLayout = findViewById(R.id.tabLayout);
         viewPager = findViewById(R.id.viewPager);
         seitenAdapter = new SeitenAdapter(getSupportFragmentManager(), getLifecycle(), download);
-
+        //alle fragments direkt setzen.Also nicht erst laden wenn geswiped wird. Wichtig damit update funktioniert.
+        viewPager.setOffscreenPageLimit(2);
         viewPager.setAdapter(seitenAdapter);
         new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> {
             if(position == 0) {
@@ -107,6 +108,9 @@ public class MainActivity3 extends AppCompatActivity{
     }
 
 
-
-
+    @Override
+    public void finish() {
+        super.finish();
+        RecycleFragment.dellAllAdapter();
+    }
 }

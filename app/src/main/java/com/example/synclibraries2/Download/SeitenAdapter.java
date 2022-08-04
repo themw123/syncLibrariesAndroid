@@ -1,6 +1,7 @@
 package com.example.synclibraries2.Download;
 
 import android.os.Bundle;
+import android.widget.ArrayAdapter;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -13,10 +14,12 @@ import syncLibraries.Download;
 public class SeitenAdapter extends FragmentStateAdapter {
 
     private Download download;
+    private ArrayAdapter arrayAdapter;
 
     public SeitenAdapter(@NonNull FragmentManager fragmentManager, @NonNull Lifecycle lifecycle, Download download) {
         super(fragmentManager, lifecycle);
         this.download = download;
+
     }
 
     @NonNull
@@ -26,6 +29,7 @@ public class SeitenAdapter extends FragmentStateAdapter {
         Bundle args = new Bundle();
         args.putString(RecycleFragment.TITLE, "Tab "+(position+1));
         fragment.setArguments(args);
+
         return fragment;
     }
 
@@ -33,4 +37,5 @@ public class SeitenAdapter extends FragmentStateAdapter {
     public int getItemCount() {
         return 3;
     }
+
 }

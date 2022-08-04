@@ -1,23 +1,31 @@
 package com.example.synclibraries2.Download;
 
+import android.app.AlertDialog;
+import android.app.Fragment;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
+import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.synclibraries2.R;
 
+import java.util.Vector;
+
 import syncLibraries.Download;
 import syncLibraries.Qbittorrent;
 
 public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHolder> {
-
 
     private int position;
     private Download download;
@@ -89,6 +97,7 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
     // Create new views (invoked by the layout manager)
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
+
         View view = null;
 
         if(position == 0) {
@@ -128,12 +137,14 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
                     Thread t = new Thread(() -> {
 
                         download.addDownloading(magnet);
+                        download.setDownloading();
 
                         Handler handler = new Handler(Looper.getMainLooper());
                         handler.post(new Runnable() {
                             @Override
                             public void run() {
-
+                                RecycleAdapter adapter = RecycleFragment.getAdapter(1);
+                                adapter.notifyDataSetChanged();
                             }
                         });
                     });
@@ -150,22 +161,30 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
             viewHolder.getButton().setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     String infohash_v1 = download.getDownloading().get(viewHolder.getAdapterPosition()).getInfohash();
+                    download.getDownloading().remove(viewHolder.getAdapterPosition());
+                    notifyItemRemoved(viewHolder.getAdapterPosition());
 
                     Thread t = new Thread(() -> {
 
                         download.delDownloading(infohash_v1);
+                        download.setDownloading();
 
                         Handler handler = new Handler(Looper.getMainLooper());
-                        handler.post(new Runnable() {
+                        handler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
-
+                                //um die realen daten zu erhalten und sicherzustellen das es gelöscht wurde
+                                notifyDataSetChanged();
                             }
-                        });
+                        },1000);
                     });
                     t.start();
                 }
             });
+
+
+
+
         }
         else if(this.position == 2) {
             viewHolder.getTextView().setText(download.getDownloaded().get(viewHolder.getAdapterPosition()));
@@ -173,19 +192,25 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
             //wenn löschen geklickt wird
             viewHolder.getButton().setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
+                    int pos = viewHolder.getAdapterPosition();
                     String title = download.getDownloaded().get(viewHolder.getAdapterPosition());
+                    download.getDownloaded().remove(viewHolder.getAdapterPosition());
 
+                    //nicht möglich wegen bekannten bug in recycler view
+                    //notifyItemRemoved(viewHolder.getAdapterPosition());
+                    notifyDataSetChanged();
 
                     Thread t = new Thread(() -> {
 
-
                         download.delDownloanded(title);
+                        download.setDownloaded();
 
                         Handler handler = new Handler(Looper.getMainLooper());
                         handler.post(new Runnable() {
                             @Override
                             public void run() {
-
+                                //um die realen daten zu erhalten und sicherzustellen das es gelöscht wurde
+                                notifyDataSetChanged();
                             }
                         });
                     });
@@ -223,6 +248,8 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
         }
         return i;
     }
+
+
 
 
 

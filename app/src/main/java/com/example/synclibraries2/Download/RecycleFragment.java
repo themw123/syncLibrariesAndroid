@@ -2,6 +2,7 @@ package com.example.synclibraries2.Download;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -11,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Adapter;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -19,11 +21,13 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.synclibraries2.MainActivity;
 import com.example.synclibraries2.R;
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.util.Vector;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -38,10 +42,12 @@ public class RecycleFragment extends Fragment {
     private int position;
     private Download download;
     private RecycleAdapter adapter;
+    private static Vector<RecycleAdapter> adapterArray = new Vector<RecycleAdapter>();
     private RecyclerView recyclerView;
 
     private TextInputEditText t;
     private ProgressBar pr;
+    private SwipeRefreshLayout swipeContainer;
 
     public static final String TITLE = "title";
 
@@ -85,6 +91,8 @@ public class RecycleFragment extends Fragment {
         adapter = new RecycleAdapter(position);
         adapter.refreshAdapter(download);
         recyclerView.setAdapter(adapter);
+        adapterArray.add(adapter);
+
 
 
         if(position == 1) {
@@ -165,6 +173,59 @@ public class RecycleFragment extends Fragment {
 
         }
 
+        if(position == 1) {
+            swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipeContainer);
+            // Setup refresh listener which triggers new data loading
+            swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                @Override
+                public void onRefresh() {
+                    Thread t = new Thread(() -> {
+                        download.setDownloading();
+                        Handler handler = new Handler(Looper.getMainLooper());
+                        handler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                swipeContainer.setRefreshing(false);
+                                adapter.notifyDataSetChanged();
+                            }
+                        });
+                    });
+                    t.start();
+                }
+            });
+
+            // Configure the refreshing colors
+
+            swipeContainer.setColorSchemeColors(Color.parseColor("#3584D5"));
+        }
+
+
+        if(position == 2) {
+            swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipeContainer);
+            // Setup refresh listener which triggers new data loading
+            swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                @Override
+                public void onRefresh() {
+
+                    Thread t = new Thread(() -> {
+                        download.setDownloaded();
+                        Handler handler = new Handler(Looper.getMainLooper());
+                        handler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                swipeContainer.setRefreshing(false);
+                                adapter.notifyDataSetChanged();
+                            }
+                        });
+                    });
+                    t.start();
+                }
+            });
+
+            // Configure the refreshing colors
+
+            swipeContainer.setColorSchemeColors(Color.parseColor("#3584D5"));
+        }
 
 
 
@@ -179,5 +240,12 @@ public class RecycleFragment extends Fragment {
 
     }
 
+    public static RecycleAdapter getAdapter(int position) {
+        return adapterArray.get(position);
+    }
+
+    public static void dellAllAdapter() {
+        adapterArray = new Vector<RecycleAdapter>();
+    }
 
 }
