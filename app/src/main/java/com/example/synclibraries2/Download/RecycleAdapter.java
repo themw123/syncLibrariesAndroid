@@ -6,19 +6,24 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Handler;
 import android.os.Looper;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Adapter;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Space;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.synclibraries2.R;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.util.Vector;
 
@@ -192,29 +197,24 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
             //wenn löschen geklickt wird
             viewHolder.getButton().setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    int pos = viewHolder.getAdapterPosition();
-                    String title = download.getDownloaded().get(viewHolder.getAdapterPosition());
-                    download.getDownloaded().remove(viewHolder.getAdapterPosition());
 
-                    //nicht möglich wegen bekannten bug in recycler view
-                    //notifyItemRemoved(viewHolder.getAdapterPosition());
-                    notifyDataSetChanged();
 
-                    Thread t = new Thread(() -> {
+                    //dialog box
+                    androidx.appcompat.app.AlertDialog dialog = new MaterialAlertDialogBuilder(v.getContext(), R.style.AlertDialogTheme)
+                            .setMessage("Wirklich löschen?")
+                            .setPositiveButton("Ja", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int whichButton) {
+                                    delDownloaded(viewHolder);
+                                }
+                            })
+                            .setNeutralButton("Nein", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int whichButton) {
+                                    //nichts
+                                }
+                            })
+                            .show();
 
-                        download.delDownloanded(title);
-                        download.setDownloaded();
 
-                        Handler handler = new Handler(Looper.getMainLooper());
-                        handler.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                //um die realen daten zu erhalten und sicherzustellen das es gelöscht wurde
-                                notifyDataSetChanged();
-                            }
-                        });
-                    });
-                    t.start();
 
                 }
             });
@@ -249,6 +249,33 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
         return i;
     }
 
+
+
+    private void delDownloaded(ViewHolder viewHolder) {
+        int pos = viewHolder.getAdapterPosition();
+        String title = download.getDownloaded().get(viewHolder.getAdapterPosition());
+        download.getDownloaded().remove(viewHolder.getAdapterPosition());
+
+        //nicht möglich wegen bekannten bug in recycler view
+        //notifyItemRemoved(viewHolder.getAdapterPosition());
+        notifyDataSetChanged();
+
+        Thread t = new Thread(() -> {
+
+            download.delDownloanded(title);
+            download.setDownloaded();
+
+            Handler handler = new Handler(Looper.getMainLooper());
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    //um die realen daten zu erhalten und sicherzustellen das es gelöscht wurde
+                    notifyDataSetChanged();
+                }
+            });
+        });
+        t.start();
+    }
 
 
 

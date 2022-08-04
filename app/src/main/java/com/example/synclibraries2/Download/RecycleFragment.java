@@ -25,6 +25,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.synclibraries2.MainActivity;
 import com.example.synclibraries2.R;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.Vector;
@@ -223,8 +224,11 @@ public class RecycleFragment extends Fragment {
             });
 
             // Configure the refreshing colors
-
             swipeContainer.setColorSchemeColors(Color.parseColor("#3584D5"));
+
+
+
+
         }
 
 

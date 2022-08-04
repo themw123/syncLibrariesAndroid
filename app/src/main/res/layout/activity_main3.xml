@@ -33,7 +33,6 @@
                 app:tabRippleColor="#2e76bf"
                 app:tabSelectedTextColor="@color/white"
                 app:tabTextColor="#B3FFFFFF"
-                app:tabTextAppearance="@style/TabLayoutStyle"
                 >
 
 
