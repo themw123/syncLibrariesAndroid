@@ -1,5 +1,7 @@
 package com.example.synclibraries2.Download;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -123,6 +125,19 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
                 public void onClick(View v) {
                     String magnet = download.getSearch().get(viewHolder.getAdapterPosition()).getMagnet();
 
+                    Thread t = new Thread(() -> {
+
+                        download.addDownloading(magnet);
+
+                        Handler handler = new Handler(Looper.getMainLooper());
+                        handler.post(new Runnable() {
+                            @Override
+                            public void run() {
+
+                            }
+                        });
+                    });
+                    t.start();
                 }
             });
         }
@@ -136,6 +151,19 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
                 public void onClick(View v) {
                     String infohash_v1 = download.getDownloading().get(viewHolder.getAdapterPosition()).getInfohash();
 
+                    Thread t = new Thread(() -> {
+
+                        download.delDownloading(infohash_v1);
+
+                        Handler handler = new Handler(Looper.getMainLooper());
+                        handler.post(new Runnable() {
+                            @Override
+                            public void run() {
+
+                            }
+                        });
+                    });
+                    t.start();
                 }
             });
         }
@@ -146,6 +174,22 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
             viewHolder.getButton().setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     String title = download.getDownloaded().get(viewHolder.getAdapterPosition());
+
+
+                    Thread t = new Thread(() -> {
+
+
+                        download.delDownloanded(title);
+
+                        Handler handler = new Handler(Looper.getMainLooper());
+                        handler.post(new Runnable() {
+                            @Override
+                            public void run() {
+
+                            }
+                        });
+                    });
+                    t.start();
 
                 }
             });
