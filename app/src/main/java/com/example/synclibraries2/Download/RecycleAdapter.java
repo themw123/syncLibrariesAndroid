@@ -160,30 +160,33 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
         else if(this.position == 1) {
             viewHolder.getTextView().setText(download.getDownloading().get(viewHolder.getAdapterPosition()).getName());
             viewHolder.getTotalsize().setText(download.getDownloading().get(viewHolder.getAdapterPosition()).getTotal_size()+" GB");
+            viewHolder.getSeeder().setText(download.getDownloading().get(viewHolder.getAdapterPosition()).getSeeder());
             viewHolder.getProgress().setText(download.getDownloading().get(viewHolder.getAdapterPosition()).getProgress()+"%");
+
 
             //wenn stoppen geklickt wird
             viewHolder.getButton().setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    String infohash_v1 = download.getDownloading().get(viewHolder.getAdapterPosition()).getInfohash();
-                    download.getDownloading().remove(viewHolder.getAdapterPosition());
-                    notifyItemRemoved(viewHolder.getAdapterPosition());
 
-                    Thread t = new Thread(() -> {
 
-                        download.delDownloading(infohash_v1);
-                        download.setDownloading();
 
-                        Handler handler = new Handler(Looper.getMainLooper());
-                        handler.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                //um die realen daten zu erhalten und sicherzustellen das es gelöscht wurde
-                                notifyDataSetChanged();
-                            }
-                        },1000);
-                    });
-                    t.start();
+                    //dialog box
+                    androidx.appcompat.app.AlertDialog dialog = new MaterialAlertDialogBuilder(v.getContext(), R.style.AlertDialogTheme)
+                            .setMessage("Auch local löschen?")
+                            .setPositiveButton("Ja", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int whichButton) {
+                                    delDownloading(viewHolder, true);
+                                }
+                            })
+                            .setNeutralButton("Nein", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int whichButton) {
+                                    delDownloading(viewHolder, false);
+                                }
+                            })
+                            .show();
+
+
+
                 }
             });
 
@@ -278,6 +281,27 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
     }
 
 
+    private void delDownloading(ViewHolder viewHolder, boolean localDelete) {
+        String infohash_v1 = download.getDownloading().get(viewHolder.getAdapterPosition()).getInfohash();
+        download.getDownloading().remove(viewHolder.getAdapterPosition());
+        notifyItemRemoved(viewHolder.getAdapterPosition());
+
+        Thread t = new Thread(() -> {
+
+            download.delDownloading(infohash_v1, localDelete);
+            download.setDownloading();
+
+            Handler handler = new Handler(Looper.getMainLooper());
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    //um die realen daten zu erhalten und sicherzustellen das es gelöscht wurde
+                    notifyDataSetChanged();
+                }
+            },1000);
+        });
+        t.start();
+    }
 
 
 }
