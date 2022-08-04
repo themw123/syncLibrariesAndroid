@@ -122,7 +122,7 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
             viewHolder.getButton().setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     String magnet = download.getSearch().get(viewHolder.getAdapterPosition()).getMagnet();
-                    //download...
+
                 }
             });
         }
@@ -130,9 +130,25 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
             viewHolder.getTextView().setText(download.getDownloading().get(viewHolder.getAdapterPosition()).getName());
             viewHolder.getTotalsize().setText(download.getDownloading().get(viewHolder.getAdapterPosition()).getTotal_size()+" GB");
             viewHolder.getProgress().setText(download.getDownloading().get(viewHolder.getAdapterPosition()).getProgress()+"%");
+
+            //wenn stoppen geklickt wird
+            viewHolder.getButton().setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    String infohash_v1 = download.getDownloading().get(viewHolder.getAdapterPosition()).getInfohash();
+
+                }
+            });
         }
         else if(this.position == 2) {
             viewHolder.getTextView().setText(download.getDownloaded().get(viewHolder.getAdapterPosition()));
+
+            //wenn löschen geklickt wird
+            viewHolder.getButton().setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    String title = download.getDownloaded().get(viewHolder.getAdapterPosition());
+
+                }
+            });
         }
 
 
