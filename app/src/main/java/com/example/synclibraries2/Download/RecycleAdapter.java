@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.synclibraries2.R;
 
 import syncLibraries.Download;
+import syncLibraries.Qbittorrent;
 
 public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHolder> {
 
@@ -39,6 +40,8 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
         private final TextView site;
         private final TextView size;
         private final TextView seeder;
+        private final TextView totalsize;
+        private final TextView progress;
         private ImageButton button;
 
         public ViewHolder(View view) {
@@ -48,6 +51,8 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
             site = (TextView) view.findViewById(R.id.site);
             size = (TextView) view.findViewById(R.id.size);
             seeder = (TextView) view.findViewById(R.id.seeder);
+            totalsize = (TextView) view.findViewById(R.id.totalsize);
+            progress = (TextView) view.findViewById(R.id.progress);
             button = (ImageButton) view.findViewById(R.id.imageButton);
         }
 
@@ -63,6 +68,12 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
         public TextView getSeeder() {
             return seeder;
         }
+        public TextView getTotalsize() {
+            return totalsize;
+        }
+        public TextView getProgress() {
+            return progress;
+        }
         public ImageButton getButton() {
             return button;
         }
@@ -76,9 +87,18 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
     // Create new views (invoked by the layout manager)
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
+        View view = null;
+
+        if(position == 0) {
+            view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.download_row1, viewGroup, false);
+        }
+        else if(position == 1) {
+            view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.download_row2, viewGroup, false);
+        }
+        else if(position == 2) {
+            view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.download_row3, viewGroup, false);
+        }
         // Create a new view, which defines the UI of the list item
-        View view = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.download_row1, viewGroup, false);
         return new ViewHolder(view);
     }
 
@@ -97,15 +117,24 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
             viewHolder.getSite().setText(download.getSearch().get(viewHolder.getAdapterPosition()).getSite());
             viewHolder.getSize().setText(download.getSearch().get(viewHolder.getAdapterPosition()).getSize());
             viewHolder.getSeeder().setText(download.getSearch().get(viewHolder.getAdapterPosition()).getSeeder());
+
+            //wenn download geklickt wird
+            viewHolder.getButton().setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    String magnet = download.getSearch().get(viewHolder.getAdapterPosition()).getMagnet();
+                    //download...
+                }
+            });
+        }
+        else if(this.position == 1) {
+            viewHolder.getTextView().setText(download.getDownloading().get(viewHolder.getAdapterPosition()).getName());
+            viewHolder.getTotalsize().setText(download.getDownloading().get(viewHolder.getAdapterPosition()).getTotal_size()+" GB");
+            viewHolder.getProgress().setText(download.getDownloading().get(viewHolder.getAdapterPosition()).getProgress()+"%");
+        }
+        else if(this.position == 2) {
+            viewHolder.getTextView().setText(download.getDownloaded().get(viewHolder.getAdapterPosition()));
         }
 
-        //wenn download geklickt wird
-        viewHolder.getButton().setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                String magnet = download.getSearch().get(viewHolder.getAdapterPosition()).getMagnet();
-                //download...
-            }
-        });
 
 
     }

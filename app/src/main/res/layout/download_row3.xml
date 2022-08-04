@@ -43,11 +43,16 @@
                     android:layout_height="match_parent"
                     android:textStyle="normal"
                     android:layout_centerInParent="true"
-                    android:gravity="center_vertical"
+                    android:gravity="center"
                     android:text="TextView"
                     android:textColor="@color/white"
                     android:layout_marginLeft="25dp"
-                    android:textSize="15sp" />
+                    app:autoSizeMaxTextSize="18dp"
+                    app:autoSizeMinTextSize="10dp"
+                    app:autoSizeTextType="uniform"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    />
 
 
             </LinearLayout>
@@ -68,7 +73,8 @@
                     android:scaleType="fitCenter"
                     android:background="#00ffffff"
                     android:clickable="true"
-                    app:srcCompat="@drawable/download" />
+                    android:padding="5dp"
+                    app:srcCompat="@drawable/delete" />
 
             </LinearLayout>
 

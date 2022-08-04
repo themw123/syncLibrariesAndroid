@@ -69,13 +69,13 @@ public class RecycleFragment extends Fragment {
         }
         else if(position == 1) {
             view = inflater.inflate(R.layout.recycle_fragment_download2, container, false);
-            recyclerView = view.findViewById(R.id.justwatch);
+            recyclerView = view.findViewById(R.id.loading);
             t = (TextInputEditText) view.findViewById(R.id.editText);
             pr = (ProgressBar)view.findViewById(R.id.progressbar);
         }
         else if (position == 2) {
             view = inflater.inflate(R.layout.recycle_fragment_download3, container, false);
-            recyclerView = view.findViewById(R.id.justwatch);
+            recyclerView = view.findViewById(R.id.local);
             t = (TextInputEditText) view.findViewById(R.id.editText);
             pr = (ProgressBar) view.findViewById(R.id.progressbar);
         }

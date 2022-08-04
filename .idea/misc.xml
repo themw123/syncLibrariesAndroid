@@ -15,8 +15,10 @@
         <entry key="..\:/Users/Marvin/AndroidStudioProjects/synclibraries2/app/src/main/res/layout/activity_main2.xml" value="0.12360688956433637" />
         <entry key="..\:/Users/Marvin/AndroidStudioProjects/synclibraries2/app/src/main/res/layout/text_row_item.xml" value="0.12360688956433637" />
         <entry key="..\:/Users/Marvin/git/synclibrariesApp2/app/src/main/res/drawable/background.xml" value="0.1025" />
+        <entry key="..\:/Users/Marvin/git/synclibrariesApp2/app/src/main/res/drawable/cancel.xml" value="0.148" />
         <entry key="..\:/Users/Marvin/git/synclibrariesApp2/app/src/main/res/drawable/cardview.xml" value="0.1" />
         <entry key="..\:/Users/Marvin/git/synclibrariesApp2/app/src/main/res/drawable/cursor.xml" value="0.1" />
+        <entry key="..\:/Users/Marvin/git/synclibrariesApp2/app/src/main/res/drawable/delete.xml" value="0.2395" />
         <entry key="..\:/Users/Marvin/git/synclibrariesApp2/app/src/main/res/drawable/download.xml" value="0.253" />
         <entry key="..\:/Users/Marvin/git/synclibrariesApp2/app/src/main/res/drawable/liste.xml" value="0.1" />
         <entry key="..\:/Users/Marvin/git/synclibrariesApp2/app/src/main/res/drawable/menu.xml" value="0.1" />
@@ -31,9 +33,9 @@
         <entry key="..\:/Users/Marvin/git/synclibrariesApp2/app/src/main/res/layout/activity_main4.xml" value="0.11822916666666666" />
         <entry key="..\:/Users/Marvin/git/synclibrariesApp2/app/src/main/res/layout/content_main3.xml" value="0.11822916666666666" />
         <entry key="..\:/Users/Marvin/git/synclibrariesApp2/app/src/main/res/layout/download_row.xml" value="0.264" />
-        <entry key="..\:/Users/Marvin/git/synclibrariesApp2/app/src/main/res/layout/download_row1.xml" value="0.358695652173913" />
+        <entry key="..\:/Users/Marvin/git/synclibrariesApp2/app/src/main/res/layout/download_row1.xml" value="0.16" />
         <entry key="..\:/Users/Marvin/git/synclibrariesApp2/app/src/main/res/layout/download_row2.xml" value="0.209375" />
-        <entry key="..\:/Users/Marvin/git/synclibrariesApp2/app/src/main/res/layout/download_row3.xml" value="0.358695652173913" />
+        <entry key="..\:/Users/Marvin/git/synclibrariesApp2/app/src/main/res/layout/download_row3.xml" value="0.2" />
         <entry key="..\:/Users/Marvin/git/synclibrariesApp2/app/src/main/res/layout/exception_row.xml" value="0.20689655172413793" />
         <entry key="..\:/Users/Marvin/git/synclibrariesApp2/app/src/main/res/layout/fragment_.xml" value="0.24010416666666667" />
         <entry key="..\:/Users/Marvin/git/synclibrariesApp2/app/src/main/res/layout/fragment_serien_filme.xml" value="0.17028985507246377" />

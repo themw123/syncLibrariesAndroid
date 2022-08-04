@@ -53,15 +53,14 @@
                         android:layout_marginLeft="25dp"
                         android:gravity="center"
                         android:paddingLeft="20dp"
-                        android:paddingBottom="5dp"
                         android:paddingTop="5dp"
-                        android:text="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+                        android:paddingBottom="5dp"
                         android:textColor="@color/white"
-                        app:autoSizeTextType="uniform"
-                        app:autoSizeMinTextSize="10dp"
+                        android:textStyle="normal"
                         app:autoSizeMaxTextSize="18dp"
+                        app:autoSizeMinTextSize="10dp"
 
-                        android:textStyle="normal" />
+                        app:autoSizeTextType="uniform" />
 
 
                 </LinearLayout>
