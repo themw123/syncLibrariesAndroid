@@ -33,7 +33,7 @@ import syncLibraries.Download;
 import syncLibraries.Qbittorrent;
 
 public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHolder> {
-
+xxxx
     private int positionFragment;
     private Download download;
 
