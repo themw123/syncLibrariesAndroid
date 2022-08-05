@@ -68,7 +68,12 @@
                         android:gravity="center"
                         android:text="TextView"
                         android:textColor="@color/white"
-                        android:textSize="15sp" />
+                        app:autoSizeMaxTextSize="18dp"
+                        android:autoSizePresetSizes="15dp"
+                        app:autoSizeMinTextSize="10dp"
+                        app:autoSizeTextType="uniform"
+                        android:paddingLeft="5dp"
+                        />
 
                     <Switch
                         android:id="@+id/switch1"
