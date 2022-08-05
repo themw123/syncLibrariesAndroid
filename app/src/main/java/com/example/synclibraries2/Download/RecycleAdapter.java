@@ -10,6 +10,8 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -137,6 +139,7 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
             //wenn download geklickt wird
             viewHolder.getButton().setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
+                    buttonAnimation(v, "long");
                     String magnet = download.getSearch().get(viewHolder.getAdapterPosition()).getMagnet();
 
                     Thread t = new Thread(() -> {
@@ -171,6 +174,7 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
             viewHolder.getButton().setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
 
+                    buttonAnimation(v, "long");
 
 
                     //dialog box
@@ -207,6 +211,7 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
             viewHolder.getButton().setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
 
+                    buttonAnimation(v, "long");
 
                     //dialog box
                     androidx.appcompat.app.AlertDialog dialog = new MaterialAlertDialogBuilder(v.getContext(), R.style.AlertDialogTheme)
@@ -312,6 +317,20 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
 
         });
         t.start();
+    }
+
+    public void buttonAnimation(View view, String time) {
+
+        Animation shake = null;
+
+        if(time.equals("long")) {
+            shake = AnimationUtils.loadAnimation(view.getContext(), R.anim.longanim);
+        }
+        else {
+            shake = AnimationUtils.loadAnimation(view.getContext(), R.anim.shortanim);
+        }
+
+        view.startAnimation(shake);
     }
 
 
