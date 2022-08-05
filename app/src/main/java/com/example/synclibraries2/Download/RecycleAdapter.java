@@ -32,11 +32,11 @@ import syncLibraries.Qbittorrent;
 
 public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHolder> {
 
-    private int position;
+    private int positionFragment;
     private Download download;
 
-    public RecycleAdapter(int position) {
-        this.position = position;
+    public RecycleAdapter(int positionFragment) {
+        this.positionFragment = positionFragment;
         this.download = null;
     }
 
@@ -105,13 +105,13 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
 
         View view = null;
 
-        if(position == 0) {
+        if(positionFragment == 0) {
             view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.download_row1, viewGroup, false);
         }
-        else if(position == 1) {
+        else if(positionFragment == 1) {
             view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.download_row2, viewGroup, false);
         }
-        else if(position == 2) {
+        else if(positionFragment == 2) {
             view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.download_row3, viewGroup, false);
         }
         // Create a new view, which defines the UI of the list item
@@ -128,7 +128,7 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
         // contents of the view with that element
 
         //text setzen
-        if(this.position == 0) {
+        if(this.positionFragment == 0) {
             viewHolder.getTextView().setText(download.getSearch().get(viewHolder.getAdapterPosition()).getName());
             viewHolder.getSite().setText(download.getSearch().get(viewHolder.getAdapterPosition()).getSite());
             viewHolder.getSize().setText(download.getSearch().get(viewHolder.getAdapterPosition()).getSize());
@@ -157,11 +157,14 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
                 }
             });
         }
-        else if(this.position == 1) {
-            viewHolder.getTextView().setText(download.getDownloading().get(viewHolder.getAdapterPosition()).getName());
-            viewHolder.getTotalsize().setText(download.getDownloading().get(viewHolder.getAdapterPosition()).getTotal_size()+" GB");
-            viewHolder.getSeeder().setText(download.getDownloading().get(viewHolder.getAdapterPosition()).getSeeder());
-            viewHolder.getProgress().setText(download.getDownloading().get(viewHolder.getAdapterPosition()).getProgress()+"%");
+        else if(this.positionFragment == 1) {
+
+            int pos = viewHolder.getLayoutPosition();
+
+            viewHolder.getTextView().setText(download.getDownloading().get(pos).getName());
+            viewHolder.getTotalsize().setText(download.getDownloading().get(pos).getTotal_size()+" GB");
+            viewHolder.getSeeder().setText(download.getDownloading().get(pos).getSeeder());
+            viewHolder.getProgress().setText(download.getDownloading().get(pos).getProgress()+"%");
 
 
             //wenn stoppen geklickt wird
@@ -175,12 +178,12 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
                             .setMessage("Auch local löschen?")
                             .setPositiveButton("Ja", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int whichButton) {
-                                    delDownloading(viewHolder, true);
+                                    delDownloading(viewHolder, pos, true);
                                 }
                             })
                             .setNeutralButton("Nein", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int whichButton) {
-                                    delDownloading(viewHolder, false);
+                                    delDownloading(viewHolder, pos, false);
                                 }
                             })
                             .show();
@@ -194,8 +197,11 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
 
 
         }
-        else if(this.position == 2) {
-            viewHolder.getTextView().setText(download.getDownloaded().get(viewHolder.getAdapterPosition()));
+        else if(this.positionFragment == 2) {
+
+            int pos = viewHolder.getLayoutPosition();
+
+            viewHolder.getTextView().setText(download.getDownloaded().get(pos));
 
             //wenn löschen geklickt wird
             viewHolder.getButton().setOnClickListener(new View.OnClickListener() {
@@ -207,7 +213,7 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
                             .setMessage("Wirklich löschen?")
                             .setPositiveButton("Ja", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int whichButton) {
-                                    delDownloaded(viewHolder);
+                                    delDownloaded(viewHolder, pos);
                                 }
                             })
                             .setNeutralButton("Nein", new DialogInterface.OnClickListener() {
@@ -237,13 +243,13 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
         int i = 0;
 
 
-        if(position == 0) {
+        if(positionFragment == 0) {
            i = download.getSearch().size();
         }
-        else if(position == 1) {
+        else if(positionFragment == 1) {
             i = download.getDownloading().size();
         }
-        else if(position == 2) {
+        else if(positionFragment == 2) {
             i = download.getDownloaded().size();
         }
         else {
@@ -254,20 +260,19 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
 
 
 
-    private void delDownloaded(ViewHolder viewHolder) {
-        int pos = viewHolder.getAdapterPosition();
-        String title = download.getDownloaded().get(viewHolder.getAdapterPosition());
-        download.getDownloaded().remove(viewHolder.getAdapterPosition());
-
-        //nicht möglich wegen bekannten bug in recycler view
-        //notifyItemRemoved(viewHolder.getAdapterPosition());
-        notifyDataSetChanged();
+    private void delDownloaded(ViewHolder viewHolder, int pos) {
+        String title = download.getDownloaded().get(pos);
+        download.getDownloaded().remove(pos);
+        notifyItemRemoved(pos);
+        notifyItemRangeChanged(pos, download.getDownloaded().size());
 
         Thread t = new Thread(() -> {
 
             download.delDownloanded(title);
-            download.setDownloaded();
+            //muss aus sein sonnst absturz weil inconsistent.
+            //download.setDownloaded();
 
+            /*
             Handler handler = new Handler(Looper.getMainLooper());
             handler.post(new Runnable() {
                 @Override
@@ -276,29 +281,35 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
                     notifyDataSetChanged();
                 }
             });
+            */
         });
         t.start();
     }
 
 
-    private void delDownloading(ViewHolder viewHolder, boolean localDelete) {
-        String infohash_v1 = download.getDownloading().get(viewHolder.getAdapterPosition()).getInfohash();
-        download.getDownloading().remove(viewHolder.getAdapterPosition());
-        notifyItemRemoved(viewHolder.getAdapterPosition());
+    private void delDownloading(ViewHolder viewHolder, int pos, boolean localDelete) {
+        String infohash_v1 = download.getDownloading().get(pos).getInfohash();
+        download.getDownloading().remove(pos);
+        notifyItemRemoved(pos);
+        notifyItemRangeChanged(pos, download.getDownloading().size());
 
         Thread t = new Thread(() -> {
 
             download.delDownloading(infohash_v1, localDelete);
-            download.setDownloading();
+            //muss aus sein sonnst absturz weil inconsistent.
+            //download.setDownloading();
 
+            /*
             Handler handler = new Handler(Looper.getMainLooper());
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     //um die realen daten zu erhalten und sicherzustellen das es gelöscht wurde
-                    notifyDataSetChanged();
+                    //notifyDataSetChanged();
                 }
             },1000);
+            */
+
         });
         t.start();
     }
