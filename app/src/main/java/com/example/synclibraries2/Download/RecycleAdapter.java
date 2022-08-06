@@ -59,6 +59,7 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
         private final TextView seeder;
         private final TextView totalsize;
         private final TextView progress;
+        private final TextView speed;
         private ImageButton button;
 
         public ViewHolder(View view) {
@@ -70,6 +71,7 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
             seeder = (TextView) view.findViewById(R.id.seeder);
             totalsize = (TextView) view.findViewById(R.id.totalsize);
             progress = (TextView) view.findViewById(R.id.progress);
+            speed = (TextView) view.findViewById(R.id.speed);
             button = (ImageButton) view.findViewById(R.id.imageButton);
         }
 
@@ -90,6 +92,9 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
         }
         public TextView getProgress() {
             return progress;
+        }
+        public TextView getSpeed() {
+            return speed;
         }
         public ImageButton getButton() {
             return button;
@@ -172,9 +177,10 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
             int pos = viewHolder.getLayoutPosition();
 
             viewHolder.getTextView().setText(download.getDownloading().get(pos).getName());
-            viewHolder.getTotalsize().setText(download.getDownloading().get(pos).getTotal_size()+" GB");
+            viewHolder.getTotalsize().setText(download.getDownloading().get(pos).getTotal_size()+" GiB");
             viewHolder.getSeeder().setText(download.getDownloading().get(pos).getSeeder());
             viewHolder.getProgress().setText(download.getDownloading().get(pos).getProgress()+"%");
+            viewHolder.getSpeed().setText(download.getDownloading().get(pos).getSpeed()+" MiB");
 
 
             //wenn stoppen geklickt wird
@@ -302,8 +308,9 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
     private void delDownloading(ViewHolder viewHolder, int pos, boolean localDelete) {
         String infohash_v1 = download.getDownloading().get(pos).getInfohash();
         download.getDownloading().remove(pos);
-        notifyItemRemoved(pos);
-        notifyItemRangeChanged(pos, download.getDownloading().size());
+        //bei live refresh sollte es besser aus sein
+        //notifyItemRemoved(pos);
+        //notifyItemRangeChanged(pos, download.getDownloading().size());
 
         Thread t = new Thread(() -> {
 

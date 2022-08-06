@@ -45,15 +45,6 @@ public class MainActivity3 extends AppCompatActivity{
         });
         ssh.start();
 
-        loadDownloading = new Thread(() -> {
-            download.setDownloading();
-        });
-        loadDownloading.start();
-
-        loadDownloaded = new Thread(() -> {
-            download.setDownloaded();
-        });
-        loadDownloaded.start();
 
         tabLayout = findViewById(R.id.tabLayout);
         viewPager = findViewById(R.id.viewPager);
@@ -86,28 +77,12 @@ public class MainActivity3 extends AppCompatActivity{
         }
     }
 
-    public static void waitForDownloading() {
-        try {
-            waitForSSH();
-            loadDownloading.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static void waitForDownloaded() {
-        try {
-            waitForSSH();
-            loadDownloaded.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
 
 
     @Override
     public void finish() {
         super.finish();
         RecycleFragment.dellAllAdapter();
+        RecycleFragment.live = false;
     }
 }

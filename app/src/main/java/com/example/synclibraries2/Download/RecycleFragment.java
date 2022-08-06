@@ -49,6 +49,7 @@ public class RecycleFragment extends Fragment {
     private TextInputEditText t;
     private ProgressBar pr;
     private SwipeRefreshLayout swipeContainer;
+    public static boolean live;
 
     public static final String TITLE = "title";
 
@@ -95,42 +96,11 @@ public class RecycleFragment extends Fragment {
         adapterArray.add(adapter);
 
 
+        getDownloaded();
 
-        if(position == 1) {
-            Thread t = new Thread(() -> {
+        getliveDownloading();
 
-                MainActivity3.waitForDownloading();
-
-                Handler handler = new Handler(Looper.getMainLooper());
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        adapter.notifyDataSetChanged();
-                        pr.setVisibility(View.INVISIBLE);
-                    }
-                });
-            });
-            t.start();
-        }
-
-
-        if(position == 2) {
-            Thread t = new Thread(() -> {
-
-                MainActivity3.waitForDownloaded();
-
-                Handler handler = new Handler(Looper.getMainLooper());
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        adapter.notifyDataSetChanged();
-                        pr.setVisibility(View.INVISIBLE);
-                    }
-                });
-            });
-            t.start();
-
-        }
+        swipeRefresh(view);
 
 
         if(position == 0) {
@@ -174,7 +144,89 @@ public class RecycleFragment extends Fragment {
 
         }
 
+
+
+
+
+
+
+
+        return view;
+
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        //((TextView)view.findViewById(R.id.textViewXY)).setText(getArguments().getString(TITLE));
+    }
+
+    public static RecycleAdapter getAdapter(int position) {
+        return adapterArray.get(position);
+    }
+
+    public static void dellAllAdapter() {
+        adapterArray = new Vector<RecycleAdapter>();
+    }
+
+
+    private void getliveDownloading() {
         if(position == 1) {
+            live = true;
+            Thread t = new Thread(() -> {
+                MainActivity3.waitForSSH();
+                int counter = 0;
+                while (live) {
+                    download.setDownloading();
+                    Handler handler = new Handler(Looper.getMainLooper());
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            adapter.notifyDataSetChanged();
+                            if (counter == 0) {
+                                pr.setVisibility(View.INVISIBLE);
+                            }
+                        }
+                    });
+
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+            });
+            t.start();
+
+        }
+
+    }
+
+
+    private void getDownloaded() {
+        if(position == 2) {
+            Thread t = new Thread(() -> {
+                download.getDownloaded().clear();
+                MainActivity3.waitForSSH();
+                download.setDownloaded();
+
+                Handler handler = new Handler(Looper.getMainLooper());
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        adapter.notifyDataSetChanged();
+                        pr.setVisibility(View.INVISIBLE);
+                    }
+                });
+            });
+            t.start();
+
+        }
+    }
+
+    private void swipeRefresh(View view) {
+        if (position == 1) {
             swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipeContainer);
             // Setup refresh listener which triggers new data loading
             swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -201,7 +253,7 @@ public class RecycleFragment extends Fragment {
         }
 
 
-        if(position == 2) {
+        if (position == 2) {
             swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipeContainer);
             // Setup refresh listener which triggers new data loading
             swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -225,31 +277,7 @@ public class RecycleFragment extends Fragment {
 
             // Configure the refreshing colors
             swipeContainer.setColorSchemeColors(Color.parseColor("#3584D5"));
-
-
-
-
         }
 
-
-
-        return view;
-
     }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        //((TextView)view.findViewById(R.id.textViewXY)).setText(getArguments().getString(TITLE));
-
-    }
-
-    public static RecycleAdapter getAdapter(int position) {
-        return adapterArray.get(position);
-    }
-
-    public static void dellAllAdapter() {
-        adapterArray = new Vector<RecycleAdapter>();
-    }
-
 }
