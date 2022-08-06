@@ -71,9 +71,6 @@ public class MainActivity3 extends AppCompatActivity{
             else if(position == 2){
                 tab.setText("Local");
             }
-            else {
-                tab.setText("kp");
-            }
         }).attach();
 
 

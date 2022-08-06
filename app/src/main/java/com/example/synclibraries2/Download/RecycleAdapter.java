@@ -151,8 +151,15 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
                         handler.post(new Runnable() {
                             @Override
                             public void run() {
-                                RecycleAdapter adapter = RecycleFragment.getAdapter(1);
-                                adapter.notifyDataSetChanged();
+                                //try damit falls download gedrückt wird und direkt geschlossen wird app nicht abstürzt
+                                //verursacher RecycleFragment.getAdapter
+                                try{
+                                    RecycleAdapter adapter = RecycleFragment.getAdapter(1);
+                                    adapter.notifyDataSetChanged();
+                                }
+                                catch(Exception e) {
+
+                                }
                             }
                         });
                     });

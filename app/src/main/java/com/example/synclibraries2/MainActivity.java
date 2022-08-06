@@ -26,6 +26,18 @@ import syncLibraries.SyncLibrary;
 
 public class MainActivity extends AppCompatActivity {
 
+    //ssh für open/close stremio ist gleiche wie für download
+    private final String sshuser = "marvin";
+    private final String sshpass = "xxxxx";
+    private final String sshserver = "192.168.0.138";
+    private final int sshport = 22;
+    private final int qbittorrentport = 8080;
+    private final String downloadpath = "D:\\torrents";
+
+
+
+
+
     private static int counter = 0;
     public static SyncLibrary sl = null;
     public static SSH ssh = null;
@@ -48,8 +60,8 @@ public class MainActivity extends AppCompatActivity {
         counter++;
         if(counter == 1) {
             createSyncLibrary();
-            createSSH();
-            this.download = new Download();
+            createSSH(sshuser, sshpass, sshserver, sshport);
+            this.download = new Download(sshuser, sshpass, sshserver, sshport, qbittorrentport ,downloadpath);
         }
 
 
@@ -164,9 +176,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void createSSH() {
+    private void createSSH(String user, String pass, String server, int port) {
         createSSH = new Thread(() -> {
-            ssh = new SSH("marvin","xxxxxx","192.168.0.138",22);
+            ssh = new SSH(user, pass, server ,port);
             ssh.connect();
         });
         createSSH.start();
@@ -286,20 +298,31 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void openSurfshark() {
-        waitForCreateSyncLibrary();
+        waitForCreateSSH();
         ssh.sendCommend("SCHTASKS.EXE /RUN /TN \"opensurfshark\"");
     }
 
     private void closeSurfshark() {
-        waitForCreateSyncLibrary();
+        waitForCreateSSH();
         ssh.sendCommend("taskkill /IM Surfshark.exe /F >nul 2>&1");
     }
 
+
+    private void openQbit() {
+        waitForCreateSSH();
+        ssh.sendCommend("SCHTASKS.EXE /RUN /TN \"openqbit\"");
+    }
+
+    private void closeQbit() {
+        waitForCreateSSH();
+        ssh.sendCommend("taskkill /IM qbittorrent.exe /F >nul 2>&1");
+    }
 
     public void onClickClose(View view) {
         Thread t = new Thread(() -> {
             buttonAnimation(view,"short");
             closeStremio(true);
+            closeQbit();
         });
         t.start();
     }
@@ -307,8 +330,9 @@ public class MainActivity extends AppCompatActivity {
     public void onClickOpen(View view) {
         Thread t = new Thread(() -> {
             buttonAnimation(view,"short");
-            openStremio();
             openSurfshark();
+            openQbit();
+            openStremio();
         });
         t.start();
 
