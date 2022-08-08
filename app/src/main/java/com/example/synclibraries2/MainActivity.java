@@ -58,11 +58,11 @@ public class MainActivity extends AppCompatActivity {
 
         //sonnst wird es mehrmals aufgerufen durch MainActivity2 anscheinend
         counter++;
-        if(counter == 1) {
-            createSyncLibrary();
-            createSSH(sshuser, sshpass, sshserver, sshport);
-            this.download = new Download(sshuser, sshpass, sshserver, sshport, qbittorrentport ,downloadpath);
-        }
+
+        createSyncLibrary();
+        createSSH(sshuser, sshpass, sshserver, sshport);
+        this.download = new Download(sshuser, sshpass, sshserver, sshport, qbittorrentport ,downloadpath);
+        
 
 
 
