@@ -311,10 +311,16 @@ public class MainActivity extends AppCompatActivity {
     private void openQbit() {
         waitForCreateSSH();
         ssh.sendCommend("SCHTASKS.EXE /RUN /TN \"openqbit\"");
+        download.startSSH();
+        download.setDownloading();
+        download.resumeDownloading();
     }
 
     private void closeQbit() {
         waitForCreateSSH();
+        download.startSSH();
+        download.setDownloading();
+        download.pauseDownloading();
         ssh.sendCommend("taskkill /IM qbittorrent.exe /F >nul 2>&1");
     }
 
