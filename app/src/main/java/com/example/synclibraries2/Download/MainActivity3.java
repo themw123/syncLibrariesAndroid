@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.synclibraries2.MainActivity;
@@ -23,7 +24,8 @@ import syncLibraries.SSH;
 
 public class MainActivity3 extends AppCompatActivity{
 
-    private TabLayout tabLayout;
+    private static TabLayout tabLayout;
+
     private ViewPager2 viewPager;
     private SeitenAdapter seitenAdapter;
     private static Download download;
@@ -45,7 +47,6 @@ public class MainActivity3 extends AppCompatActivity{
         });
         ssh.start();
 
-
         tabLayout = findViewById(R.id.tabLayout);
         viewPager = findViewById(R.id.viewPager);
         seitenAdapter = new SeitenAdapter(getSupportFragmentManager(), getLifecycle(), download);
@@ -64,8 +65,36 @@ public class MainActivity3 extends AppCompatActivity{
             }
         }).attach();
 
+        if(download.getDownloadingNoti() > 0) {
+            tabLayout.getTabAt(1).getOrCreateBadge().setNumber(download.getDownloadingNoti());
+            tabLayout.getTabAt(1).getOrCreateBadge().setBackgroundColor(Color.parseColor("#12467a"));
+            tabLayout.getTabAt(1).getOrCreateBadge().setBadgeTextColor(Color.WHITE);
+            tabLayout.getTabAt(1).getOrCreateBadge().setHorizontalOffset(-10);
+        }
 
 
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
+                if (tab.getPosition() == 0) {
+
+                } else if (tab.getPosition() == 1) {
+                    notification(1, "down");
+                } else {
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
 
     }
 
@@ -78,6 +107,20 @@ public class MainActivity3 extends AppCompatActivity{
     }
 
 
+    public static void notification(int tab, String state) {
+        if(state.equals("up")) {
+            download.setDownloadingNoti(download.getDownloadingNoti()+1);
+            tabLayout.getTabAt(tab).getOrCreateBadge().setNumber(download.getDownloadingNoti());
+            tabLayout.getTabAt(tab).getOrCreateBadge().setBackgroundColor(Color.parseColor("#12467a"));
+            tabLayout.getTabAt(tab).getOrCreateBadge().setBadgeTextColor(Color.WHITE);
+            tabLayout.getTabAt(tab).getOrCreateBadge().setHorizontalOffset(-10);
+        }
+        else if(state.equals("down")){
+            tabLayout.getTabAt(tab).removeBadge();
+            download.setDownloadingNoti(0);
+        }
+
+    }
 
     @Override
     public void finish() {

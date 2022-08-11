@@ -26,6 +26,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.synclibraries2.R;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.tabs.TabLayout;
 
 import java.util.Vector;
 
@@ -61,6 +62,7 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
         private final TextView progress;
         private final TextView speed;
         private ImageButton button;
+        private TabLayout tabLayout;
 
         public ViewHolder(View view) {
             super(view);
@@ -73,6 +75,7 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
             progress = (TextView) view.findViewById(R.id.progress);
             speed = (TextView) view.findViewById(R.id.speed);
             button = (ImageButton) view.findViewById(R.id.imageButton);
+            tabLayout = (TabLayout) view.findViewById(R.id.tabLayout);
         }
 
         public TextView getTextView() {
@@ -99,6 +102,7 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
         public ImageButton getButton() {
             return button;
         }
+        public TabLayout getTabLayout() { return tabLayout; }
 
 
     }
@@ -146,11 +150,17 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
                 public void onClick(View v) {
                     buttonAnimation(v, "long");
                     String magnet = download.getSearch().get(viewHolder.getAdapterPosition()).getMagnet();
+                    int count1 = download.getDownloading().size();
 
                     Thread t = new Thread(() -> {
 
                         download.addDownloading(magnet);
                         download.setDownloading();
+
+                        int count2 = download.getDownloading().size();
+                        if(count2 > count1) {
+                            MainActivity3.notification(1,"up");
+                        }
 
                         Handler handler = new Handler(Looper.getMainLooper());
                         handler.post(new Runnable() {
@@ -318,16 +328,17 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
             //muss aus sein sonnst absturz weil inconsistent.
             //download.setDownloading();
 
-            /*
+
             Handler handler = new Handler(Looper.getMainLooper());
-            handler.postDelayed(new Runnable() {
+            handler.post(new Runnable() {
                 @Override
                 public void run() {
                     //um die realen daten zu erhalten und sicherzustellen das es gelöscht wurde
-                    //notifyDataSetChanged();
+                    notifyDataSetChanged();
+
                 }
-            },1000);
-            */
+            });
+
 
         });
         t.start();
