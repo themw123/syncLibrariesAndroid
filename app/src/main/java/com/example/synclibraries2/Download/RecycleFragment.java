@@ -62,6 +62,7 @@ public class RecycleFragment extends Fragment {
     public RecycleFragment(int position, Download download) {
         this.position = position;
         this.download = download;
+
         // Required empty public constructor
     }
 

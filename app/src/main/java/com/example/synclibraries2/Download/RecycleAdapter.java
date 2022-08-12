@@ -1,42 +1,34 @@
 package com.example.synclibraries2.Download;
 
-import android.app.AlertDialog;
-import android.app.Fragment;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Handler;
 import android.os.Looper;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.Adapter;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.Space;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.synclibraries2.Callback;
 import com.example.synclibraries2.R;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.tabs.TabLayout;
 
-import java.util.Vector;
-
 import syncLibraries.Download;
-import syncLibraries.Qbittorrent;
 
 public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHolder> {
 
     private int positionFragment;
     private Download download;
+    private static Callback callback;
+
+    public static void setCallback(Callback callback) {
+        RecycleAdapter.callback = callback;
+    }
 
     public RecycleAdapter(int positionFragment) {
         this.positionFragment = positionFragment;
@@ -159,7 +151,9 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
 
                         int count2 = download.getDownloading().size();
                         if(count2 > count1) {
-                            MainActivity3.notification(1,"up");
+                            //nur um callbacks zu testen
+                            callback.notificationCallback(1, "up");
+                            //MainActivity3.notification(1,"up");
                         }
 
                         Handler handler = new Handler(Looper.getMainLooper());

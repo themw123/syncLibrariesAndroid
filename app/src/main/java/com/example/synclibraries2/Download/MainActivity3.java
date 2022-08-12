@@ -1,31 +1,25 @@
 package com.example.synclibraries2.Download;
 
-import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.view.KeyEvent;
-import android.view.View;
-import android.widget.TabHost;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.example.synclibraries2.Callback;
 import com.example.synclibraries2.MainActivity;
 import com.example.synclibraries2.R;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
-import com.google.android.material.textfield.TextInputEditText;
 
 import syncLibraries.Download;
-import syncLibraries.SSH;
 
-public class MainActivity3 extends AppCompatActivity{
+public class MainActivity3 extends AppCompatActivity implements Callback {
+
+    private Callback callback;
 
     private static TabLayout tabLayout;
-
     private ViewPager2 viewPager;
     private SeitenAdapter seitenAdapter;
     private static Download download;
@@ -39,6 +33,9 @@ public class MainActivity3 extends AppCompatActivity{
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main3);
+
+        //nur um callbacks zu testen
+        RecycleAdapter.setCallback(this);
 
         this.download = MainActivity.download;
 
@@ -80,7 +77,7 @@ public class MainActivity3 extends AppCompatActivity{
                 if (tab.getPosition() == 0) {
 
                 } else if (tab.getPosition() == 1) {
-                    notification(1, "down");
+                    notificationCallback(1, "down");
                 } else {
                 }
             }
@@ -107,7 +104,16 @@ public class MainActivity3 extends AppCompatActivity{
     }
 
 
-    public static void notification(int tab, String state) {
+    @Override
+    public void finish() {
+        super.finish();
+        RecycleFragment.dellAllAdapter();
+        RecycleFragment.live = false;
+    }
+
+    //nur um callbacks zu testen
+    @Override
+    public void notificationCallback(int tab, String state) {
         if(state.equals("up")) {
             download.setDownloadingNoti(download.getDownloadingNoti()+1);
             tabLayout.getTabAt(tab).getOrCreateBadge().setNumber(download.getDownloadingNoti());
@@ -119,13 +125,5 @@ public class MainActivity3 extends AppCompatActivity{
             tabLayout.getTabAt(tab).removeBadge();
             download.setDownloadingNoti(0);
         }
-
-    }
-
-    @Override
-    public void finish() {
-        super.finish();
-        RecycleFragment.dellAllAdapter();
-        RecycleFragment.live = false;
     }
 }
