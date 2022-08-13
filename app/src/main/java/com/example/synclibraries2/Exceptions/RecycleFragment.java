@@ -9,9 +9,12 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.example.synclibraries2.MainActivity;
 import com.example.synclibraries2.R;
@@ -25,17 +28,11 @@ public class RecycleFragment extends Fragment {
     private RecycleAdapter adapter;
     private RecyclerView recyclerView;
 
-    private SyncLibrary sl;
-
-
     public static final String TITLE = "title";
 
     public RecycleFragment(int position) {
         this.position = position;
         // Required empty public constructor
-        MainActivity.waitForCreateSyncLibrary();
-        MainActivity.waitForStartSync();
-        this.sl = MainActivity.sl;
     }
 
     @Override
@@ -47,9 +44,7 @@ public class RecycleFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter = new RecycleAdapter(position);
 
-        adapter.refreshListe(sl);
-        adapter.notifyDataSetChanged();
-        recyclerView.setAdapter(adapter);
+        setData();
 
 
         return view;
@@ -63,4 +58,34 @@ public class RecycleFragment extends Fragment {
         //((TextView)view.findViewById(R.id.textViewXY)).setText(getArguments().getString(TITLE));
 
     }
+
+
+    private void setData() {
+        Thread t1 = new Thread(() -> {
+            MainActivity.waitForCreateSyncLibrary();
+            MainActivity.waitForStartSync();
+
+            Handler handler = new Handler(Looper.getMainLooper());
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    try{
+                        adapter.refreshListe(MainActivity.sl);
+                        adapter.notifyDataSetChanged();
+                        recyclerView.setAdapter(adapter);
+                        getActivity().findViewById(R.id.progressbar).setVisibility(View.INVISIBLE);
+                    }
+                    catch(Exception e) {
+
+                    }
+
+                }
+            });
+        });
+        t1.start();
+
+
+
+    }
+
 }

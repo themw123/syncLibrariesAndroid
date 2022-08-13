@@ -99,11 +99,11 @@ public class RecycleFragment extends Fragment {
 
 
 
-        getDownloaded();
+        setDownloaded();
 
-        getliveDownloading();
+        setliveDownloading();
 
-        swipeRefresh(view);
+        setswipeRefresh(view);
 
 
         if(position == 0) {
@@ -173,7 +173,7 @@ public class RecycleFragment extends Fragment {
     }
 
 
-    private void getliveDownloading() {
+    private void setliveDownloading() {
         if(position == 1) {
             live = true;
             Thread t = new Thread(() -> {
@@ -207,7 +207,7 @@ public class RecycleFragment extends Fragment {
     }
 
 
-    private void getDownloaded() {
+    private void setDownloaded() {
         if(position == 2) {
             Thread t = new Thread(() -> {
                 download.getDownloaded().clear();
@@ -228,7 +228,7 @@ public class RecycleFragment extends Fragment {
         }
     }
 
-    private void swipeRefresh(View view) {
+    private void setswipeRefresh(View view) {
         if (position == 1) {
             swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipeContainer);
             // Setup refresh listener which triggers new data loading
@@ -236,6 +236,7 @@ public class RecycleFragment extends Fragment {
                 @Override
                 public void onRefresh() {
                     Thread t = new Thread(() -> {
+                        MainActivity3.waitForSSH();
                         download.setDownloading();
                         Handler handler = new Handler(Looper.getMainLooper());
                         handler.post(new Runnable() {

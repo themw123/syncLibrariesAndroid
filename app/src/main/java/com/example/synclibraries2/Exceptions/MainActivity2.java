@@ -25,36 +25,27 @@ public class MainActivity2 extends AppCompatActivity{
         setContentView(R.layout.activity_main2);
 
 
+        tabLayout = findViewById(R.id.tabLayout);
+        viewPager = findViewById(R.id.viewPager);
+        seitenAdapter = new SeitenAdapter(getSupportFragmentManager(), getLifecycle());
+        viewPager.setAdapter(seitenAdapter);
         findViewById(R.id.progressbar).setVisibility(View.VISIBLE);
-        Thread t1 = new Thread(() -> {
 
-            tabLayout = findViewById(R.id.tabLayout);
-            viewPager = findViewById(R.id.viewPager);
-            seitenAdapter = new SeitenAdapter(getSupportFragmentManager(), getLifecycle());
-
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    viewPager.setAdapter(seitenAdapter);
-                    new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> {
-                        if(position == 0) {
-                            tab.setText("Serien");
-                        }
-                        else if(position == 1) {
-                            tab.setText("Filme");
-                        }
-                        else {
-                            tab.setText("kp");
-                        }
-                    }).attach();
-                    findViewById(R.id.progressbar).setVisibility(View.INVISIBLE);
-                }
-            });
+        new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> {
+            if(position == 0) {
+                tab.setText("Serien");
+            }
+            else if(position == 1) {
+                tab.setText("Filme");
+            }
+            else {
+                tab.setText("kp");
+            }
+        }).attach();
 
 
 
-        });
-        t1.start();
+
 
 
 
