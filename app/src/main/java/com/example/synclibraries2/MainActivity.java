@@ -235,8 +235,8 @@ public class MainActivity extends AppCompatActivity {
         });
 
         FloatingActionMenu actionMenu = new FloatingActionMenu.Builder(this)
-                .addSubActionView(downloadButton, 180, 180)
-                .addSubActionView(exceptionButton, 180, 180)
+                .addSubActionView(downloadButton, 200, 200)
+                .addSubActionView(exceptionButton, 200, 200)
                 .setRadius(250)
                 .setStartAngle(230)
                 .setEndAngle(310)
