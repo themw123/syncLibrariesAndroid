@@ -1,40 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
+<ripple
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="#91adc9"
+    android:radius="47dp"
+    >
+    <item>
+        <selector>
 
+            <item android:state_enabled="true">
+                <shape xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:shape="rectangle">
+                    <solid android:color="#3584D5"/>
+                    <stroke android:width="6dp" android:color="@color/white"></stroke>
+                    <corners android:radius="600dp"/>
+                </shape>
+            </item>
 
-<selector xmlns:android="http://schemas.android.com/apk/res/android" >
+            <item android:state_enabled="false">
+                <shape xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:shape="rectangle">
+                    <solid android:color="#91adc9"/>
+                    <stroke android:width="6dp" android:color="@color/white"></stroke>
+                    <corners android:radius="600dp"/>
+                </shape>
+            </item>
 
-
-    <item android:state_enabled="true" android:state_pressed="true" >
-        <shape xmlns:android="http://schemas.android.com/apk/res/android"
-            android:shape="rectangle">
-            <solid android:color="#91adc9"/>
-            <stroke android:width="6dp" android:color="@color/white"></stroke>
-            <corners android:radius="600dp"/>
-        </shape>
+        </selector>
     </item>
 
-
-    <item android:state_enabled="true" android:state_pressed="false" >
-        <shape xmlns:android="http://schemas.android.com/apk/res/android"
-            android:shape="rectangle">
-            <solid android:color="#3584D5"/>
-            <stroke android:width="6dp" android:color="@color/white"></stroke>
-            <corners android:radius="600dp"/>
-        </shape>
-    </item>
-
-    <item android:state_enabled="false" android:state_pressed="false" >
-        <shape xmlns:android="http://schemas.android.com/apk/res/android"
-            android:shape="rectangle">
-            <solid android:color="#91adc9"/>
-            <stroke android:width="6dp" android:color="@color/white"></stroke>
-            <corners android:radius="600dp"/>
-        </shape>
-    </item>
-
-
-
-
-
-
-</selector>
+</ripple>

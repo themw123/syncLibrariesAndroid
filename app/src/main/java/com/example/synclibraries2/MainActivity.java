@@ -203,6 +203,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void menuButtons() {
+
         FloatingActionButton.LayoutParams params1 = new FloatingActionButton.LayoutParams(170,170);
         params1.setMargins(0, 0, 0, 80);
         FloatingActionButton menuButton = new FloatingActionButton.Builder(this)
@@ -210,7 +211,6 @@ public class MainActivity extends AppCompatActivity {
                 .setLayoutParams(params1)
                 .setBackgroundDrawable(R.drawable.menu)
                 .build();
-        menuButton.setElevation(5);
 
         SubActionButton.Builder itemBuilder = new SubActionButton.Builder(this);
         // repeat many times:

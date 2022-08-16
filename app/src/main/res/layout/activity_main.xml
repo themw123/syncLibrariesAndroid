@@ -131,7 +131,6 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="188dp"
             android:background="@drawable/syncbutton"
-
             android:elevation="8dp"
             android:gravity="center"
 
@@ -151,7 +150,9 @@
             android:layout_marginTop="185dp"
             android:backgroundTint="#134e8a"
             android:indeterminate="true"
-            android:indeterminateTint="#134e8a" />
+            android:indeterminateTint="#134e8a"
+            android:visibility="invisible"
+            />
 
         <ImageView
             android:id="@+id/imageViewMenu"

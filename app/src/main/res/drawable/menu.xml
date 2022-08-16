@@ -1,9 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 
+<ripple
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="#91adc9"
+    android:radius="47dp"
+    >
+    <item>
 
-<selector xmlns:android="http://schemas.android.com/apk/res/android" >
+        <selector xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <item android:drawable="@drawable/menu2" android:state_enabled="true" android:state_pressed="true"/>
-    <item android:drawable="@drawable/menu1" android:state_enabled="true" android:state_pressed="false"/>
-    <item android:drawable="@drawable/menu2" android:state_enabled="false" android:state_pressed="false"/>
-</selector>
+            <item android:drawable="@drawable/menu1" android:state_enabled="true"/>
+            <item android:drawable="@drawable/menu2" android:state_enabled="false"/>
+        </selector>
+
+    </item>
+
+</ripple>
