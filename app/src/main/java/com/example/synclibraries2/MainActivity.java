@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.view.animation.Animation;
@@ -219,7 +220,15 @@ public class MainActivity extends AppCompatActivity {
         exceptionButton.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                actionMenu.close(true);
+
+                Handler handler = new Handler(Looper.getMainLooper());
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        actionMenu.close(true);
+                    }
+                }, 500);
+
                 startActivity(new Intent( MainActivity.this, MainActivity2.class));
             }
         });
@@ -229,7 +238,13 @@ public class MainActivity extends AppCompatActivity {
         downloadButton.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                actionMenu.close(true);
+                Handler handler = new Handler(Looper.getMainLooper());
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        actionMenu.close(true);
+                    }
+                }, 500);
                 startActivity(new Intent( MainActivity.this, MainActivity3.class));
             }
         });
