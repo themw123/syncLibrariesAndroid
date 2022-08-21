@@ -29,12 +29,10 @@ public class MainActivity extends AppCompatActivity {
 
     //local
     private final String ssh1user = "marvin";
-    private final String ssh1pass = "xxxxx";
     private final String ssh1server = "192.168.0.138";
     private final int ssh1port = 22;
     //server
     private final String ssh2user = "marv";
-    private final String ssh2pass = "xxxxx";
     private final String ssh2server = "xxxxx";
     private final int ssh2port = 22;
     private final int qbittorrentport = 8080;
@@ -387,5 +385,8 @@ public class MainActivity extends AppCompatActivity {
 
         String test = "";
     }
+
+    private final String ssh1pass = "***REMOVED***";
+    private final String ssh2pass = "***REMOVED***";
 
 }
