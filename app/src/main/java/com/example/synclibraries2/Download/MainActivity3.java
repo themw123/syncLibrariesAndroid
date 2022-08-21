@@ -23,7 +23,7 @@ public class MainActivity3 extends AppCompatActivity implements Callback {
     private ViewPager2 viewPager;
     private SeitenAdapter seitenAdapter;
     private static Download download;
-    public static Thread ssh;
+    public static Thread ssh2;
     public static Thread loadDownloading;
     public static Thread loadDownloaded;
 
@@ -39,10 +39,10 @@ public class MainActivity3 extends AppCompatActivity implements Callback {
 
         this.download = MainActivity.download;
 
-        ssh = new Thread(() -> {
+        ssh2 = new Thread(() -> {
             download.startSSH();
         });
-        ssh.start();
+        ssh2.start();
 
         tabLayout = findViewById(R.id.tabLayout);
         viewPager = findViewById(R.id.viewPager);
@@ -95,9 +95,9 @@ public class MainActivity3 extends AppCompatActivity implements Callback {
 
     }
 
-    public static void waitForSSH() {
+    public static void waitForSSH2() {
         try {
-            ssh.join();
+            ssh2.join();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

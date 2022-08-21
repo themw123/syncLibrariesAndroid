@@ -177,7 +177,7 @@ public class RecycleFragment extends Fragment {
         if(position == 1) {
             live = true;
             Thread t = new Thread(() -> {
-                MainActivity3.waitForSSH();
+                MainActivity3.waitForSSH2();
                 int counter = 0;
                 while (live) {
                     download.setDownloading();
@@ -211,7 +211,7 @@ public class RecycleFragment extends Fragment {
         if(position == 2) {
             Thread t = new Thread(() -> {
                 download.getDownloaded().clear();
-                MainActivity3.waitForSSH();
+                MainActivity3.waitForSSH2();
                 download.setDownloaded();
 
                 Handler handler = new Handler(Looper.getMainLooper());
@@ -236,7 +236,7 @@ public class RecycleFragment extends Fragment {
                 @Override
                 public void onRefresh() {
                     Thread t = new Thread(() -> {
-                        MainActivity3.waitForSSH();
+                        MainActivity3.waitForSSH2();
                         download.setDownloading();
                         Handler handler = new Handler(Looper.getMainLooper());
                         handler.post(new Runnable() {

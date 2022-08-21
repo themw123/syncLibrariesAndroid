@@ -27,22 +27,27 @@ import syncLibraries.SyncLibrary;
 
 public class MainActivity extends AppCompatActivity {
 
-    //ssh für open/close stremio ist gleiche wie für download
-    private final String sshuser = "marvin";
-    private final String sshpass = "xxxxx";
-    private final String sshserver = "192.168.0.138";
-    private final int sshport = 22;
+    //local
+    private final String ssh1user = "marvin";
+    private final String ssh1pass = "xxxxx";
+    private final String ssh1server = "192.168.0.138";
+    private final int ssh1port = 22;
+    //server
+    private final String ssh2user = "marv";
+    private final String ssh2pass = "xxxxx";
+    private final String ssh2server = "xxxxx";
+    private final int ssh2port = 22;
     private final int qbittorrentport = 8080;
-    private final String downloadpath = "D:\\torrents";
+    private final String downloadpath = "/downloads";
+
 
     private static int counter = 0;
     public static SyncLibrary sl = null;
     public static SSH ssh = null;
     public static Download download = null;
 
-
     private static Thread createSyncLibrary = null;
-    private static Thread createSSH = null;
+    private static Thread createSSH1 = null;
     private static Thread startSync = new Thread();
 
     private FloatingActionMenu actionMenu;
@@ -59,8 +64,8 @@ public class MainActivity extends AppCompatActivity {
         counter++;
         if(counter == 1) {
             createSyncLibrary();
-            createSSH(sshuser, sshpass, sshserver, sshport);
-            this.download = new Download(sshuser, sshpass, sshserver, sshport, qbittorrentport, downloadpath);
+            createSSH1(ssh1user, ssh1pass, ssh1server, ssh1port);
+            this.download = new Download(ssh2user, ssh2pass, ssh2server, ssh2port, qbittorrentport, downloadpath);
         }
 
 
@@ -175,17 +180,17 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void createSSH(String user, String pass, String server, int port) {
-        createSSH = new Thread(() -> {
+    private void createSSH1(String user, String pass, String server, int port) {
+        createSSH1 = new Thread(() -> {
             ssh = new SSH(user, pass, server ,port);
             ssh.connect();
         });
-        createSSH.start();
+        createSSH1.start();
     }
 
     public static void waitForCreateSSH() {
         try {
-            createSSH.join();
+            createSSH1.join();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -259,36 +264,33 @@ public class MainActivity extends AppCompatActivity {
                 .build();
     }
 
+
+    private void openPlex() {
+        waitForCreateSSH();
+        ssh.sendCommend("SCHTASKS.EXE /RUN /TN \"openplex\"");
+        opencloseanimation();
+    }
+    private void closePlex() {
+        waitForCreateSSH();
+        ssh.sendCommend("taskkill /IM Plex.exe /F >nul 2>&1");
+        opencloseanimation();
+    }
+
     private void closeStremio(boolean state) {
         waitForCreateSSH();
         ssh.sendCommend("taskkill /IM stremio.exe /F >nul 2>&1");
         if(state) {
-            Button open = findViewById(R.id.open);
-            Button close = findViewById(R.id.close);
-            if(ssh.getError()) {
-                open.setTextColor(Color.parseColor("#c44347"));
-                close.setTextColor(Color.parseColor("#c44347"));
-            }
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    Handler handler = new Handler();
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            open.setTextColor(Color.parseColor("#A6A4A4"));
-                            close.setTextColor(Color.parseColor("#A6A4A4"));
-                        }
-                    }, 4000);
-                }
-            });
+            opencloseanimation();
         }
-
     }
 
     private void openStremio() {
         waitForCreateSSH();
         ssh.sendCommend("SCHTASKS.EXE /RUN /TN \"openstremio\"");
+        opencloseanimation();
+    }
+
+    private void opencloseanimation() {
         Button open = findViewById(R.id.open);
         Button close = findViewById(R.id.close);
         if(ssh.getError()) {
@@ -340,8 +342,9 @@ public class MainActivity extends AppCompatActivity {
     public void onClickClose(View view) {
         Thread t = new Thread(() -> {
             buttonAnimation(view,"short");
-            closeStremio(true);
-            closeQbit();
+            closePlex();
+            //closeStremio(true);
+            //closeQbit();
         });
         t.start();
     }
@@ -349,9 +352,10 @@ public class MainActivity extends AppCompatActivity {
     public void onClickOpen(View view) {
         Thread t = new Thread(() -> {
             buttonAnimation(view,"short");
-            openSurfshark();
-            openQbit();
-            openStremio();
+            openPlex();
+            //openSurfshark();
+            //openQbit();
+            //openStremio();
         });
         t.start();
 
