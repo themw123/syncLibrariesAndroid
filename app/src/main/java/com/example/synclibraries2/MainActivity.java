@@ -263,14 +263,35 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
     private void openPlex() {
-        waitForCreateSSH();
         ssh.sendCommend("SCHTASKS.EXE /RUN /TN \"openplex\"");
         opencloseanimation();
     }
     private void closePlex() {
-        waitForCreateSSH();
         ssh.sendCommend("taskkill /IM Plex.exe /F >nul 2>&1");
+        opencloseanimation();
+    }
+
+    private void openVPN() {
+        ssh.sendCommend("\"C:\\Program Files\\ShrewSoft\\VPN Client\\ipsecc.exe\" -r ***REMOVED*** -u Marvin -p " + ssh1pass +"***REMOVED***");
+        opencloseanimation();
+    }
+
+    private void closeVPN() {
+        ssh.sendCommend("taskkill /IM ipsecc.exe /F >nul 2>&1");
         opencloseanimation();
     }
 
@@ -322,7 +343,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void openQbit() {
-        waitForCreateSSH();
         ssh.sendCommend("SCHTASKS.EXE /RUN /TN \"openqbit\"");
         download.startSSH();
         download.setDownloading();
@@ -330,7 +350,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void closeQbit() {
-        waitForCreateSSH();
         download.startSSH();
         download.setDownloading();
         download.pauseDownloading();
@@ -339,8 +358,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void onClickClose(View view) {
         Thread t = new Thread(() -> {
+            waitForCreateSSH();
             buttonAnimation(view,"short");
             closePlex();
+            closeVPN();
             //closeStremio(true);
             //closeQbit();
         });
@@ -349,8 +370,20 @@ public class MainActivity extends AppCompatActivity {
 
     public void onClickOpen(View view) {
         Thread t = new Thread(() -> {
+            waitForCreateSSH();
             buttonAnimation(view,"short");
+
+            openVPN();
+
+            try {
+                Thread.sleep(8000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
             openPlex();
+
+
             //openSurfshark();
             //openQbit();
             //openStremio();
