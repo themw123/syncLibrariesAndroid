@@ -278,58 +278,37 @@ public class MainActivity extends AppCompatActivity {
 
     private void openPlex() {
         ssh.sendCommend("SCHTASKS.EXE /RUN /TN \"openplex\"");
-        opencloseanimation();
+        opencloseColor(false);
     }
     private void closePlex() {
         ssh.sendCommend("taskkill /IM Plex.exe /F >nul 2>&1");
-        opencloseanimation();
+        opencloseColor(false);
     }
 
     private void openVPNPC() {
         ssh.sendCommend("\"C:\\Program Files\\ShrewSoft\\VPN Client\\ipsecc.exe\" -r ***REMOVED*** -u Marvin -p " + ssh1pass +"***REMOVED***");
-        opencloseanimation();
+        opencloseColor(false);
     }
 
     private void closeVPNPC() {
         ssh.sendCommend("taskkill /IM ipsecc.exe /F >nul 2>&1");
-        opencloseanimation();
+        opencloseColor(false);
     }
 
     private void closeStremio(boolean state) {
         waitForCreateSSH();
         ssh.sendCommend("taskkill /IM stremio.exe /F >nul 2>&1");
         if(state) {
-            opencloseanimation();
+            opencloseColor(false);
         }
     }
 
     private void openStremio() {
         waitForCreateSSH();
         ssh.sendCommend("SCHTASKS.EXE /RUN /TN \"openstremio\"");
-        opencloseanimation();
+        opencloseColor(false);
     }
 
-    private void opencloseanimation() {
-        Button open = findViewById(R.id.open);
-        Button close = findViewById(R.id.close);
-        if(ssh.getError()) {
-            open.setTextColor(Color.parseColor("#c44347"));
-            close.setTextColor(Color.parseColor("#c44347"));
-        }
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        open.setTextColor(Color.parseColor("#A6A4A4"));
-                        close.setTextColor(Color.parseColor("#A6A4A4"));
-                    }
-                }, 4000);
-            }
-        });
-    }
 
     private void openSurfshark() {
         waitForCreateSSH();
@@ -372,6 +351,7 @@ public class MainActivity extends AppCompatActivity {
         Thread t = new Thread(() -> {
             waitForCreateSSH();
             buttonAnimation(view,"short");
+            String ipold = ssh.sendCommend("curl \"http://myexternalip.com/raw\"");
 
             openVPNPC();
 
@@ -379,6 +359,12 @@ public class MainActivity extends AppCompatActivity {
                 Thread.sleep(8000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
+            }
+
+            String ipnew = ssh.sendCommend("curl \"http://myexternalip.com/raw\"");
+
+            if(!ipold.equals(ipnew)) {
+                opencloseColor(true);
             }
 
             openPlex();
@@ -392,6 +378,31 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private void opencloseColor(boolean state) {
+        Button open = findViewById(R.id.open);
+        Button close = findViewById(R.id.close);
+        if(ssh.getError()) {
+            open.setTextColor(Color.parseColor("#c44347"));
+            close.setTextColor(Color.parseColor("#c44347"));
+        }
+        if(state) {
+            open.setTextColor(Color.parseColor("#32a852"));
+            close.setTextColor(Color.parseColor("#32a852"));
+        }
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        open.setTextColor(Color.parseColor("#A6A4A4"));
+                        close.setTextColor(Color.parseColor("#A6A4A4"));
+                    }
+                }, 4000);
+            }
+        });
+    }
 
     public void buttonAnimation(View view, String time) {
 
