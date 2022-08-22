@@ -365,9 +365,8 @@ public class MainActivity extends AppCompatActivity {
 
             if(!ipold.equals(ipnew)) {
                 opencloseColor(true);
+                openPlex();
             }
-
-            openPlex();
 
 
             //openSurfshark();
