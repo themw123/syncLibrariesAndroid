@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
     private final int ssh1port = 22;
     //server
     private final String ssh2user = "marvin";
-    private final String ssh2server = "xxxxx";
+    private final String server = "xxx";
     private final int ssh2port = 22;
     private final int qbittorrentport = 8080;
     private final String downloadpath = "/downloads";
@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
         if(counter == 1) {
             createSyncLibrary();
             createSSH1(ssh1user, ssh1pass, ssh1server, ssh1port);
-            this.download = new Download(ssh2user, ssh2pass, ssh2server, ssh2port, qbittorrentport, downloadpath);
+            this.download = new Download(ssh2user, ssh2pass, server, ssh2port, qbittorrentport, downloadpath);
         }
 
 
