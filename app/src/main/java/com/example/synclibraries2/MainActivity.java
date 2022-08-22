@@ -285,12 +285,12 @@ public class MainActivity extends AppCompatActivity {
         opencloseanimation();
     }
 
-    private void openVPN() {
+    private void openVPNPC() {
         ssh.sendCommend("\"C:\\Program Files\\ShrewSoft\\VPN Client\\ipsecc.exe\" -r ***REMOVED*** -u Marvin -p " + ssh1pass +"***REMOVED***");
         opencloseanimation();
     }
 
-    private void closeVPN() {
+    private void closeVPNPC() {
         ssh.sendCommend("taskkill /IM ipsecc.exe /F >nul 2>&1");
         opencloseanimation();
     }
@@ -361,7 +361,7 @@ public class MainActivity extends AppCompatActivity {
             waitForCreateSSH();
             buttonAnimation(view,"short");
             closePlex();
-            closeVPN();
+            closeVPNPC();
             //closeStremio(true);
             //closeQbit();
         });
@@ -373,7 +373,7 @@ public class MainActivity extends AppCompatActivity {
             waitForCreateSSH();
             buttonAnimation(view,"short");
 
-            openVPN();
+            openVPNPC();
 
             try {
                 Thread.sleep(8000);
