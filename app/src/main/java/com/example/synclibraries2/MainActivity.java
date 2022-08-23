@@ -351,7 +351,8 @@ public class MainActivity extends AppCompatActivity {
         Thread t = new Thread(() -> {
             waitForCreateSSH();
             buttonAnimation(view,"short");
-            String ipold = ssh.sendCommend("curl \"http://myexternalip.com/raw\"");
+            String ipold = "";
+            ipold = ssh.sendCommend("curl \"http://myexternalip.com/raw\"");
 
             openVPNPC();
 
@@ -361,11 +362,16 @@ public class MainActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-            String ipnew = ssh.sendCommend("curl \"http://myexternalip.com/raw\"");
+            String ipnew = "";
+            ipnew = ssh.sendCommend("curl \"http://myexternalip.com/raw\"");
 
-            if(!ipold.equals(ipnew)) {
-                opencloseColor(true);
-                openPlex();
+            try {
+                if(!ipold.equals(ipnew)) {
+                    opencloseColor(true);
+                    openPlex();
+                }
+            }catch (Exception e) {
+
             }
 
 
