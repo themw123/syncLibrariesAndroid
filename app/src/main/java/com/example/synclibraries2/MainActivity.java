@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
     private final int ssh1port = 22;
     //server
     private final String ssh2user = "marvin";
-    private final String server = "xxx";
+    private final String server = "192.168.178.24";
     private final int ssh2port = 22;
     private final int qbittorrentport = 8080;
     private final String downloadpath = "/downloads";
