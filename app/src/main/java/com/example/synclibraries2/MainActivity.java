@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
     private final int ssh1port = 22;
     //server
     private final String ssh2user = "marvin";
-    private final String server = "192.168.178.24";
+    private final String server = "192.168.0.67";
     private final int ssh2port = 22;
     private final int qbittorrentport = 8080;
     private final String downloadpath = "/downloads";
@@ -337,10 +337,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void onClickClose(View view) {
         Thread t = new Thread(() -> {
-            waitForCreateSSH();
             buttonAnimation(view,"short");
+            waitForCreateSSH();
             closePlex();
-            closeVPNPC();
+            //closeVPNPC();
             //closeStremio(true);
             //closeQbit();
         });
@@ -349,8 +349,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void onClickOpen(View view) {
         Thread t = new Thread(() -> {
-            waitForCreateSSH();
             buttonAnimation(view,"short");
+            waitForCreateSSH();
+            openPlex();
+
+            /*
             String ipold = "";
             ipold = ssh.sendCommend("curl \"http://myexternalip.com/raw\"");
 
@@ -373,7 +376,7 @@ public class MainActivity extends AppCompatActivity {
             }catch (Exception e) {
 
             }
-
+            */
 
             //openSurfshark();
             //openQbit();
