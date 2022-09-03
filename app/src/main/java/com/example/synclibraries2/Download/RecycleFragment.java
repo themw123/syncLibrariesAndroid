@@ -117,7 +117,7 @@ public class RecycleFragment extends Fragment {
                     imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
 
                     String titel = t.getText().toString();
-                    t.setText("");
+                    //t.setText("");
                     if(!titel.isEmpty()) {
                         pr.setVisibility(View.VISIBLE);
 
