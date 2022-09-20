@@ -49,14 +49,14 @@ public class RecycleFragment extends Fragment {
     private static Vector<RecycleAdapter> adapterArray = new Vector<RecycleAdapter>();
     private RecyclerView recyclerView;
 
-    public static boolean switchbool;
-
     private TextInputEditText t;
     private ProgressBar pr;
     private SwipeRefreshLayout swipeContainer;
     public static boolean live;
 
+
     public static final String TITLE = "title";
+    public static boolean switchbool;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
