@@ -13,7 +13,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Adapter;
+import android.widget.CompoundButton;
 import android.widget.ProgressBar;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -47,6 +49,8 @@ public class RecycleFragment extends Fragment {
     private static Vector<RecycleAdapter> adapterArray = new Vector<RecycleAdapter>();
     private RecyclerView recyclerView;
 
+    public static boolean switchbool;
+
     private TextInputEditText t;
     private ProgressBar pr;
     private SwipeRefreshLayout swipeContainer;
@@ -76,6 +80,23 @@ public class RecycleFragment extends Fragment {
             recyclerView = view.findViewById(R.id.search);
             t = (TextInputEditText) view.findViewById(R.id.editText);
             pr = (ProgressBar)view.findViewById(R.id.progressbar);
+
+            Switch switch2 = (Switch)view.findViewById(R.id.switch2);
+            switch2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    // TODO Auto-generated method stub
+                    if (buttonView.isChecked()){
+                       switchbool = true;
+                    }
+                    else{
+                        switchbool = false;
+                    }
+
+                }
+            });
+
+
         }
         else if(position == 1) {
             view = inflater.inflate(R.layout.recycle_fragment_download2, container, false);
@@ -283,5 +304,9 @@ public class RecycleFragment extends Fragment {
             swipeContainer.setColorSchemeColors(Color.parseColor("#3584D5"));
         }
 
+    }
+
+    public static boolean getSwitchbool() {
+        return switchbool;
     }
 }
