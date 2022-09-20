@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -55,6 +56,8 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
         private final TextView speed;
         private ImageButton button;
         private TabLayout tabLayout;
+        private Switch switch2;
+
 
         public ViewHolder(View view) {
             super(view);
@@ -68,6 +71,8 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
             speed = (TextView) view.findViewById(R.id.speed);
             button = (ImageButton) view.findViewById(R.id.imageButton);
             tabLayout = (TabLayout) view.findViewById(R.id.tabLayout);
+            switch2 = (Switch) view.findViewById(R.id.switch2);
+
         }
 
         public TextView getTextView() {
@@ -95,6 +100,7 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
             return button;
         }
         public TabLayout getTabLayout() { return tabLayout; }
+        public Switch getSwitch2() { return switch2; }
 
 
     }
@@ -137,16 +143,20 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
             viewHolder.getSize().setText(download.getSearch().get(viewHolder.getAdapterPosition()).getSize());
             viewHolder.getSeeder().setText(download.getSearch().get(viewHolder.getAdapterPosition()).getSeeder());
 
+
+
             //wenn download geklickt wird
             viewHolder.getButton().setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
+
                     buttonAnimation(v, "long");
                     String magnet = download.getSearch().get(viewHolder.getAdapterPosition()).getMagnet();
                     int count1 = download.getDownloading().size();
 
                     Thread t = new Thread(() -> {
 
-                        download.addDownloading(magnet);
+                        boolean switchbool = RecycleFragment.getSwitchbool();
+                        download.addDownloading(magnet, switchbool);
                         download.setDownloading();
 
                         int count2 = download.getDownloading().size();
