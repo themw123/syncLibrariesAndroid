@@ -38,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
     private final int qbittorrentport = 8080;
     private final String downloadpath = "/downloads";
 
+    private final String ssh1pass = BuildConfig.ssh1pass;
+    private final String ssh2pass = BuildConfig.ssh2pass;
 
     private static int counter = 0;
     public static SyncLibrary sl = null;
@@ -438,7 +440,5 @@ public class MainActivity extends AppCompatActivity {
         String test = "";
     }
 
-    private final String ssh1pass = "***REMOVED***";
-    private final String ssh2pass = "***REMOVED***";
 
 }
