@@ -12,8 +12,8 @@ import syncLibraries.SSH;
 
 public class MainActivity4 extends AppCompatActivity{
 
-    private String url = "https://bs.to/serie/Westworld/3/4-x";
-    private SSH ssh = MainActivity.ssh;
+    private String url;
+    private SSH ssh;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +22,7 @@ public class MainActivity4 extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
 
+        ssh = MainActivity.ssh;
         openWebsite();
         //closeBrowser();
     }
