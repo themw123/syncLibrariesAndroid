@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.synclibraries2.Audio.MainActivity4;
 import com.example.synclibraries2.Download.MainActivity3;
 import com.example.synclibraries2.Exceptions.MainActivity2;
 import com.oguzdev.circularfloatingactionmenu.library.FloatingActionButton;
@@ -238,6 +239,26 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent( MainActivity.this, MainActivity2.class));
             }
         });
+
+        ImageView itemIcon3 = new ImageView(this);
+        itemIcon3.setImageDrawable(getDrawable(R.drawable.audio));
+        SubActionButton audioButton = itemBuilder.setContentView(itemIcon3).build();
+        audioButton.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Handler handler = new Handler(Looper.getMainLooper());
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        actionMenu.close(true);
+                    }
+                }, 500);
+
+                startActivity(new Intent( MainActivity.this, MainActivity4.class));
+            }
+        });
+
         ImageView itemIcon = new ImageView(this);
         itemIcon.setImageDrawable(getDrawable(R.drawable.download1));
         SubActionButton downloadButton = itemBuilder.setContentView(itemIcon).build();
@@ -257,8 +278,9 @@ public class MainActivity extends AppCompatActivity {
 
         actionMenu = new FloatingActionMenu.Builder(this)
                 .addSubActionView(downloadButton, 200, 200)
+                .addSubActionView(audioButton, 200, 200)
                 .addSubActionView(exceptionButton, 200, 200)
-                .setRadius(250)
+                .setRadius(290)
                 .setStartAngle(230)
                 .setEndAngle(310)
                 .attachTo(menuButton)
