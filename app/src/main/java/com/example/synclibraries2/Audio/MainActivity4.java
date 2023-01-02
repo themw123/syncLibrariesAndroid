@@ -36,7 +36,7 @@ public class MainActivity4 extends AppCompatActivity{
             }
             //per ssh openchrome ausführen
             MainActivity.waitForCreateSSH();
-            closeBrowser();
+            ssh.sendCommend("taskkill /IM chrome.exe /F >nul 2>&1");
             ssh.sendCommend( "SCHTASKS /Create /TN openchrome /TR \"C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe " + url + "\" /SC ONEVENT /EC Application /MO *[System/EventID=777] /f");
             ssh.sendCommend("SCHTASKS.EXE /RUN /TN \"openchrome\"");
             //ssh.sendCommend("schtasks.exe /delete /tn mytest /f");
@@ -47,12 +47,6 @@ public class MainActivity4 extends AppCompatActivity{
 
     }
 
-
-    private void closeBrowser() {
-        //per ssh openchrome beenden
-        ssh.sendCommend("taskkill /IM chrome.exe /F >nul 2>&1");
-
-    }
 
     /*
     @Override
