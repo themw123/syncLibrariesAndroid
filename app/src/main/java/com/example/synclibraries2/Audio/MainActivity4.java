@@ -3,23 +3,14 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import com.example.synclibraries2.R;
-import java.io.IOException;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-import okhttp3.ResponseBody;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
+import syncLibraries.SocketClient;
 
 public class MainActivity4 extends AppCompatActivity{
 
     private String url = "https://bs.to/serie/Westworld/3/4-x";
+    private SocketClient client;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,11 +19,32 @@ public class MainActivity4 extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
 
+        client = new SocketClient("192.168.0.138", 9876);
+        client.openSocket();
 
+        Thread t = new Thread(() -> {
+            try {
+                Thread.sleep(5000);
+                client.writeToServer("https://bs.to/serie/Westworld/3/1-Parce-Domine/de/Streamtape");
+                Thread.sleep(5000);
+                //client.closeSocket();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
 
+        });
+        t.start();
 
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        // Perform some action here
+
+        client.closeSocket();
+
+    }
 
 
 }
