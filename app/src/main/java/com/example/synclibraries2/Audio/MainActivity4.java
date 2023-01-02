@@ -2,16 +2,18 @@ package com.example.synclibraries2.Audio;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+
+import com.example.synclibraries2.MainActivity;
 import com.example.synclibraries2.R;
 
 import syncLibraries.Audio;
-import syncLibraries.SocketClient;
+import syncLibraries.SSH;
+
 
 public class MainActivity4 extends AppCompatActivity{
 
     private String url = "https://bs.to/serie/Westworld/3/4-x";
-    private SocketClient client;
-
+    private SSH ssh = MainActivity.ssh;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,9 +33,14 @@ public class MainActivity4 extends AppCompatActivity{
             if(url == null) {
                 return;
             }
-            //erst per ssh server socket starten dann weiter
-            client = new SocketClient("192.168.0.138", 9876);
-            client.writeToServer(url);
+            //per ssh openchrome ausführen
+            MainActivity.waitForCreateSSH();
+            ssh.sendCommend( "SCHTASKS /Create /TN openchrome /TR \"C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe " + url + "\" /SC ONEVENT /EC Application /MO *[System/EventID=777] /f");
+            ssh.sendCommend("SCHTASKS.EXE /RUN /TN \"openchrome\"");
+            //ssh.sendCommend("schtasks.exe /delete /tn mytest /f");
+
+
+
         });
         t.start();
 
@@ -41,8 +48,7 @@ public class MainActivity4 extends AppCompatActivity{
 
 
     private void closeBrowser() {
-        client.closeSocket();
-        //auch noch serversocket script auf pc schließen (kein ssh nötig weil script mit writeToServer("exit"); beendet wird durch client)
+        //per ssh openchrome beenden
     }
 
     /*
