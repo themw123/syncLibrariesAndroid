@@ -13,12 +13,14 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="center"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
 
         >
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/MyTextInputLayoutStyle"
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="80dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="20dp"
