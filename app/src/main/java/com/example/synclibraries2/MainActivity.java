@@ -1,7 +1,9 @@
-package com.example.synclibraries2.Exceptions;
+package com.example.synclibraries2;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -15,10 +17,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.synclibraries2.Audio.MainActivity4;
-import com.example.synclibraries2.BuildConfig;
+import com.example.synclibraries2.Exceptions.MainActivity2;
 import com.example.synclibraries2.Download.MainActivity3;
-import com.example.synclibraries2.R;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.oguzdev.circularfloatingactionmenu.library.FloatingActionButton;
 import com.oguzdev.circularfloatingactionmenu.library.FloatingActionMenu;
 import com.oguzdev.circularfloatingactionmenu.library.SubActionButton;
@@ -76,9 +77,26 @@ public class MainActivity extends AppCompatActivity {
 
         menuButtons();
 
-
     }
 
+    private void buildAlert() {
+        //dialog box
+        androidx.appcompat.app.AlertDialog dialog = new MaterialAlertDialogBuilder(this, R.style.AlertDialogTheme)
+                .setMessage("Override?")
+                .setPositiveButton("Ja", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+
+                    }
+                })
+                .setNeutralButton("Nein", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+
+                    }
+                })
+                .setView(R.layout.override)
+                .show();
+
+    }
 
 
     private void openWebsite() {
@@ -287,7 +305,9 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }, 500);
 
-                startActivity(new Intent( MainActivity.this, MainActivity4.class));
+
+                buildAlert();
+
             }
         });
 

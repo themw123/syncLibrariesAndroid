@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.synclibraries2.MainActivity;
 import com.example.synclibraries2.R;
 
 public class RecycleFragment extends Fragment {

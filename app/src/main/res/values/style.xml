@@ -44,6 +44,21 @@
     </style>
 
 
+    <style name="MyEditTextTheme">
+        <item name="colorControlActivated">#3584D5</item>
+        <item name="colorControlHighlight">#3584D5</item>
+    </style>
+
+    <style name="MyTextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">#ffffff</item> <!-- Stroke color when not focused -->
+        <item name="boxCornerRadiusBottomEnd">4dp</item>
+        <item name="boxCornerRadiusBottomStart">4dp</item>
+        <item name="boxCornerRadiusTopEnd">4dp</item>
+        <item name="boxCornerRadiusTopStart">4dp</item>
+    </style>
+
+
+
 
 
 

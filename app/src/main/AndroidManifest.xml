@@ -16,13 +16,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Synclibraries2">
         <activity
-            android:name=".Audio.MainActivity4"
-            android:exported="false"
-            android:label="MainActivity4"
-            android:theme="@style/Theme.Synclibraries2.NoActionBar"
-            android:windowSoftInputMode="adjustPan"
-            />
-        <activity
             android:name=".Download.MainActivity3"
             android:exported="false"
             android:label="@string/title_activity_main3"
@@ -32,16 +25,20 @@
         <activity
             android:name=".Exceptions.MainActivity2"
             android:exported="false"
-            android:parentActivityName=".Exceptions.MainActivity"
+            android:parentActivityName=".MainActivity"
             android:windowSoftInputMode="adjustNothing" />
         <activity
-            android:name=".Exceptions.MainActivity"
-            android:exported="true">
+            android:name=".MainActivity"
+            android:exported="true"
+            android:windowSoftInputMode="adjustPan"
+
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
     </application>
 
