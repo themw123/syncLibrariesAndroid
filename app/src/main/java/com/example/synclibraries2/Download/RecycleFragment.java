@@ -1,18 +1,15 @@
 package com.example.synclibraries2.Download;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.os.Message;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Adapter;
 import android.widget.CompoundButton;
 import android.widget.ProgressBar;
 import android.widget.Switch;
@@ -25,21 +22,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.example.synclibraries2.MainActivity;
 import com.example.synclibraries2.R;
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.Vector;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 
 import syncLibraries.Download;
-import syncLibraries.SSH;
-import syncLibraries.SyncLibrary;
 
 public class RecycleFragment extends Fragment {
 

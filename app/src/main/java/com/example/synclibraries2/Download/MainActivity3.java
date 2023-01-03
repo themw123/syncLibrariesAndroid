@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.synclibraries2.Callback;
-import com.example.synclibraries2.MainActivity;
+import com.example.synclibraries2.Exceptions.MainActivity;
 import com.example.synclibraries2.R;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;

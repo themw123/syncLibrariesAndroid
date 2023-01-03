@@ -32,10 +32,10 @@
         <activity
             android:name=".Exceptions.MainActivity2"
             android:exported="false"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName=".Exceptions.MainActivity"
             android:windowSoftInputMode="adjustNothing" />
         <activity
-            android:name=".MainActivity"
+            android:name=".Exceptions.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

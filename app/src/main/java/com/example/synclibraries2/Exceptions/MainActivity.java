@@ -1,4 +1,4 @@
-package com.example.synclibraries2;
+package com.example.synclibraries2.Exceptions;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -16,12 +16,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.synclibraries2.Audio.MainActivity4;
+import com.example.synclibraries2.BuildConfig;
 import com.example.synclibraries2.Download.MainActivity3;
-import com.example.synclibraries2.Exceptions.MainActivity2;
+import com.example.synclibraries2.R;
 import com.oguzdev.circularfloatingactionmenu.library.FloatingActionButton;
 import com.oguzdev.circularfloatingactionmenu.library.FloatingActionMenu;
 import com.oguzdev.circularfloatingactionmenu.library.SubActionButton;
 
+import syncLibraries.Audio;
 import syncLibraries.Download;
 import syncLibraries.SSH;
 import syncLibraries.SyncLibrary;
@@ -77,6 +79,36 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+
+    private void openWebsite() {
+        Thread t = new Thread(() -> {
+            Audio audio = new Audio("192.168.0.67", 32400, "fYyu_nN9V9_jqpZ6K6UF");
+            String override = null;
+            String url = audio.getBsUrl(override);
+            if(url == null) {
+                return;
+            }
+            MainActivity.waitForCreateSSH();
+            ssh.sendCommend("taskkill /IM chrome.exe /F >nul 2>&1");
+
+            //zwei mal damit surfshark vpn genug zeit zum laden hat und keine credentials fordert
+            ssh.sendCommend( "SCHTASKS /Create /TN openchrome1 /TR \"C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe\" /SC ONEVENT /EC Application /MO *[System/EventID=777] /f");
+            ssh.sendCommend("SCHTASKS.EXE /RUN /TN \"openchrome1\"");
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            ssh.sendCommend( "SCHTASKS /Create /TN openchrome2 /TR \"C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe " + url + "\" /SC ONEVENT /EC Application /MO *[System/EventID=777] /f");
+            ssh.sendCommend("SCHTASKS.EXE /RUN /TN \"openchrome2\"");
+            //ssh.sendCommend("schtasks.exe /delete /tn mytest /f");
+
+
+        });
+        t.start();
+
+    }
 
 
 
@@ -365,6 +397,8 @@ public class MainActivity extends AppCompatActivity {
             buttonAnimation(view,"short");
             waitForCreateSSH();
             closePlex();
+            ssh.sendCommend("taskkill /IM chrome.exe /F >nul 2>&1");
+
             //closeVPNPC();
             //closeStremio(true);
             //closeQbit();
@@ -378,30 +412,11 @@ public class MainActivity extends AppCompatActivity {
             waitForCreateSSH();
             openPlex();
 
-            /*
-            String ipold = "";
-            ipold = ssh.sendCommend("curl \"http://myexternalip.com/raw\"");
+            //on double click
+            openWebsite();
 
-            openVPNPC();
-
-            try {
-                Thread.sleep(8000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
-            String ipnew = "";
-            ipnew = ssh.sendCommend("curl \"http://myexternalip.com/raw\"");
-
-            try {
-                if(!ipold.equals(ipnew)) {
-                    opencloseColor(true);
-                    openPlex();
-                }
-            }catch (Exception e) {
-
-            }
-            */
+            //on hold add exception
+            //...
 
             //openSurfshark();
             //openQbit();

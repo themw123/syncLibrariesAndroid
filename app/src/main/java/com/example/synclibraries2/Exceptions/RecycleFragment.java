@@ -1,6 +1,5 @@
 package com.example.synclibraries2.Exceptions;
 
-import android.app.Activity;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -14,12 +13,8 @@ import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 
-import com.example.synclibraries2.MainActivity;
 import com.example.synclibraries2.R;
-
-import syncLibraries.SyncLibrary;
 
 public class RecycleFragment extends Fragment {
 
