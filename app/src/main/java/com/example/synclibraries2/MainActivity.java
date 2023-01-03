@@ -20,9 +20,12 @@ import android.widget.TextView;
 import com.example.synclibraries2.Exceptions.MainActivity2;
 import com.example.synclibraries2.Download.MainActivity3;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.textfield.TextInputEditText;
 import com.oguzdev.circularfloatingactionmenu.library.FloatingActionButton;
 import com.oguzdev.circularfloatingactionmenu.library.FloatingActionMenu;
 import com.oguzdev.circularfloatingactionmenu.library.SubActionButton;
+
+import java.util.Vector;
 
 import syncLibraries.Audio;
 import syncLibraries.Download;
@@ -56,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
     private static Thread startSync = new Thread();
 
     private FloatingActionMenu actionMenu;
+    private TextInputEditText editText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,19 +77,25 @@ public class MainActivity extends AppCompatActivity {
             this.download = new Download(ssh2user, ssh2pass, server, ssh2port, qbittorrentport, downloadpath);
         }
 
-
-
         menuButtons();
-
     }
 
     private void buildAlert() {
         //dialog box
         androidx.appcompat.app.AlertDialog dialog = new MaterialAlertDialogBuilder(this, R.style.AlertDialogTheme)
-                .setMessage("Override?")
+                .setMessage("Überschreiben?")
                 .setPositiveButton("Ja", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
+                        String ausnahme = editText.getText().toString();
 
+                        Thread t = new Thread(() -> {
+                            waitForCreateSyncLibrary();
+                            String plexToken = sl.getSession().getPlex();
+                            sl.getSession().updateAusnahme(ausnahme);
+                            sl.setAusnahme();
+
+                        });
+                        t.start();
                     }
                 })
                 .setNeutralButton("Nein", new DialogInterface.OnClickListener() {
@@ -96,15 +106,32 @@ public class MainActivity extends AppCompatActivity {
                 .setView(R.layout.override)
                 .show();
 
+
+        Thread t = new Thread(() -> {
+            waitForCreateSyncLibrary();
+            String ausnahme = sl.getAusnahme();
+
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    editText = (TextInputEditText) dialog.findViewById(R.id.editText);
+                    editText.setText(ausnahme);
+                }
+            });
+
+        });
+        t.start();
     }
 
 
     private void openWebsite() {
         Thread t = new Thread(() -> {
-            Audio audio = new Audio("192.168.0.67", 32400, "fYyu_nN9V9_jqpZ6K6UF");
-            String override = null;
+            waitForCreateSyncLibrary();
+            String override = sl.getAusnahme();
+            String plexToken = sl.getSession().getPlex();
+            Audio audio = new Audio(server, 32400, plexToken);
             String url = audio.getBsUrl(override);
-            if(url == null) {
+            if(url == null || url == "" || url.isEmpty()) {
                 return;
             }
             MainActivity.waitForCreateSSH();
