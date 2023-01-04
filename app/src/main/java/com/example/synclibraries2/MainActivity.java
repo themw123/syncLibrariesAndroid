@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -26,11 +27,13 @@ import com.oguzdev.circularfloatingactionmenu.library.FloatingActionButton;
 import com.oguzdev.circularfloatingactionmenu.library.FloatingActionMenu;
 import com.oguzdev.circularfloatingactionmenu.library.SubActionButton;
 
+import java.io.IOException;
 import java.util.Vector;
 
 import syncLibraries.Audio;
 import syncLibraries.Download;
 import syncLibraries.SSH;
+import syncLibraries.SocketClient;
 import syncLibraries.SyncLibrary;
 
 public class MainActivity extends AppCompatActivity {
@@ -46,6 +49,13 @@ public class MainActivity extends AppCompatActivity {
     private final int ssh2port = 22;
     private final int qbittorrentport = 8080;
     private final String downloadpath = "/downloads";
+
+
+    //SocketServer
+    private final String socketServer = "192.168.0.138";
+    private final int socketPort = 9876;
+
+
 
     private final String ssh1pass = BuildConfig.ssh1pass;
     private final String ssh2pass = BuildConfig.ssh2pass;
@@ -129,6 +139,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void openWebsite() {
         Thread t = new Thread(() -> {
+
+
             waitForCreateSyncLibrary();
             String override = sl.getAusnahme();
             String plexToken = sl.getSession().getPlex();
@@ -137,18 +149,13 @@ public class MainActivity extends AppCompatActivity {
             if(url == null) {
                 return;
             }
-            MainActivity.waitForCreateSSH();
-            ssh.sendCommend("SCHTASKS.EXE /RUN /TN \"openchrome1\"");
-            try {
-                Thread.sleep(3000);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            //ssh.sendCommend("taskkill /IM chrome.exe /F >nul 2>&1");
-            ssh.sendCommend( "SCHTASKS /Create /TN openchrome2 /TR \"C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe " + url + "\" /SC ONEVENT /EC Application /MO *[System/EventID=777] /f");
-            ssh.sendCommend("SCHTASKS.EXE /RUN /TN \"openchrome2\"");
 
-            //ssh.sendCommend("schtasks.exe /delete /tn mytest /f");
+
+            closeChrome();
+
+            SocketClient client = new SocketClient(socketServer, socketPort);
+            String[] arr2 = {"open", url};
+            client.writeToServer(arr2);
 
 
         });
@@ -380,6 +387,9 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+    private void closeChrome() {
+        ssh.sendCommend("taskkill /IM chrome.exe /F >nul 2>&1");
+    }
 
     private void openPlex() {
         ssh.sendCommend("SCHTASKS.EXE /RUN /TN \"openplex\"");
@@ -445,8 +455,7 @@ public class MainActivity extends AppCompatActivity {
             buttonAnimation(view,"short");
             waitForCreateSSH();
             closePlex();
-            ssh.sendCommend("taskkill /IM chrome.exe /F >nul 2>&1");
-
+            closeChrome();
             //closeVPNPC();
             //closeStremio(true);
             //closeQbit();
