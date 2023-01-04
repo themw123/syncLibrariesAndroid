@@ -1,6 +1,7 @@
 package com.example.synclibraries2;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -63,6 +64,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //dark mode deaktivieren
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -131,22 +134,20 @@ public class MainActivity extends AppCompatActivity {
             String plexToken = sl.getSession().getPlex();
             Audio audio = new Audio(server, 32400, plexToken);
             String url = audio.getBsUrl(override);
-            if(url == null || url == "" || url.isEmpty()) {
+            if(url == null) {
                 return;
             }
             MainActivity.waitForCreateSSH();
-            ssh.sendCommend("taskkill /IM chrome.exe /F >nul 2>&1");
-
-            //zwei mal damit surfshark vpn genug zeit zum laden hat und keine credentials fordert
-            ssh.sendCommend( "SCHTASKS /Create /TN openchrome1 /TR \"C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe\" /SC ONEVENT /EC Application /MO *[System/EventID=777] /f");
             ssh.sendCommend("SCHTASKS.EXE /RUN /TN \"openchrome1\"");
             try {
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
+                Thread.sleep(3000);
+            } catch (Exception e) {
                 e.printStackTrace();
             }
+            //ssh.sendCommend("taskkill /IM chrome.exe /F >nul 2>&1");
             ssh.sendCommend( "SCHTASKS /Create /TN openchrome2 /TR \"C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe " + url + "\" /SC ONEVENT /EC Application /MO *[System/EventID=777] /f");
             ssh.sendCommend("SCHTASKS.EXE /RUN /TN \"openchrome2\"");
+
             //ssh.sendCommend("schtasks.exe /delete /tn mytest /f");
 
 
