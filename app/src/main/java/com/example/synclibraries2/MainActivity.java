@@ -203,8 +203,17 @@ public class MainActivity extends AppCompatActivity {
 
             closeChrome();
 
+            site = "";
+            if(url.contains("bs.to")) {
+                site = "bs";
+            }else if(url.contains("cine.to")) {
+                site = "cine";
+            }
+            else if(url.contains("kinos.to")) {
+                site = "kinos";
+            }
             SocketClient client = new SocketClient(socketServer, socketPort);
-            String[] arr2 = {"open", url};
+            String[] arr2 = {"open", url, site};
             client.writeToServer(arr2);
 
 
