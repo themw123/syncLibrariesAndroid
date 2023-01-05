@@ -17,6 +17,8 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.example.synclibraries2.Exceptions.MainActivity2;
@@ -71,7 +73,9 @@ public class MainActivity extends AppCompatActivity {
 
     private FloatingActionMenu actionMenu;
     private TextInputEditText editText;
-
+    private RadioGroup radioGroup;
+    private RadioButton radioButton1;
+    private RadioButton radioButton2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //dark mode deaktivieren
@@ -96,15 +100,32 @@ public class MainActivity extends AppCompatActivity {
     private void buildAlert() {
         //dialog box
         androidx.appcompat.app.AlertDialog dialog = new MaterialAlertDialogBuilder(this, R.style.AlertDialogTheme)
-                .setMessage("Überschreiben?")
+                .setMessage("Settings")
                 .setPositiveButton("Ja", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
-                        String ausnahme = editText.getText().toString();
 
                         Thread t = new Thread(() -> {
+                            String bsTitle = editText.getText().toString();
+
+                            String site = "";
+                            int selectedId = radioGroup.getCheckedRadioButtonId();
+                            int b1id = radioButton1.getId();
+                            int b2id = radioButton2.getId();
+                            if (selectedId != -1) {
+                                if(selectedId == b1id) {
+                                    //site = (String) radioButton1.getText();
+                                    site = "cine";
+                                }
+                                else if(selectedId == b2id) {
+                                    //site = (String) radioButton2.getText();
+                                    site = "kinos";
+                                }
+                            }
+
                             waitForCreateSyncLibrary();
                             String plexToken = sl.getSession().getPlex();
-                            sl.getSession().updateAusnahme(ausnahme);
+                            sl.getSession().updateAusnahme("site", site);
+                            sl.getSession().updateAusnahme("bsTitle", bsTitle);
                             sl.setAusnahme();
 
                         });
@@ -121,14 +142,36 @@ public class MainActivity extends AppCompatActivity {
 
 
         Thread t = new Thread(() -> {
+            //wichtig
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             waitForCreateSyncLibrary();
-            String ausnahme = sl.getAusnahme();
+            String bsTitle = sl.getAusnahme("bsTitle");
+            String site = sl.getAusnahme("site");
 
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
                     editText = (TextInputEditText) dialog.findViewById(R.id.editText);
-                    editText.setText(ausnahme);
+                    editText.setText(bsTitle);
+
+                    radioGroup = (RadioGroup) dialog.findViewById(R.id.radio_group);
+                    radioButton1 = (RadioButton) dialog.findViewById(R.id.radio_cine);
+                    radioButton2 = (RadioButton) dialog.findViewById(R.id.radio_kinos);
+
+                    int selectedId = radioGroup.getCheckedRadioButtonId();
+
+                    if(site.equals("cine")) {
+                        radioGroup.check(R.id.radio_cine);
+                    }
+                    else if(site.equals("kinos")) {
+                        radioGroup.check(R.id.radio_kinos);
+                    }
+                    selectedId = radioGroup.getCheckedRadioButtonId();
+
                 }
             });
 
@@ -142,7 +185,7 @@ public class MainActivity extends AppCompatActivity {
 
 
             waitForCreateSyncLibrary();
-            String override = sl.getAusnahme();
+            String override = sl.getAusnahme("bsTitle");
             String plexToken = sl.getSession().getPlex();
             Audio audio = new Audio(sl, server, 32400, plexToken);
             String url = audio.getUrl(override);
