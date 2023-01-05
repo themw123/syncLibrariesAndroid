@@ -191,10 +191,12 @@ public class MainActivity extends AppCompatActivity {
 
 
             waitForCreateSyncLibrary();
-            String override = sl.getAusnahme("bsTitle");
+            String bsTitle = sl.getAusnahme("bsTitle");
+            String site = sl.getAusnahme("site");
+
             String plexToken = sl.getSession().getPlex();
             Audio audio = new Audio(sl, server, 32400, plexToken);
-            String url = audio.getUrl(override);
+            String url = audio.getUrl(bsTitle, site);
             if(url == null) {
                 return;
             }
