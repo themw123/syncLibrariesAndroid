@@ -72,6 +72,8 @@ public class MainActivity extends AppCompatActivity {
     private static Thread startSync = new Thread();
 
     private FloatingActionMenu actionMenu;
+
+    private Thread updateAudioSettings = new Thread();
     private TextInputEditText editText;
     private RadioGroup radioGroup;
     private RadioButton radioButton1;
@@ -97,6 +99,14 @@ public class MainActivity extends AppCompatActivity {
         menuButtons();
     }
 
+    private void waitForUpdateAudioSettings() {
+        try {
+            updateAudioSettings.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
     private void buildAlert() {
         //dialog box
         androidx.appcompat.app.AlertDialog dialog = new MaterialAlertDialogBuilder(this, R.style.AlertDialogTheme)
@@ -104,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
                 .setPositiveButton("Ja", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
 
-                        Thread t = new Thread(() -> {
+                        updateAudioSettings = new Thread(() -> {
                             String bsTitle = editText.getText().toString();
 
                             String site = "";
@@ -129,7 +139,7 @@ public class MainActivity extends AppCompatActivity {
                             sl.setAusnahme();
 
                         });
-                        t.start();
+                        updateAudioSettings.start();
                     }
                 })
                 .setNeutralButton("Nein", new DialogInterface.OnClickListener() {
@@ -142,13 +152,8 @@ public class MainActivity extends AppCompatActivity {
 
 
         Thread t = new Thread(() -> {
-            //wichtig
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
             waitForCreateSyncLibrary();
+            waitForUpdateAudioSettings();
             String bsTitle = sl.getAusnahme("bsTitle");
             String site = sl.getAusnahme("site");
 
