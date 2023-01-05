@@ -144,12 +144,11 @@ public class MainActivity extends AppCompatActivity {
             waitForCreateSyncLibrary();
             String override = sl.getAusnahme();
             String plexToken = sl.getSession().getPlex();
-            Audio audio = new Audio(server, 32400, plexToken);
-            String url = audio.getBsUrl(override);
+            Audio audio = new Audio(sl, server, 32400, plexToken);
+            String url = audio.getUrl(override);
             if(url == null) {
                 return;
             }
-
 
             closeChrome();
 
