@@ -111,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
         //dialog box
         androidx.appcompat.app.AlertDialog dialog = new MaterialAlertDialogBuilder(this, R.style.AlertDialogTheme)
                 .setMessage("Settings")
-                .setPositiveButton("Ja", new DialogInterface.OnClickListener() {
+                .setPositiveButton("save", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
 
                         updateAudioSettings = new Thread(() -> {
@@ -142,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
                         updateAudioSettings.start();
                     }
                 })
-                .setNeutralButton("Nein", new DialogInterface.OnClickListener() {
+                .setNeutralButton("exit".toLowerCase(), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
 
                     }
@@ -150,6 +150,7 @@ public class MainActivity extends AppCompatActivity {
                 .setView(R.layout.override)
                 .show();
 
+        dialog.getButton(AlertDialog.BUTTON_NEUTRAL).setAllCaps(false);
 
         Thread t = new Thread(() -> {
             waitForCreateSyncLibrary();

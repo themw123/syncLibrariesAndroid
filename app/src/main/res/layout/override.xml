@@ -71,10 +71,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
+                android:buttonTint="#3584D5"
                 android:text="Cine.to" />
             <RadioButton android:id="@+id/radio_kinos"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:buttonTint="#3584D5"
                 android:text="Kinos.to" />
         </RadioGroup>
 
