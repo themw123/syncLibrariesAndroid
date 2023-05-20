@@ -5,20 +5,17 @@ Es wurde um synclibraries herumgebaut, damit es möglich ist die Synchronisierun
 
 App:
 
-
-<img src="/img/ausnahmen.jpg" alt="Ausnahmen" width="300">
+<img src="/img/ausnahmen.jpg" width="300">
 
 Suche:
-![Alt text](/img/suche.jpg)
+
+<img src="/img/suche.jpg" width="300">
 
 
 Download:
-![Alt text](/img/downloading.jpg)
-
+<img src="/img/downloading.jpg" width="300">
 
 
 Lokal:
-![Alt text](/img/local.jpg)
-
-
+<img src="/img/local.jpg" width="300">
 
