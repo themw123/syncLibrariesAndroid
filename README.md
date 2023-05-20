@@ -13,9 +13,11 @@ Suche:
 
 
 Download:
+
 <img src="/img/downloading.jpg" width="300">
 
 
 Lokal:
+
 <img src="/img/local.jpg" width="300">
 
