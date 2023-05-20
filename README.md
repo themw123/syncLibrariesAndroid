@@ -6,9 +6,7 @@ Es wurde um synclibraries herumgebaut, damit es möglich ist die Synchronisierun
 App:
 
 
-Ausnahmen:
-![Alt text](/img/ausnahmen.jpg)
-
+<img src="/img/ausnahmen.jpg" alt="Ausnahmen" width="300">
 
 Suche:
 ![Alt text](/img/suche.jpg)
