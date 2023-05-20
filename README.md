@@ -5,7 +5,11 @@ Es wurde um synclibraries herumgebaut, damit es möglich ist die Synchronisierun
 
 App:
 
+
+Ausnahmen:
+
 <img src="/img/ausnahmen.jpg" width="300">
+
 
 Suche:
 
