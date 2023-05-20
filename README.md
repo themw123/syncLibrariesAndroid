@@ -7,20 +7,20 @@ App:
 
 
 Ausnahmen:
-![Alt text](/img/ausnahmen.png)
+![Alt text](/img/ausnahmen.jpg)
 
 
 Suche:
-![Alt text](/img/suche.png)
+![Alt text](/img/suche.jpg)
 
 
 Download:
-![Alt text](/img/downloading.png)
+![Alt text](/img/downloading.jpg)
 
 
 
 Lokal:
-![Alt text](/img/local.png)
+![Alt text](/img/local.jpg)
 
 
 
