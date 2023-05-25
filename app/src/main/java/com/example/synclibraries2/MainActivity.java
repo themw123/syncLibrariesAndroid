@@ -460,7 +460,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void openVPNPC() {
-        ssh.sendCommend("\"C:\\Program Files\\ShrewSoft\\VPN Client\\ipsecc.exe\" -r ko0eqqy9sklnlwn7.myfritz.net -u Marvin -p " + ssh1pass +"Mw -a");
+        ssh.sendCommend("\"C:\\Program Files\\ShrewSoft\\VPN Client\\ipsecc.exe\" -r xxx -u Marvin -p " + ssh1pass +"xxx");
         opencloseColor(false);
     }
 
